@@ -9,8 +9,8 @@ export default class Event {
     name: string;
 
     constructor(client: Agness, options: EventOptions) {
-        this.name = options.name;
         this.client = client;
+        this.name = options.name;
     }
 
     // eslint-disable-next-line

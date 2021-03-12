@@ -1,5 +1,5 @@
-import Event from '../structures/Event';
 import { readdirSync, statSync } from 'fs';
+import Event from '../structures/Event';
 import { join } from 'path';
 import Agness from '../bot';
 

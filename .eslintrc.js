@@ -24,6 +24,7 @@ module.exports = {
         'eol-last': ['warn', 'never'],
         'comma-dangle': ['warn', 'never'],
         'quote-props': ['warn', 'as-needed'],
+        '@typescript-eslint/no-empty-function': 'warn',
         semi: ['warn', 'always', { omitLastInOneLineBlock: true }]
     },
     ignorePatterns: [
