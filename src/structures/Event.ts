@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Agness from '../bot';
 
 interface EventOptions {
@@ -5,11 +6,9 @@ interface EventOptions {
 }
 
 export default class Event {
-    client: Agness;
     name: string;
 
-    constructor(client: Agness, options: EventOptions) {
-        this.client = client;
+    constructor(public client: Agness, options: EventOptions) {
         this.name = options.name;
     }
 

@@ -5,11 +5,9 @@ import { join } from 'path';
 import Agness from '../bot';
 
 export default class Commands extends Collection<string, Command> {
-    client: Agness;
-
-    constructor(client: Agness) {
+    // eslint-disable-next-line no-unused-vars
+    constructor(public client: Agness) {
         super();
-        this.client = client;
     }
 
     async load(): Promise<void> {
@@ -19,7 +17,7 @@ export default class Commands extends Collection<string, Command> {
             const commands = readdirSync(join(folder, category)).filter(x => x.endsWith('.js'));
             for (const command of commands) {
                 const commandFile = await import(join(folder, category, command));
-                const commandClass: Command = new commandFile.default(this.client);
+                const commandClass: Command = new commandFile.default(this.client, category);
                 this.set(commandClass.name, commandClass);
             }
         }

@@ -4,11 +4,8 @@ import { join } from 'path';
 import Agness from '../bot';
 
 export default class Events {
-    client: Agness;
-
-    constructor(client: Agness) {
-        this.client = client;
-    }
+    // eslint-disable-next-line
+    constructor(public client: Agness) { }
 
     async load(): Promise<void> {
         const folder = join(__dirname, '../events/');

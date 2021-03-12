@@ -34,7 +34,7 @@
   "dependencies": {
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.11.15",
+    "mongoose": "^5.11.14",
     "phin": "^3.5.1"
   }
 }
