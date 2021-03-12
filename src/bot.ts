@@ -8,7 +8,7 @@ config();
 export default class Agness extends Client {
     commands = new Commands(this);
     events = new Events(this);
-    color = '#637cf6';
+    color = '#66e7ae';
 
     constructor() {
         super({

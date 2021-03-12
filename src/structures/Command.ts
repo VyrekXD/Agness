@@ -65,7 +65,7 @@ export default class Command {
         const channel = (message.channel as TextChannel);
         if (this.guildOnly && !message.guild) return !this.sendOrReply(message, 'This command is only available for servers.');
         if (message.guild && !channel.permissionsFor(message.guild.me as GuildMember).has('SEND_MESSAGES')) return false;
-        if (this.checkCooldowns(message)) return !message.channel.send(`You have to wait **${Number(((this.cooldowns.get(message.author.id) as number) - Date.now()) / 1000).toFixed(2)}s** to execute this command.`);
+        if (this.checkCooldowns(message) && !devs.includes(message.author.id)) return !message.channel.send(`You have to wait **${Number(((this.cooldowns.get(message.author.id) as number) - Date.now()) / 1000).toFixed(2)}s** to execute this command.`);
         if (!this.enabled && !devs.includes(message.author.id)) return !this.sendOrReply(message, 'This command is under maintenance.');
         if (this.devsOnly && !devs.includes(message.author.id)) return !this.sendOrReply(message, 'This command can only be used by developers.');
         if (message.guild && !channel.nsfw && this.nsfwOnly) return !this.sendOrReply(message, 'This command can only be used on NSFW channels.');
