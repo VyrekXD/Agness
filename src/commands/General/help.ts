@@ -10,7 +10,7 @@ export default class PingCommand extends Command {
         });
     }
 
-    async run(message: Message): Promise<void | Message> {
-        
+    async run(message: Message): Promise<void> {
+        message.channel.send('This is the help command. Nothing to show right now.');
     }
 }
