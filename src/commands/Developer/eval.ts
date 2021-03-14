@@ -4,7 +4,7 @@ import { exec } from 'child_process';
 import { Message } from 'discord.js';
 import Agness from '../../bot';
 
-export default class PingCommand extends Command {
+export default class EvalCommand extends Command {
     constructor(client: Agness, category: string) {
         super(client, {
             name: 'eval',

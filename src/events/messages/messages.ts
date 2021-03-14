@@ -13,7 +13,7 @@ export default class MessageEvent extends Event {
     async run(message: Message): Promise<void> {
         if (!message.author || message.author.bot) return;
 
-        const server = await Servers.findOne({ _id: message.guild?.id });
+        const server = await Servers.findOne({ guildID: message.guild?.id });
         const prefix = (server ? server.prefix : process.env.BOT_PREFIX) as string;
         const prefixes = [prefix, `<@${this.client.user?.id}>`, `<@!${this.client.user?.id}>`];
         const usedPrefix = prefixes.find((p) => message.content.startsWith(p));
@@ -25,6 +25,7 @@ export default class MessageEvent extends Event {
 
         try {
             if (!cmd || !cmd.canRun(message)) return;
+            cmd.prepare({ server });
             await cmd.run(message, args);
         } catch (e) {
             console.log(e.stack || e);

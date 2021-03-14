@@ -1,10 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { Collection, Message, GuildMember, TextChannel, PermissionResolvable } from 'discord.js';
+import { Server } from '../database/server';
+import English from '../languages/English';
+import Language from './Language';
 import Agness from '../bot';
 
 const devs = process.env.DEVS ? process.env.DEVS.split(', ') : [];
 
-export interface CommandOptions {
+interface CommandOptions {
     name: string;
     category: string;
     aliases?: string[];
@@ -39,6 +42,8 @@ export default class Command {
     nsfwOnly: boolean;
     devsOnly: boolean;
     cooldowns = new Collection();
+    server?: Server | null;
+    lang: Language = new English(this.client);
 
     constructor(public client: Agness, options: CommandOptions) {
         this.name = options.name;
@@ -56,6 +61,12 @@ export default class Command {
         this.guildOnly = typeof options.guildOnly === 'boolean' ? options.guildOnly : this.category !== 'General';
         this.nsfwOnly = !!options.nsfwOnly;
         this.devsOnly = !!options.devsOnly;
+    }
+
+    prepare({ server }: { server?: Server | null }): void {
+        this.server = server;
+        if (this.server)
+            this.lang = this.client.languages.get(this.server.language) as Language;
     }
 
     // eslint-disable-next-line
@@ -79,6 +90,7 @@ export default class Command {
             return !this.sendOrReply(message, `I need the following permissions on this channel: \`${this.botChannelPermissions.map(this.parsePermission).join(', ')}\``);
         return true;
     }
+
     checkCooldowns(message: Message): boolean {
         if (this.cooldowns.has(message.author.id)) return true;
         this.cooldowns.set(message.author.id, Date.now() + (this.cooldown * 1000));
