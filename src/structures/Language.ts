@@ -3,10 +3,12 @@ import Agness from '../bot';
 
 type functionString = (...args: string[]) => string;
 
+interface CommandStrings {
+    help: string;
+}
+
 interface LanguageStrings {
-    commands: {
-        help: string;
-    }
+    commands: CommandStrings;
 }
 
 interface LanguageOptions {
@@ -26,8 +28,8 @@ export default class Language {
         this.strings = options.strings;
     }
 
-    get(string: string, ...args: string[]): string {
-        const value = (this.strings.commands as Record<string, string | functionString>)[string];
+    get(string: keyof CommandStrings, ...args: string[]): string {
+        const value = (this.strings.commands as unknown as Record<keyof CommandStrings, string | functionString>)[string];
         if (typeof value === 'function')
             return value(...args);
         else
