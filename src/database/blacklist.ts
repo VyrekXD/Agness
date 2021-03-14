@@ -21,4 +21,4 @@ const blacklists: Schema<Blacklist> = new Schema({
     }
 });
 
-export const Blacklists: Model<Blacklist> = model('Blacklists', blacklists);
+export const Blacklists: Model<Blacklist> = model('blacklist', blacklists);

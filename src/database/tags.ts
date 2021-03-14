@@ -11,8 +11,14 @@ export interface Tag extends Document {
 }
 
 const tag: Schema<Tag> = new Schema({
-    guildID: String,
-    name: String,
+    guildID: {
+        type: String,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
     message: {
         type: String,
         default: ''
@@ -29,4 +35,4 @@ const tag: Schema<Tag> = new Schema({
     }
 });
 
-export const Tags: Model<Tag> = model('Tags', tag);
+export const Tags: Model<Tag> = model('tags', tag);

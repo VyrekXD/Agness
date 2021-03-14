@@ -26,4 +26,4 @@ const leaves: Schema<Leave> = new Schema({
     }
 });
 
-export const Leaves: Model<Leave> = model('Leave', leaves);
+export const Leaves: Model<Leave> = model('leave', leaves);

@@ -16,8 +16,14 @@ export interface Embed extends Document {
 }
 
 const embeds: Schema<Embed> = new Schema({
-    guildID: String,
-    embed_name: String,
+    guildID: {
+        type: String,
+        required: true
+    },
+    embed_name: {
+        type: String,
+        required: true
+    },
     author_text: {
         type: String,
         default: ''
@@ -60,4 +66,4 @@ const embeds: Schema<Embed> = new Schema({
     }
 });
 
-export const Embeds: Model<Embed> = model('Embed', embeds);
+export const Embeds: Model<Embed> = model('embed', embeds);
