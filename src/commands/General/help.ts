@@ -6,9 +6,7 @@ export default class HelpCommand extends Command {
     constructor(client: Agness, category: string) {
         super(client, {
             name: 'help',
-            category,
-            botGuildPermissions: ['ADMINISTRATOR'],
-            botChannelPermissions: ['MANAGE_MESSAGES']
+            category
         });
     }
 
