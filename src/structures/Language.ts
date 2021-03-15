@@ -1,17 +1,17 @@
-/* eslint-disable no-unused-vars, max-lines */
+/* eslint-disable no-unused-vars */
+import { PermissionString } from 'discord.js';
 import Agness from '../bot';
 
-type functionString = (...args: string[]) => string;
-
 interface CommandStrings {
-    help: Function,
-    category: Function,
-    command: Function,
-    noHelp: String,
+    help(prefix: string): string;
+    helpCategory(prefix: string, category: string): string;
+    helpCommand(prefix: string, command: string): string;
+    helpNo(): string;
 }
 
 interface LanguageStrings {
     commands: CommandStrings;
+    permissions: Record<PermissionString, string>;
 }
 
 interface LanguageOptions {
@@ -31,11 +31,14 @@ export default class Language {
         this.strings = options.strings;
     }
 
-    get(string: keyof CommandStrings, ...args: string[]): string {
-        const value = (this.strings.commands as unknown as Record<keyof CommandStrings, string | functionString>)[string];
-        if (typeof value === 'function')
-            return value(...args);
-        else
-            return value;
+    get<K extends keyof CommandStrings>(string: K, ...args: Parameters<CommandStrings[K]>): ReturnType<CommandStrings[K]> {
+        const value = (this.strings.commands)[string];
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return value(...args);
+    }
+
+    parsePermission(permission: PermissionString): string {
+        return this.strings.permissions[permission];
     }
 }
