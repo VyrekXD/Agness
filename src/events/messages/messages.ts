@@ -13,7 +13,11 @@ export default class MessageEvent extends Event {
     async run(message: Message): Promise<void> {
         if (!message.author || message.author.bot) return;
 
-        const server = await Servers.findOne({ guildID: message.guild?.id });
+        let server = await Servers.findOne({ guildID: message.guild?.id });
+        if(!server && message.guild) {
+            server = new Servers({ guildID: message.guild?.id})
+            await server.save()
+        }
         const prefix = (server ? server.prefix : process.env.BOT_PREFIX) as string;
         const prefixes = [prefix, `<@${this.client.user?.id}>`, `<@!${this.client.user?.id}>`];
         const usedPrefix = prefixes.find((p) => message.content.startsWith(p));

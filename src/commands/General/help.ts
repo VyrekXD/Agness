@@ -1,16 +1,40 @@
 import Command from '../../structures/Command';
-import { Message } from 'discord.js';
+import { Message, MessageEmbed } from 'discord.js';
 import Agness from '../../bot';
 
 export default class HelpCommand extends Command {
     constructor(client: Agness, category: string) {
         super(client, {
             name: 'help',
-            category
+            category,
+            botGuildPermissions: ['ADMINISTRATOR'],
+            botChannelPermissions: ['MANAGE_MESSAGES']
         });
     }
 
-    async run(message: Message): Promise<void> {
-        message.channel.send(this.lang.get('help'));
+    async run(message: Message, args: string[]): Promise<void | Message> {
+        if (!args[0]) {
+            return message.channel.send(new MessageEmbed()
+                .setDescription(this.lang.get('help', this.server?.prefix as string))
+                .setColor(this.client.color)
+            )
+        }
+        const category = this.client.commands.filter((x) => x.category.toLowerCase() == args[0].toLowerCase()).array();
+        const cmd = this.client.commands.get(args[0].toLowerCase())
+        if (category.length) {
+            message.channel.send(new MessageEmbed()
+                .setDescription(this.lang.get('category', this.server?.prefix as string, args[0].toLowerCase()))
+                .setColor(this.client.color)
+            )
+        } else if (cmd) {
+            message.channel.send(new MessageEmbed()
+                .setDescription(this.lang.get('command', this.server?.prefix as string, args[0].toLowerCase()))
+                .setColor(this.client.color)
+            )
+        } else {
+            message.channel.send(this.lang.get('noHelp'), new MessageEmbed()
+            .setDescription(this.lang.get('help', this.server?.prefix as string))
+            .setColor(this.client.color))
+        }
     }
 }

@@ -4,7 +4,10 @@ import Agness from '../bot';
 type functionString = (...args: string[]) => string;
 
 interface CommandStrings {
-    help: string;
+    help: Function,
+    category: Function,
+    command: Function,
+    noHelp: String,
 }
 
 interface LanguageStrings {
