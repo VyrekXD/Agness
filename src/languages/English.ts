@@ -1,6 +1,8 @@
 /* eslint-disable  max-lines */
 import Language from '../structures/Language';
+import { PermissionString } from 'discord.js';
 import Agness from '../bot';
+
 
 export default class English extends Language {
     constructor(client: Agness) {
@@ -62,7 +64,28 @@ ${findCom?.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).joi
 ${findCom?.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
 \`\`\``;
                     },
-                    helpNo: () => '> The command or category couldn\'t be found.'
+                    helpNo: () => '> The command or category couldn\'t be found.',
+                    cmdServer: () => 'This command is only available for servers.',
+                    cmdCooldown: (cooldown) => `You have to wait **${cooldown}s** to execute this command.`,
+                    cmdEnabled: () => 'This command is under maintenance.',
+                    cmdDevs: () => 'This command can only be used by developers.',
+                    cmdNSFW: () => 'This command can only be used on NSFW channels.',
+                    cmdMemberGuild: (perms: PermissionString[]) => `You need the following permissions:
+\`\`\`diff
+${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
+\`\`\``,
+                    cmdMemberChannel: (perms: PermissionString[]) => `You need the following permissions on this channel:
+\`\`\`diff
+${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
+\`\`\``,
+                    cmdBotGuild: (perms: PermissionString[]) => `I need the following permissions:
+\`\`\`diff
+${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
+\`\`\``,
+                    cmdBotChannel: (perms: PermissionString[]) => `I need the following permissions on this channel:
+\`\`\`diff
+${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
+\`\`\``
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrator',

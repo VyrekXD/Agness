@@ -1,4 +1,5 @@
 import Language from '../structures/Language';
+import { PermissionString } from 'discord.js';
 import Agness from '../bot';
 
 export default class Spanish extends Language {
@@ -63,7 +64,28 @@ ${findCom?.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).j
 \`\`\`
 `;
                     },
-                    helpNo: () => '> No se pudo encontrar el comando o la categoría.'
+                    helpNo: () => '> No se pudo encontrar el comando o la categoría.',
+                    cmdServer: () => 'Este comando solo está disponible para servidores.',
+                    cmdCooldown: (cooldown) => `Tienes que esperar **${cooldown}s** para ejecutar este comando.`,
+                    cmdEnabled: () => 'Este comando está en mantenimiento.',
+                    cmdDevs: () => 'Este comando solo puede ser utilizado por los desarrolladores.',
+                    cmdNSFW: () => 'Este comando solo se puede utilizar en canales NSFW.',
+                    cmdMemberGuild: (perms: PermissionString[]) => `Necesita los siguientes permisos:
+\`\`\`diff
+${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
+\`\`\``,
+                    cmdMemberChannel: (perms: PermissionString[]) => `Necesita los siguientes permisos en este canal:
+\`\`\`diff
+${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
+\`\`\``,
+                    cmdBotGuild: (perms: PermissionString[]) => `Necesito los siguientes permisos:
+\`\`\`diff
+${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
+\`\`\``,
+                    cmdBotChannel: (perms: PermissionString[]) => `Necesito los siguientes permisos en este canal:
+\`\`\`diff
+${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
+\`\`\``
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrador',

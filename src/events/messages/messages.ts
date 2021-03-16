@@ -15,8 +15,8 @@ export default class MessageEvent extends Event {
 
         let server = await Servers.findOne({ guildID: message.guild?.id });
         if(!server && message.guild) {
-            server = new Servers({ guildID: message.guild?.id})
-            await server.save()
+            server = new Servers({ guildID: message.guild?.id});
+            await server.save();
         }
         const prefix = (server ? server.prefix : process.env.BOT_PREFIX) as string;
         const prefixes = [prefix, `<@${this.client.user?.id}>`, `<@!${this.client.user?.id}>`];

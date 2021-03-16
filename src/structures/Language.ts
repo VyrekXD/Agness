@@ -7,6 +7,15 @@ interface CommandStrings {
     helpCategory(prefix: string, category: string): string;
     helpCommand(prefix: string, command: string): string;
     helpNo(): string;
+    cmdServer(): string;
+    cmdCooldown(cooldown: string): string;
+    cmdEnabled(): string;
+    cmdDevs(): string;
+    cmdNSFW(): string;
+    cmdMemberGuild(perms: PermissionString[]): string;
+    cmdMemberChannel(perms: PermissionString[]): string;
+    cmdBotGuild(perms: PermissionString[]): string;
+    cmdBotChannel(perms: PermissionString[]): string;
 }
 
 interface LanguageStrings {
