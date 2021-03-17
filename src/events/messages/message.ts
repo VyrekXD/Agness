@@ -14,8 +14,8 @@ export default class MessageEvent extends Event {
         if (!message.author || message.author.bot) return;
 
         let server = await Servers.findOne({ guildID: message.guild?.id });
-        if(!server && message.guild) {
-            server = new Servers({ guildID: message.guild?.id});
+        if (!server && message.guild) {
+            server = new Servers({ guildID: message.guild?.id });
             await server.save();
         }
         const prefix = (server ? server.prefix : process.env.BOT_PREFIX) as string;
@@ -28,8 +28,9 @@ export default class MessageEvent extends Event {
         const cmd = this.client.commands.get(command);
 
         try {
-            if (!cmd || !cmd.canRun(message)) return;
+            if (!cmd) return;
             cmd.prepare({ server });
+            if (!cmd.canRun(message)) return;
             await cmd.run(message, args);
         } catch (e) {
             console.log(e.stack || e);
