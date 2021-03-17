@@ -10,7 +10,7 @@ export default class PingCommand extends Command {
         });
     }
 
-    async run(message: Message): Promise<void> {
-        message.channel.send(`Pong! ${this.client.ws.ping}ms.`);
+    async run(message: Message): Promise<Message> {
+        return message.channel.send(`Pong! ${this.client.ws.ping}ms.`);
     }
 }

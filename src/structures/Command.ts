@@ -12,7 +12,7 @@ interface CommandOptions {
     category: string;
     aliases?: string[];
     description?: string;
-    usage?(p: string): string;
+    usageArgs?: string[];
     example?(p: string): string;
     botGuildPermissions?: PermissionString[];
     botChannelPermissions?: PermissionString[];
@@ -30,7 +30,7 @@ export default class Command {
     category: string;
     aliases: string[];
     description: string;
-    usage: (p: string) => string;
+    usageArgs: string[];
     example: (p: string) => string;
     botGuildPermissions: PermissionString[];
     botChannelPermissions: PermissionString[];
@@ -50,7 +50,7 @@ export default class Command {
         this.aliases = options.aliases || [];
         this.category = options.category || 'General';
         this.description = options.description || '';
-        this.usage = options.usage || ((p) => `${p}${this.name}`);
+        this.usageArgs = options.usageArgs || [];
         this.example = options.example || ((p) => `${p}${this.name}`);
         this.botGuildPermissions = options.botGuildPermissions || [];
         this.botChannelPermissions = options.botChannelPermissions || [];
@@ -61,6 +61,10 @@ export default class Command {
         this.guildOnly = typeof options.guildOnly === 'boolean' ? options.guildOnly : this.category !== 'General';
         this.nsfwOnly = !!options.nsfwOnly;
         this.devsOnly = !!options.devsOnly;
+    }
+
+    usage(p: string): string {
+        return `${p}${this.name} ${this.usageArgs.join(' ')}`.trim();
     }
 
     prepare({ server }: { server?: Server | null }): void {
@@ -108,5 +112,14 @@ export default class Command {
         if (message.guild && !(message.channel as TextChannel).permissionsFor(message.guild.me as GuildMember).has('READ_MESSAGE_HISTORY'))
             return message.channel.send(text);
         return message.reply(text, { allowedMentions: { users: [] } });
+    }
+
+    sendError(message: Message, text: string, arg: number): Promise<Message> {
+        const values = [`> ${(this.server?.prefix || process.env.BOT_PREFIX) as string}${this.name}`, ...this.usageArgs];
+        const characters = this.usageArgs[arg].replace(/\S/gi, '^');
+        return message.channel.send(`\`\`\`diff
+- ${text}
+${values.join(' ')}
+- ${characters.padStart(values.slice(0, 1).join(' ').length + characters.length - 1, ' ')}\`\`\``);
     }
 }

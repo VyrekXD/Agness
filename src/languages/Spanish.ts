@@ -88,6 +88,11 @@ ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
 \`\`\``
                 },
+                commandDescriptions: {
+                    help: 'Muestra la ayuda y enlaces útiles del bot.',
+                    eval: '',
+                    ping: ''
+                },
                 permissions: {
                     ADMINISTRATOR: 'Administrador',
                     MANAGE_GUILD: 'Gestionar servidor',

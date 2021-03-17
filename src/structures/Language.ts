@@ -21,10 +21,17 @@ interface CommandErrorStrings {
     cmdBotChannel(perms: PermissionString[]): string;
 }
 
+interface CommandDescriptionStrings {
+    help: string;
+    ping: string;
+    eval: string;
+}
+
 interface LanguageStrings {
     commands: CommandStrings;
     commandErrors: CommandErrorStrings;
     permissions: Record<PermissionString, string>;
+    commandDescriptions: CommandDescriptionStrings;
 }
 
 interface LanguageOptions {
@@ -57,6 +64,7 @@ export default class Language {
         // @ts-ignore
         return value(...args);
     }
+
     parsePermission(permission: PermissionString): string {
         return this.strings.permissions[permission];
     }

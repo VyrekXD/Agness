@@ -13,7 +13,7 @@ export default class EvalCommand extends Command {
         });
     }
 
-    async run(message: Message, args: string[]): Promise<Message | void> {
+    async run(message: Message, args: string[]): Promise<Message> {
         if (!args[0]) return message.channel.send('What do you wanna evaluate?');
         let evalued = 'undefined';
         switch (args[0].toLowerCase()) {
@@ -63,5 +63,7 @@ export default class EvalCommand extends Command {
         } catch {
             await msg.reactions.resolve('🔨')?.users.remove();
         }
+
+        return msg;
     }
 }
