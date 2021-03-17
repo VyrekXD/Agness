@@ -1,6 +1,5 @@
 /* eslint-disable  max-lines */
 import Language from '../structures/Language';
-import { PermissionString } from 'discord.js';
 import Agness from '../bot';
 
 
@@ -11,7 +10,7 @@ export default class English extends Language {
             displayName: 'English',
             strings: {
                 commands: {
-                    help: (prefix: string): string => `<:world:820783752489074748> **${client.user?.username} Help Panel**
+                    help: (prefix) => `<:world:820783752489074748> **${client.user?.username} Help Panel**
 Hi! At the moment I have **2** categories and  **${client.commands.size}** commands.
 **Categories:**
 > \`${prefix}help Config\` • Configuration Commands <:config:820788840654307348>
@@ -21,7 +20,7 @@ If you need more detailed information about each command, you can use:
 > \`${prefix}help <Command>\`
 **Links**
 **[Bot Invite](https://discord.com/api/oauth2/authorize?client_id=${client.user?.id}&permissions=8&scope=bot) | [Support Server](https://discord.gg/K63NqEDm86) | [GitHub](https://github.com/AgnessBot/Agness) | [Top.gg](https://top.gg/bot/798573830645874718)**`,
-                    helpCategory: (prefix: string, category: 'config' | 'general' | 'developer'): string => {
+                    helpCategory: (prefix, category) => {
                         const categories = {
                             config: '**Config** <:config:820788840654307348>',
                             general: '**General** <:general:820791014872449055>',
@@ -37,7 +36,7 @@ If you need more detailed information about each command, you can use:
 ${Array(Math.ceil(commands.array().length / 4)).fill([]).map((_, i) => commands.array().map((c) => c.name).slice(i * 4, (i * 4) + 4)).map((l) => l.map((c) => c.padEnd(17, ' ')).join('').trim()).join('\n')}
 \`\`\``;
                     },
-                    helpCommand: (prefix: string, command: string): string => {
+                    helpCommand: (prefix, command) => {
                         const findCom = this.client.commands.get(command);
                         return `__**${findCom?.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())} Command**__
 **Description:** ${findCom?.description || 'No description.'}
@@ -64,25 +63,27 @@ ${findCom?.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).joi
 ${findCom?.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
 \`\`\``;
                     },
-                    helpNo: () => '> The command or category couldn\'t be found.',
+                    helpNo: () => '> The command or category couldn\'t be found.'
+                },
+                commandErrors: {
                     cmdServer: () => 'This command is only available for servers.',
                     cmdCooldown: (cooldown) => `You have to wait **${cooldown}s** to execute this command.`,
                     cmdEnabled: () => 'This command is under maintenance.',
                     cmdDevs: () => 'This command can only be used by developers.',
                     cmdNSFW: () => 'This command can only be used on NSFW channels.',
-                    cmdMemberGuild: (perms: PermissionString[]) => `You need the following permissions:
+                    cmdMemberGuild: (perms) => `You need the following permissions:
 \`\`\`diff
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
 \`\`\``,
-                    cmdMemberChannel: (perms: PermissionString[]) => `You need the following permissions on this channel:
+                    cmdMemberChannel: (perms) => `You need the following permissions on this channel:
 \`\`\`diff
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
 \`\`\``,
-                    cmdBotGuild: (perms: PermissionString[]) => `I need the following permissions:
+                    cmdBotGuild: (perms) => `I need the following permissions:
 \`\`\`diff
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
 \`\`\``,
-                    cmdBotChannel: (perms: PermissionString[]) => `I need the following permissions on this channel:
+                    cmdBotChannel: (perms) => `I need the following permissions on this channel:
 \`\`\`diff
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
 \`\`\``

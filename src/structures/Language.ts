@@ -4,9 +4,12 @@ import Agness from '../bot';
 
 interface CommandStrings {
     help(prefix: string): string;
-    helpCategory(prefix: string, category: string): string;
+    helpCategory(prefix: string, category: 'config' | 'general' | 'developer'): string;
     helpCommand(prefix: string, command: string): string;
     helpNo(): string;
+}
+
+interface CommandErrorStrings {
     cmdServer(): string;
     cmdCooldown(cooldown: string): string;
     cmdEnabled(): string;
@@ -20,6 +23,7 @@ interface CommandStrings {
 
 interface LanguageStrings {
     commands: CommandStrings;
+    commandErrors: CommandErrorStrings;
     permissions: Record<PermissionString, string>;
 }
 
@@ -47,6 +51,12 @@ export default class Language {
         return value(...args);
     }
 
+    getError<K extends keyof CommandErrorStrings>(string: K, ...args: Parameters<CommandErrorStrings[K]>): ReturnType<CommandErrorStrings[K]> {
+        const value = (this.strings.commandErrors)[string];
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return value(...args);
+    }
     parsePermission(permission: PermissionString): string {
         return this.strings.permissions[permission];
     }

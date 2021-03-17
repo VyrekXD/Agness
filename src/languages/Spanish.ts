@@ -1,5 +1,4 @@
 import Language from '../structures/Language';
-import { PermissionString } from 'discord.js';
 import Agness from '../bot';
 
 export default class Spanish extends Language {
@@ -9,7 +8,7 @@ export default class Spanish extends Language {
             displayName: 'Spanish',
             strings: {
                 commands: {
-                    help: (prefix: string): string => `<:world:820783752489074748> **Panel de ayuda de ${client.user?.username}**
+                    help: (prefix) => `<:world:820783752489074748> **Panel de ayuda de ${client.user?.username}**
 ¡Hola! En este momento cuento con **2** categorias y **${client.commands.size}** comandos.
 
 **Categorias:**
@@ -20,7 +19,7 @@ Si necesita información más detallada sobre cada comando, puede usar:
 > \`${prefix}help <Comando>\`
 **Enlaces**
 **[Invitacion del Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user?.id}&permissions=8&scope=bot) | [Servidor de Soporte](https://discord.gg/K63NqEDm86) | [GitHub](https://github.com/AgnessBot/Agness) | [Top.gg](https://top.gg/bot/798573830645874718)**`,
-                    helpCategory: (prefix: string, category: 'config' | 'general' | 'developer'): string => {
+                    helpCategory: (prefix, category) => {
                         const categories = {
                             config: '**Configuración** <:config:820788840654307348>',
                             general: '**General** <:general:820791014872449055>',
@@ -36,7 +35,7 @@ Si necesita información más detallada sobre cada comando, puedes usar:
 ${Array(Math.ceil(commands.array().length / 4)).fill([]).map((_, i) => commands.array().map((c) => c.name).slice(i * 4, (i * 4) + 4)).map((l) => l.map((c) => c.padEnd(17, ' ')).join('').trim()).join('\n')}
 \`\`\``;
                     },
-                    helpCommand: (prefix: string, command: string): string => {
+                    helpCommand: (prefix, command) => {
                         const findCom = this.client.commands.get(command);
                         return `__**Comando ${findCom?.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())}**__
 **Descripción:** ${findCom?.description || 'No tiene descripción.'}
@@ -64,25 +63,27 @@ ${findCom?.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).j
 \`\`\`
 `;
                     },
-                    helpNo: () => '> No se pudo encontrar el comando o la categoría.',
+                    helpNo: () => '> No se pudo encontrar el comando o la categoría.'
+                },
+                commandErrors: {
                     cmdServer: () => 'Este comando solo está disponible para servidores.',
                     cmdCooldown: (cooldown) => `Tienes que esperar **${cooldown}s** para ejecutar este comando.`,
                     cmdEnabled: () => 'Este comando está en mantenimiento.',
                     cmdDevs: () => 'Este comando solo puede ser utilizado por los desarrolladores.',
                     cmdNSFW: () => 'Este comando solo se puede utilizar en canales NSFW.',
-                    cmdMemberGuild: (perms: PermissionString[]) => `Necesita los siguientes permisos:
+                    cmdMemberGuild: (perms) => `Necesita los siguientes permisos:
 \`\`\`diff
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
 \`\`\``,
-                    cmdMemberChannel: (perms: PermissionString[]) => `Necesita los siguientes permisos en este canal:
+                    cmdMemberChannel: (perms) => `Necesita los siguientes permisos en este canal:
 \`\`\`diff
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
 \`\`\``,
-                    cmdBotGuild: (perms: PermissionString[]) => `Necesito los siguientes permisos:
+                    cmdBotGuild: (perms) => `Necesito los siguientes permisos:
 \`\`\`diff
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
 \`\`\``,
-                    cmdBotChannel: (perms: PermissionString[]) => `Necesito los siguientes permisos en este canal:
+                    cmdBotChannel: (perms) => `Necesito los siguientes permisos en este canal:
 \`\`\`diff
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
 \`\`\``

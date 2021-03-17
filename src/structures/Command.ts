@@ -74,24 +74,24 @@ export default class Command {
 
     canRun(message: Message): boolean {
         const channel = (message.channel as TextChannel);
-        if (this.guildOnly && !message.guild) return !this.sendOrReply(message, this.lang.get('cmdServer'));
+        if (this.guildOnly && !message.guild) return !this.sendOrReply(message, this.lang.getError('cmdServer'));
         if (message.guild && !channel.permissionsFor(message.guild.me as GuildMember).has('SEND_MESSAGES')) return false;
         if (this.checkCooldowns(message) && !devs.includes(message.author.id))
-            return !message.channel.send(this.lang.get('cmdCooldown', Number(((this.cooldowns.get(message.author.id) as number) - Date.now()) / 1000).toFixed(2)));
+            return !message.channel.send(this.lang.getError('cmdCooldown', Number(((this.cooldowns.get(message.author.id) as number) - Date.now()) / 1000).toFixed(2)));
         if (!this.enabled && !devs.includes(message.author.id))
-            return !this.sendOrReply(message, this.lang.get('cmdEnabled'));
+            return !this.sendOrReply(message, this.lang.getError('cmdEnabled'));
         if (this.devsOnly && !devs.includes(message.author.id))
-            return !this.sendOrReply(message, this.lang.get('cmdDevs'));
+            return !this.sendOrReply(message, this.lang.getError('cmdDevs'));
         if (message.guild && !channel.nsfw && this.nsfwOnly)
-            return !this.sendOrReply(message, this.lang.get('cmdNSFW'));
+            return !this.sendOrReply(message, this.lang.getError('cmdNSFW'));
         if (message.guild && this.memberGuildPermissions[0] && !this.memberGuildPermissions.some((p) => (message.member as GuildMember).permissions.has(p as PermissionResolvable)) && !devs.includes(message.author.id))
-            return !this.sendOrReply(message, this.lang.get('cmdMemberGuild', this.memberGuildPermissions));
+            return !this.sendOrReply(message, this.lang.getError('cmdMemberGuild', this.memberGuildPermissions));
         if (message.guild && this.memberChannelPermissions[0] && !this.memberChannelPermissions.some((p) => channel.permissionsFor(message.member as GuildMember).has(p as PermissionResolvable)) && !devs.includes(message.author.id))
-            return !this.sendOrReply(message, this.lang.get('cmdMemberChannel', this.memberChannelPermissions));
+            return !this.sendOrReply(message, this.lang.getError('cmdMemberChannel', this.memberChannelPermissions));
         if (message.guild && this.botGuildPermissions[0] && !this.botGuildPermissions.some((p) => (message.guild?.me as GuildMember).permissions.has(p as PermissionResolvable)))
-            return !this.sendOrReply(message, this.lang.get('cmdBotGuild', this.botGuildPermissions));
+            return !this.sendOrReply(message, this.lang.getError('cmdBotGuild', this.botGuildPermissions));
         if (message.guild && this.botChannelPermissions[0] && !this.botChannelPermissions.some((p) => channel.permissionsFor(message.guild?.me as GuildMember).has(p as PermissionResolvable)))
-            return !this.sendOrReply(message, this.lang.get('cmdBotChannel', this.botChannelPermissions));
+            return !this.sendOrReply(message, this.lang.getError('cmdBotChannel', this.botChannelPermissions));
         return true;
     }
 
