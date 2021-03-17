@@ -15,46 +15,53 @@ export default class EvalCommand extends Command {
 
     async run(message: Message, args: string[]): Promise<Message | void> {
         if (!args[0]) return message.channel.send('What do you wanna evaluate?');
+        let evalued = 'undefined';
         switch (args[0].toLowerCase()) {
             case '-a': {
                 if (!args[1]) return message.channel.send('What do you wanna evaluate?');
                 try {
-                    let evalued = await eval('(async() => {\n' + args.slice(1).join(' ') + '\n})();');
-                    if (typeof (evalued) !== 'string') {
-                        evalued = inspect(evalued, { depth: 0 });
-                    }
-                    message.channel.send(evalued.slice(0, 1950), { code: 'js' });
+                    evalued = await eval('(async() => {\n' + args.slice(1).join(' ') + '\n})();');
+                    evalued = inspect(evalued, { depth: 0 });
                 } catch (err) {
-                    message.channel.send(err.toString().slice(0, 1950), { code: 'js' });
+                    evalued = err.toString();
                 }
                 break;
             }
             case '-sh': {
                 if (!args[1]) return message.channel.send('What should I run in the terminal?');
-                const evalued = args.slice(1).join(' ');
+                evalued = args.slice(1).join(' ');
                 try {
                     const { stdout, stderr } = await promisify(exec)(evalued);
                     if (!stdout && !stderr) return message.channel.send('I ran that but there\'s no nothing to show.');
                     if (stdout)
-                        message.channel.send(stdout.slice(0, 1950), { code: 'sh' });
+                        evalued = stdout;
                     if (stderr)
-                        message.channel.send(stderr.slice(0, 1950), { code: 'sh' });
+                        evalued = stderr;
                 } catch (err) {
-                    message.channel.send(err.toString().slice(0, 1950), { code: 'sh' });
+                    evalued = err.toString();
                 }
                 break;
             }
             default: {
                 try {
-                    let evalued = eval(args.join(' '));
-                    if (typeof (evalued) !== 'string')
-                        evalued = inspect(evalued, { depth: 0 });
-                    message.channel.send(evalued.slice(0, 1950), { code: 'js' });
+                    evalued = eval(args.join(' '));
+                    evalued = inspect(evalued, { depth: 0 });
                 } catch (err) {
-                    message.channel.send(err.toString().slice(0, 1950), { code: 'js' });
+                    evalued = err.toString();
                 }
                 break;
             }
+        }
+
+        const msg = await message.channel.send(evalued.slice(0, 1950), {
+            code: args[0].toLowerCase() === '-sh' ? 'sh' : 'js'
+        });
+        try {
+            await msg.react('🔨');
+            await msg.awaitReactions((reaction, user) => reaction.emoji.name === '🔨' && user.id === message.author.id, { time: 15000, max: 1, errors: ['time'] });
+            await msg.delete();
+        } catch {
+            await msg.reactions.resolve('🔨')?.users.remove();
         }
     }
 }
