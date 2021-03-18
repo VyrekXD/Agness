@@ -63,7 +63,8 @@ ${findCom?.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).j
 \`\`\`
 `;
                     },
-                    helpNo: () => '> No se pudo encontrar el comando o la categoría.'
+                    helpNo: () => '> No se pudo encontrar el comando o la categoría.',
+                    prefixOK: (newPrefix) => `Mi nuevo prefijo es: \`${newPrefix}\``
                 },
                 commandErrors: {
                     cmdServer: () => 'Este comando solo está disponible para servidores.',
@@ -86,12 +87,15 @@ ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
                     cmdBotChannel: (perms) => `Necesito los siguientes permisos en este canal:
 \`\`\`diff
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
-\`\`\``
+\`\`\``,
+                    prefixArgs: () => `Debes especificar el nuevo prefijo.`,
+                    prefixLength: () => `El nuevo prefijo no debe superar los 5 caracteres.`
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',
-                    eval: '',
-                    ping: ''
+                    eval: 'Evalua un codigo',
+                    ping: 'Muestra la latencia del bot.',
+                    prefix: 'Establece un prefijo personalizado en tu servidor.'
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrador',

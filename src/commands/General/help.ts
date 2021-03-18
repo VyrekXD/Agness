@@ -6,6 +6,9 @@ export default class HelpCommand extends Command {
     constructor(client: Agness, category: string) {
         super(client, {
             name: 'help',
+            usageArgs: ['<Category | Command>'],
+            example: (p) => `${p}help prefix`,
+            botGuildPermissions: ['EMBED_LINKS'],
             category
         });
     }

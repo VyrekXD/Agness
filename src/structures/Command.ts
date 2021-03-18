@@ -116,10 +116,10 @@ export default class Command {
 
     sendError(message: Message, text: string, arg: number): Promise<Message> {
         const values = [`> ${(this.server?.prefix || process.env.BOT_PREFIX) as string}${this.name}`, ...this.usageArgs];
-        const characters = this.usageArgs[arg].replace(/\S/gi, '^');
+        const characters = this.usageArgs[arg].replace(/[^a-z\s]/gi, '_').replace(/[a-z\s]/gi, '^').replace(/_/gi, ' ');
         return message.channel.send(`\`\`\`diff
 - ${text}
 ${values.join(' ')}
-- ${characters.padStart(values.slice(0, 1).join(' ').length + characters.length - 1, ' ')}\`\`\``);
+- ${characters.padStart(values.slice(0, arg + 1).join(' ').length + characters.length - 1, ' ')}\`\`\``);
     }
 }

@@ -39,7 +39,7 @@ ${Array(Math.ceil(commands.array().length / 4)).fill([]).map((_, i) => commands.
                     helpCommand: (prefix, command) => {
                         const findCom = this.client.commands.get(command);
                         return `__**${findCom?.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())} Command**__
-**Description:** ${findCom?.description || 'No description.'}
+**Description:** ${this.getDescription(command) || 'No description.'}
 **Aliases:** ${findCom?.aliases.join(' | ') || 'No aliases.'}
 **Category:** ${findCom?.category}
 **Usage:** ${findCom?.usage(prefix)}
@@ -63,7 +63,8 @@ ${findCom?.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).joi
 ${findCom?.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
 \`\`\``;
                     },
-                    helpNo: () => '> The command or category couldn\'t be found.'
+                    helpNo: () => '> The command or category couldn\'t be found.',
+                    prefixOK: (newPrefix) => `My new prefix is: \`${newPrefix}\``
                 },
                 commandErrors: {
                     cmdServer: () => 'This command is only available for servers.',
@@ -86,12 +87,15 @@ ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
                     cmdBotChannel: (perms) => `I need the following permissions on this channel:
 \`\`\`diff
 ${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
-\`\`\``
+\`\`\``,
+                    prefixArgs: () => `You must specify the new prefix.`,
+                    prefixLength: () => `The new prefix must not exceed 5 characters.`
                 },
                 commandDescriptions: {
-                    help: '',
-                    eval: '',
-                    ping: ''
+                    help: 'Displays helpful links and help for the bot.',
+                    eval: 'Evaluate a code.',
+                    ping: 'Shows the latency of the bot.',
+                    prefix: 'Set a custom prefix on your server.'
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrator',

@@ -9,6 +9,7 @@ export default class EvalCommand extends Command {
         super(client, {
             name: 'eval',
             aliases: ['e'],
+            usageArgs: ['<Code | Type>'],
             category
         });
     }

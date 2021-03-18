@@ -7,6 +7,7 @@ interface CommandStrings {
     helpCategory(prefix: string, category: 'config' | 'general' | 'developer'): string;
     helpCommand(prefix: string, command: string): string;
     helpNo(): string;
+    prefixOK(newPrefix: string): string;
 }
 
 interface CommandErrorStrings {
@@ -19,12 +20,15 @@ interface CommandErrorStrings {
     cmdMemberChannel(perms: PermissionString[]): string;
     cmdBotGuild(perms: PermissionString[]): string;
     cmdBotChannel(perms: PermissionString[]): string;
+    prefixArgs(): string;
+    prefixLength(): string;
 }
 
 interface CommandDescriptionStrings {
     help: string;
     ping: string;
     eval: string;
+    prefix: string;
 }
 
 interface LanguageStrings {
@@ -64,7 +68,12 @@ export default class Language {
         // @ts-ignore
         return value(...args);
     }
-
+    getDescription(string: string): string {
+        const value = (this.strings.commandDescriptions)[string as keyof CommandDescriptionStrings];
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        return value
+    }
     parsePermission(permission: PermissionString): string {
         return this.strings.permissions[permission];
     }
