@@ -5,12 +5,12 @@ export default class Spanish extends Language {
     constructor(client: Agness) {
         super(client, {
             code: 'es',
-            displayName: 'Spanish',
+            nativeName: 'Español',
+            flag: '🇪🇸',
             strings: {
                 commands: {
                     help: (prefix) => `<:world:820783752489074748> **Panel de ayuda de ${client.user?.username}**
-¡Hola! En este momento cuento con **2** categorias y **${client.commands.size}** comandos.
-
+¡Hola! En este momento cuento con **2** categorias y **${client.commands.size - client.commands.filter(c => c.category === 'Developer').size}** comandos.
 **Categorias:**
 > \`${prefix}help Config\` • Comandos de configuración <:config:820788840654307348>
 > \`${prefix}help General\` • Comandos útiles <:general:820791014872449055>
@@ -19,77 +19,69 @@ Si necesita información más detallada sobre cada comando, puede usar:
 > \`${prefix}help <Comando>\`
 **Enlaces**
 **[Invitacion del Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user?.id}&permissions=8&scope=bot) | [Servidor de Soporte](https://discord.gg/K63NqEDm86) | [GitHub](https://github.com/AgnessBot/Agness) | [Top.gg](https://top.gg/bot/798573830645874718)**`,
-                    helpCategory: (prefix, category) => {
-                        const categories = {
-                            config: '**Configuración** <:config:820788840654307348>',
+                    helpCategory: (prefix, commands, commandsString) => {
+                        const categories: Record<string, unknown> = {
+                            config: '**Config** <:config:820788840654307348>',
                             general: '**General** <:general:820791014872449055>',
                             developer: '**Developer**'
                         };
-                        const commands = client.commands.filter((c) => c.category.toLowerCase() == category);
-                        return `**Comandos en la categoria:** ${categories[category]}
+                        return `**Comandos en la categoria:** ${categories[(commands.first()?.category as string).toLowerCase()]}
 Esta categoria tiene \`${commands.size}\` comandos.
 Si necesita información más detallada sobre cada comando, puedes usar:
 > \`${prefix}help <Comando>\`
 **Lista de comandos:**
 \`\`\`
-${Array(Math.ceil(commands.array().length / 4)).fill([]).map((_, i) => commands.array().map((c) => c.name).slice(i * 4, (i * 4) + 4)).map((l) => l.map((c) => c.padEnd(17, ' ')).join('').trim()).join('\n')}
+${commandsString}
 \`\`\``;
                     },
                     helpCommand: (prefix, command) => {
-                        const findCom = this.client.commands.get(command);
-                        return `__**Comando ${findCom?.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())}**__
-**Descripción:** ${findCom?.description || 'No tiene descripción.'}
-**Alias:** ${findCom?.aliases.join(' | ') || 'No tiene alias.'}
-**Categoria:** ${findCom?.category}
-**Uso:** ${findCom?.usage(prefix)}
-**Ejemplo:** ${findCom?.example(prefix)}
+                        return `__**Comando ${command?.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())}**__
+**Descripción:** ${command?.description || 'No tiene descripción.'}
+**Alias:** ${command?.aliases.join(' | ') || 'No tiene alias.'}
+**Categoria:** ${command?.category}
+**Uso:** ${command?.usage(prefix)}
+**Ejemplo:** ${command?.example(prefix)}
 \`\`\`diff
-¿En mantenimiento?: ${findCom?.enabled ? 'No.' : 'Sí.'}
-¿Solo servidores?: ${findCom?.guildOnly ? 'Sí.' : 'No.'}
-¿Solo NSFW?: ${findCom?.nsfwOnly ? 'Sí.' : 'No.'}
-¿Solo desarrolladores?: ${findCom?.devsOnly ? 'Sí.' : 'No.'}
+¿En mantenimiento?: ${command?.enabled ? 'Sí.' : 'No.'}
+¿Solo servidores?: ${command?.guildOnly ? 'Sí.' : 'No.'}
+¿Solo NSFW?: ${command?.nsfwOnly ? 'Sí.' : 'No.'}
+¿Solo desarrolladores?: ${command?.devsOnly ? 'Sí.' : 'No.'}
 
 Permisos del bot:
 > Servidor:
-${findCom?.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
+${command?.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 > Canal:
-${findCom?.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
+${command?.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 
 Permisos del miembro:
 > Servidor:
-${findCom?.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
+${command?.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 > Canal:
-${findCom?.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
+${command?.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 \`\`\`
 `;
                     },
                     helpNo: () => '> No se pudo encontrar el comando o la categoría.',
-                    prefixOK: (newPrefix) => `Mi nuevo prefijo es: \`${newPrefix}\``
-                },
+                    prefixOK: (newPrefix) => `Mi nuevo prefijo es: \`${newPrefix}\``,
+                    langTitle: () => 'Lista de Lenguajes',
+                    langDescription: (prefix) => `Estos son los lenguajes actualmente disponibles en Agness.
+**Si quieres cambiar el idioma de Agness en el servidor usa:**
+> \`${prefix}lang <Código de lenguaje>\`
+
+${this.client.languages.map((l) => `- ${l.flag} **${l.nativeName}** (\`${l.code}\`)`).join('\n')}`                },
                 commandErrors: {
                     cmdServer: () => 'Este comando solo está disponible para servidores.',
                     cmdCooldown: (cooldown) => `Tienes que esperar **${cooldown}s** para ejecutar este comando.`,
                     cmdEnabled: () => 'Este comando está en mantenimiento.',
                     cmdDevs: () => 'Este comando solo puede ser utilizado por los desarrolladores.',
                     cmdNSFW: () => 'Este comando solo se puede utilizar en canales NSFW.',
-                    cmdMemberGuild: (perms) => `Necesita los siguientes permisos:
-\`\`\`diff
-${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
-\`\`\``,
-                    cmdMemberChannel: (perms) => `Necesita los siguientes permisos en este canal:
-\`\`\`diff
-${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
-\`\`\``,
-                    cmdBotGuild: (perms) => `Necesito los siguientes permisos:
-\`\`\`diff
-${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
-\`\`\``,
-                    cmdBotChannel: (perms) => `Necesito los siguientes permisos en este canal:
-\`\`\`diff
-${perms.map(p => `+ ${this.parsePermission(p)}`).join('\n')}
-\`\`\``,
-                    prefixArgs: () => `Debes especificar el nuevo prefijo.`,
-                    prefixLength: () => `El nuevo prefijo no debe superar los 5 caracteres.`
+                    cmdMemberGuild: (perms) => `Necesita los siguientes permisos:\n\`\`\`diff\n${perms}\n\`\`\``,
+                    cmdMemberChannel: (perms) => `Necesita los siguientes permisos en este canal:\n\`\`\`diff\n${perms}\n\`\`\``,
+                    cmdBotGuild: (perms) => `Necesito los siguientes permisos:\n\`\`\`diff\n${perms}\n\`\`\``,
+                    cmdBotChannel: (perms) => `Necesito los siguientes permisos en este canal:\n\`\`\`diff\n${perms}\n\`\`\``,
+                    prefixArgs: () => 'Debes especificar el nuevo prefijo.',
+                    prefixLength: () => 'El nuevo prefijo no debe superar los 5 caracteres.',
+                    langNo: (prefix) => `Debes especificar un idioma válido.`
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',

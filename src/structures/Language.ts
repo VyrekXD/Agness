@@ -1,13 +1,16 @@
 /* eslint-disable no-unused-vars */
-import { PermissionString } from 'discord.js';
+import { Collection, PermissionString } from 'discord.js';
 import Agness from '../bot';
+import Command from './Command';
 
 interface CommandStrings {
     help(prefix: string): string;
-    helpCategory(prefix: string, category: 'config' | 'general' | 'developer'): string;
-    helpCommand(prefix: string, command: string): string;
+    helpCategory(prefix: string, commands: Collection<string, Command>, commandsString: string): string;
+    helpCommand(prefix: string, command: Command): string;
     helpNo(): string;
     prefixOK(newPrefix: string): string;
+    langTitle(): string;
+    langDescription(prefix: string): string;
 }
 
 interface CommandErrorStrings {
@@ -16,12 +19,13 @@ interface CommandErrorStrings {
     cmdEnabled(): string;
     cmdDevs(): string;
     cmdNSFW(): string;
-    cmdMemberGuild(perms: PermissionString[]): string;
-    cmdMemberChannel(perms: PermissionString[]): string;
-    cmdBotGuild(perms: PermissionString[]): string;
-    cmdBotChannel(perms: PermissionString[]): string;
+    cmdMemberGuild(perms: string): string;
+    cmdMemberChannel(perms: string): string;
+    cmdBotGuild(perms: string): string;
+    cmdBotChannel(perms: string): string;
     prefixArgs(): string;
     prefixLength(): string;
+    langNo(prefix: string): string;
 }
 
 interface CommandDescriptionStrings {
@@ -40,19 +44,22 @@ interface LanguageStrings {
 
 interface LanguageOptions {
     code: string;
-    displayName: string;
+    nativeName: string;
+    flag: string;
     strings: LanguageStrings;
 }
 
 export default class Language {
     code: string;
-    displayName: string;
+    nativeName: string;
+    flag: string;
     strings: LanguageStrings;
 
     constructor(public client: Agness, options: LanguageOptions) {
         this.code = options.code;
-        this.displayName = options.displayName;
+        this.nativeName = options.nativeName;
         this.strings = options.strings;
+        this.flag = options.flag
     }
 
     get<K extends keyof CommandStrings>(string: K, ...args: Parameters<CommandStrings[K]>): ReturnType<CommandStrings[K]> {
@@ -72,7 +79,7 @@ export default class Language {
         const value = (this.strings.commandDescriptions)[string as keyof CommandDescriptionStrings];
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        return value
+        return value;
     }
     parsePermission(permission: PermissionString): string {
         return this.strings.permissions[permission];

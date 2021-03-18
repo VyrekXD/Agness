@@ -89,13 +89,13 @@ export default class Command {
         if (message.guild && !channel.nsfw && this.nsfwOnly)
             return !this.sendOrReply(message, this.lang.getError('cmdNSFW'));
         if (message.guild && this.memberGuildPermissions[0] && !this.memberGuildPermissions.some((p) => (message.member as GuildMember).permissions.has(p as PermissionResolvable)) && !devs.includes(message.author.id))
-            return !this.sendOrReply(message, this.lang.getError('cmdMemberGuild', this.memberGuildPermissions));
+            return !this.sendOrReply(message, this.lang.getError('cmdMemberGuild',  this.memberGuildPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
         if (message.guild && this.memberChannelPermissions[0] && !this.memberChannelPermissions.some((p) => channel.permissionsFor(message.member as GuildMember).has(p as PermissionResolvable)) && !devs.includes(message.author.id))
-            return !this.sendOrReply(message, this.lang.getError('cmdMemberChannel', this.memberChannelPermissions));
+            return !this.sendOrReply(message, this.lang.getError('cmdMemberChannel',  this.memberChannelPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
         if (message.guild && this.botGuildPermissions[0] && !this.botGuildPermissions.some((p) => (message.guild?.me as GuildMember).permissions.has(p as PermissionResolvable)))
-            return !this.sendOrReply(message, this.lang.getError('cmdBotGuild', this.botGuildPermissions));
+            return !this.sendOrReply(message, this.lang.getError('cmdBotGuild',  this.botGuildPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
         if (message.guild && this.botChannelPermissions[0] && !this.botChannelPermissions.some((p) => channel.permissionsFor(message.guild?.me as GuildMember).has(p as PermissionResolvable)))
-            return !this.sendOrReply(message, this.lang.getError('cmdBotChannel', this.botChannelPermissions));
+            return !this.sendOrReply(message, this.lang.getError('cmdBotChannel', this.botChannelPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
         return true;
     }
 

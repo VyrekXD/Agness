@@ -22,6 +22,6 @@ export default class PrefixCommand extends Command {
         if (!server) server = new Servers({ guildID: message.guild?.id, prefix: args[0] });
         server.prefix = args[0];
         await server.save();
-        return message.channel.send(this.lang.get('prefixOK', args[0]))
+        return message.channel.send(this.lang.get('prefixOK', args[0]));
     }
 }
