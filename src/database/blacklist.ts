@@ -9,6 +9,7 @@ export interface Blacklist extends Document {
 const blacklists: Schema<Blacklist> = new Schema({
     userID: {
         type: String,
+        required: true,
         unique: true
     },
     reason: {

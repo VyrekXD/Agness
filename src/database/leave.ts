@@ -3,20 +3,21 @@ import { Document, Schema, Model, model } from 'mongoose';
 export interface Leave extends Document {
     guildID: string;
     channelID: string;
-    embed_name: string;
+    embedName: string;
     message: string;
 }
 
 const leaves: Schema<Leave> = new Schema({
     guildID: {
         type: String,
+        required: true,
         unique: true
     },
     channelID: {
         type: String,
         default: ''
     },
-    embed_name: {
+    embedName: {
         type: String,
         default: ''
     },

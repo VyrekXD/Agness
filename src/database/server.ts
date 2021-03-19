@@ -9,6 +9,7 @@ export interface Server extends Document {
 const servers: Schema<Server> = new Schema({
     guildID: {
         type: String,
+        required: true,
         unique: true
     },
     prefix: {

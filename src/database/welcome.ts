@@ -3,7 +3,7 @@ import { Document, Schema, Model, model } from 'mongoose';
 export interface Welcome extends Document {
     guildID: string;
     channelID: string;
-    embed_name: string;
+    embedName: string;
     message: string;
     userRoleID: string;
     botRoleID: string;
@@ -12,13 +12,14 @@ export interface Welcome extends Document {
 const welcomes: Schema<Welcome> = new Schema({
     guildID: {
         type: String,
+        required: true,
         unique: true
     },
     channelID: {
         type: String,
         default: ''
     },
-    embed_name: {
+    embedName: {
         type: String,
         default: ''
     },

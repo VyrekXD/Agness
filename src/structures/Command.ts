@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { Collection, Message, GuildMember, TextChannel, PermissionResolvable, PermissionString } from 'discord.js';
+import { Collection, Message, TextChannel, PermissionString } from 'discord.js';
 import { Server } from '../database/server';
 import English from '../languages/English';
 import Language from './Language';
 import Agness from '../bot';
 
 const devs = process.env.DEVS ? process.env.DEVS.split(', ') : [];
+
+export type Category = 'Config' | 'Developer' | 'General';
 
 interface CommandOptions {
     name: string;
@@ -25,9 +27,9 @@ interface CommandOptions {
     devsOnly?: boolean;
 }
 
-export default class Command {
+export default abstract class Command {
     name: string;
-    category: string;
+    category: Category;
     aliases: string[];
     description: string;
     usageArgs: string[];
@@ -48,7 +50,7 @@ export default class Command {
     constructor(public client: Agness, options: CommandOptions) {
         this.name = options.name;
         this.aliases = options.aliases || [];
-        this.category = options.category || 'General';
+        this.category = (options.category || 'General') as Category;
         this.description = options.description || '';
         this.usageArgs = options.usageArgs || [];
         this.example = options.example || ((p) => `${p}${this.name}`);
@@ -74,12 +76,12 @@ export default class Command {
     }
 
     // eslint-disable-next-line
-    async run(...args: any[]): Promise<any> { }
+    abstract run(message: Message, args: string[]): Promise<Message | void>;
 
     canRun(message: Message): boolean {
         const channel = (message.channel as TextChannel);
         if (this.guildOnly && !message.guild) return !this.sendOrReply(message, this.lang.getError('cmdServer'));
-        if (message.guild && !channel.permissionsFor(message.guild.me as GuildMember).has('SEND_MESSAGES')) return false;
+        if (message.guild && !channel.permissionsFor(message.guild!.me!).has('SEND_MESSAGES')) return false;
         if (this.checkCooldowns(message) && !devs.includes(message.author.id))
             return !message.channel.send(this.lang.getError('cmdCooldown', Number(((this.cooldowns.get(message.author.id) as number) - Date.now()) / 1000).toFixed(2)));
         if (!this.enabled && !devs.includes(message.author.id))
@@ -88,13 +90,13 @@ export default class Command {
             return !this.sendOrReply(message, this.lang.getError('cmdDevs'));
         if (message.guild && !channel.nsfw && this.nsfwOnly)
             return !this.sendOrReply(message, this.lang.getError('cmdNSFW'));
-        if (message.guild && this.memberGuildPermissions[0] && !this.memberGuildPermissions.some((p) => (message.member as GuildMember).permissions.has(p as PermissionResolvable)) && !devs.includes(message.author.id))
-            return !this.sendOrReply(message, this.lang.getError('cmdMemberGuild',  this.memberGuildPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
-        if (message.guild && this.memberChannelPermissions[0] && !this.memberChannelPermissions.some((p) => channel.permissionsFor(message.member as GuildMember).has(p as PermissionResolvable)) && !devs.includes(message.author.id))
-            return !this.sendOrReply(message, this.lang.getError('cmdMemberChannel',  this.memberChannelPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
-        if (message.guild && this.botGuildPermissions[0] && !this.botGuildPermissions.some((p) => (message.guild?.me as GuildMember).permissions.has(p as PermissionResolvable)))
-            return !this.sendOrReply(message, this.lang.getError('cmdBotGuild',  this.botGuildPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
-        if (message.guild && this.botChannelPermissions[0] && !this.botChannelPermissions.some((p) => channel.permissionsFor(message.guild?.me as GuildMember).has(p as PermissionResolvable)))
+        if (message.guild && this.memberGuildPermissions[0] && !this.memberGuildPermissions.some((p) => message.member!.permissions.has(p)) && !devs.includes(message.author.id))
+            return !this.sendOrReply(message, this.lang.getError('cmdMemberGuild', this.memberGuildPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
+        if (message.guild && this.memberChannelPermissions[0] && !this.memberChannelPermissions.some((p) => channel.permissionsFor(message.member!).has(p)) && !devs.includes(message.author.id))
+            return !this.sendOrReply(message, this.lang.getError('cmdMemberChannel', this.memberChannelPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
+        if (message.guild && this.botGuildPermissions[0] && !this.botGuildPermissions.some((p) => message.guild!.me!.permissions.has(p)))
+            return !this.sendOrReply(message, this.lang.getError('cmdBotGuild', this.botGuildPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
+        if (message.guild && this.botChannelPermissions[0] && !this.botChannelPermissions.some((p) => channel.permissionsFor(message.guild!.me!).has(p)))
             return !this.sendOrReply(message, this.lang.getError('cmdBotChannel', this.botChannelPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
         return true;
     }
@@ -109,13 +111,13 @@ export default class Command {
     }
 
     sendOrReply(message: Message, text: string): Promise<Message> {
-        if (message.guild && !(message.channel as TextChannel).permissionsFor(message.guild.me as GuildMember).has('READ_MESSAGE_HISTORY'))
+        if (message.guild && !(message.channel as TextChannel).permissionsFor(message.guild!.me!).has('READ_MESSAGE_HISTORY'))
             return message.channel.send(text);
         return message.reply(text, { allowedMentions: { users: [] } });
     }
 
     sendError(message: Message, text: string, arg: number): Promise<Message> {
-        const values = [`> ${(this.server?.prefix || process.env.BOT_PREFIX) as string}${this.name}`, ...this.usageArgs];
+        const values = [`> ${(this.server!.prefix || process.env.BOT_PREFIX) as string}${this.name}`, ...this.usageArgs];
         const characters = this.usageArgs[arg].replace(/[^a-z\s]/gi, '_').replace(/[a-z\s]/gi, '^').replace(/_/gi, ' ');
         return message.channel.send(`\`\`\`diff
 - ${text}

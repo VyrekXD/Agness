@@ -9,11 +9,26 @@ export interface Reaction extends Document {
 }
 
 const reactions: Schema<Reaction> = new Schema({
-    guildID: String,
-    messageID: String,
-    roleID: String,
-    reaction: String,
-    type: String
+    guildID: {
+        type: String,
+        required: true
+    },
+    messageID: {
+        type: String,
+        required: true
+    },
+    roleID: {
+        type: String,
+        required: true
+    },
+    reaction: {
+        type: String,
+        required: true
+    },
+    type: {
+        type: String,
+        required: true
+    }
 });
 
 export const Reactions: Model<Reaction> = model('Roles', reactions);

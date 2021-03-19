@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import Language from '../structures/Language';
 import Agness from '../bot';
 
@@ -5,8 +6,8 @@ export default class Spanish extends Language {
     constructor(client: Agness) {
         super(client, {
             code: 'es',
-            nativeName: 'Español',
             flag: '🇪🇸',
+            nativeName: 'Español',
             strings: {
                 commands: {
                     help: (prefix) => `<:world:820783752489074748> **Panel de ayuda de ${client.user?.username}**
@@ -19,56 +20,56 @@ Si necesita información más detallada sobre cada comando, puede usar:
 > \`${prefix}help <Comando>\`
 **Enlaces**
 **[Invitacion del Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user?.id}&permissions=8&scope=bot) | [Servidor de Soporte](https://discord.gg/K63NqEDm86) | [GitHub](https://github.com/AgnessBot/Agness) | [Top.gg](https://top.gg/bot/798573830645874718)**`,
-                    helpCategory: (prefix, commands, commandsString) => {
-                        const categories: Record<string, unknown> = {
-                            config: '**Config** <:config:820788840654307348>',
-                            general: '**General** <:general:820791014872449055>',
-                            developer: '**Developer**'
+                    helpCategory: (prefix, category, commands, quantity) => {
+                        const categories = {
+                            Config: '**Config** <:config:820788840654307348>',
+                            General: '**General** <:general:820791014872449055>',
+                            Developer: '**Developer**'
                         };
-                        return `**Comandos en la categoria:** ${categories[(commands.first()?.category as string).toLowerCase()]}
-Esta categoria tiene \`${commands.size}\` comandos.
+                        return `**Comandos en la categoria:** ${categories[category]}
+Esta categoria tiene \`${quantity}\` comandos.
 Si necesita información más detallada sobre cada comando, puedes usar:
 > \`${prefix}help <Comando>\`
 **Lista de comandos:**
 \`\`\`
-${commandsString}
+${commands}
 \`\`\``;
                     },
                     helpCommand: (prefix, command) => {
-                        return `__**Comando ${command?.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())}**__
-**Descripción:** ${command?.description || 'No tiene descripción.'}
-**Alias:** ${command?.aliases.join(' | ') || 'No tiene alias.'}
-**Categoria:** ${command?.category}
-**Uso:** ${command?.usage(prefix)}
-**Ejemplo:** ${command?.example(prefix)}
+                        return `__**Comando ${command.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())}**__
+**Descripción:** ${command.description || 'No tiene descripción.'}
+**Alias:** ${command.aliases.join(' | ') || 'No tiene alias.'}
+**Categoria:** ${command.category}
+**Uso:** ${command.usage(prefix)}
+**Ejemplo:** ${command.example(prefix)}
 \`\`\`diff
-¿En mantenimiento?: ${command?.enabled ? 'Sí.' : 'No.'}
-¿Solo servidores?: ${command?.guildOnly ? 'Sí.' : 'No.'}
-¿Solo NSFW?: ${command?.nsfwOnly ? 'Sí.' : 'No.'}
-¿Solo desarrolladores?: ${command?.devsOnly ? 'Sí.' : 'No.'}
+¿En mantenimiento?: ${command.enabled ? 'Sí.' : 'No.'}
+¿Solo servidores?: ${command.guildOnly ? 'Sí.' : 'No.'}
+¿Solo NSFW?: ${command.nsfwOnly ? 'Sí.' : 'No.'}
+¿Solo desarrolladores?: ${command.devsOnly ? 'Sí.' : 'No.'}
 
 Permisos del bot:
 > Servidor:
-${command?.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
+${command.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 > Canal:
-${command?.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
+${command.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 
 Permisos del miembro:
 > Servidor:
-${command?.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
+${command.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 > Canal:
-${command?.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
+${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 \`\`\`
 `;
                     },
-                    helpNo: () => '> No se pudo encontrar el comando o la categoría.',
-                    prefixOK: (newPrefix) => `Mi nuevo prefijo es: \`${newPrefix}\``,
+                    prefix: (prefix) => `Mi nuevo prefijo es: \`${prefix}\``,
                     langTitle: () => 'Lista de Lenguajes',
-                    langDescription: (prefix) => `Estos son los lenguajes actualmente disponibles en Agness.
+                    langDescription: (prefix, languages) => `Estos son los lenguajes actualmente disponibles en Agness.
 **Si quieres cambiar el idioma de Agness en el servidor usa:**
 > \`${prefix}lang <Código de lenguaje>\`
 
-${this.client.languages.map((l) => `- ${l.flag} **${l.nativeName}** (\`${l.code}\`)`).join('\n')}`                },
+${languages}`
+                },
                 commandErrors: {
                     cmdServer: () => 'Este comando solo está disponible para servidores.',
                     cmdCooldown: (cooldown) => `Tienes que esperar **${cooldown}s** para ejecutar este comando.`,
@@ -81,7 +82,8 @@ ${this.client.languages.map((l) => `- ${l.flag} **${l.nativeName}** (\`${l.code}
                     cmdBotChannel: (perms) => `Necesito los siguientes permisos en este canal:\n\`\`\`diff\n${perms}\n\`\`\``,
                     prefixArgs: () => 'Debes especificar el nuevo prefijo.',
                     prefixLength: () => 'El nuevo prefijo no debe superar los 5 caracteres.',
-                    langNo: (prefix) => `Debes especificar un idioma válido.`
+                    langNo: () => 'Debes especificar un idioma válido.',
+                    helpNo: () => '> No se pudo encontrar el comando o la categoría.'
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',

@@ -25,6 +25,7 @@ module.exports = {
         'comma-dangle': ['warn', 'never'],
         'quote-props': ['warn', 'as-needed'],
         '@typescript-eslint/no-empty-function': 'warn',
+        '@typescript-eslint/no-non-null-assertion': 'off',
         semi: ['warn', 'always', { omitLastInOneLineBlock: true }]
     },
     ignorePatterns: [

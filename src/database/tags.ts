@@ -4,7 +4,7 @@ export interface Tag extends Document {
     guildID: string;
     name: string;
     message: string;
-    embed_name: string;
+    embedName: string;
     addRoleID: string[];
     deleteRoleID: string[];
     image: string;
@@ -23,12 +23,18 @@ const tag: Schema<Tag> = new Schema({
         type: String,
         default: ''
     },
-    embed_name: {
+    embedName: {
         type: String,
         default: ''
     },
-    addRoleID: [String],
-    deleteRoleID: [String],
+    addRoleID: {
+        type: [String],
+        default: []
+    },
+    deleteRoleID: {
+        type: [String],
+        default: []
+    },
     image: {
         type: String,
         default: ''

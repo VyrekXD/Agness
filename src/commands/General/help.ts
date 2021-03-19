@@ -16,23 +16,26 @@ export default class HelpCommand extends Command {
     async run(message: Message, args: string[]): Promise<Message> {
         if (!args[0])
             return message.channel.send(new MessageEmbed()
-                .setDescription(this.lang.get('help', this.server?.prefix as string))
+                .setDescription(this.lang.get('help', this.server!.prefix, 2, this.client.commands.size - this.client.commands.filter((c) => c.category === 'Developer').size))
                 .setColor(this.client.color)
             );
-        const category = this.client.commands.filter((x) => x.category.toLowerCase() == args[0].toLowerCase());
+        const category = this.client.commands.filter((c) => c.category.toLowerCase() == args[0].toLowerCase());
         const cmd = this.client.commands.get(args[0].toLowerCase());
         if (category.array().length)
             return message.channel.send(new MessageEmbed()
-                .setDescription(this.lang.get('helpCategory', this.server?.prefix as string, category,
-                    Array(Math.ceil(category.array().length / 4)).fill([]).map((_, i) => category.array().map((c) => c.name).slice(i * 4, (i * 4) + 4)).map((l) => l.map((c) => c.padEnd(17, ' ')).join('').trim()).join('\n')))
+                .setDescription(this.lang.get('helpCategory', this.server!.prefix, category.first()!.category,
+                    Array(Math.ceil(category.array().length / 4))
+                        .fill([]).map((_, i) => category.array().map((c) => c.name).slice(i * 4, (i * 4) + 4))
+                        .map((l) => l.map((c) => c.padEnd(17, ' ')).join('').trim())
+                        .join('\n'), category.size))
                 .setColor(this.client.color));
         else if (cmd)
             return message.channel.send(new MessageEmbed()
-                .setDescription(this.lang.get('helpCommand', this.server?.prefix as string, cmd))
+                .setDescription(this.lang.get('helpCommand', this.server!.prefix, cmd))
                 .setColor(this.client.color));
         else
-            return message.channel.send(this.lang.get('helpNo'), new MessageEmbed()
-                .setDescription(this.lang.get('help', this.server?.prefix as string))
+            return message.channel.send(this.lang.getError('helpNo'), new MessageEmbed()
+                .setDescription(this.lang.get('help', this.server!.prefix, 2, this.client.commands.size - this.client.commands.filter((c) => c.category === 'Developer').size))
                 .setColor(this.client.color));
     }
 }

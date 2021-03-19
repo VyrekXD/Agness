@@ -18,8 +18,9 @@ export default class MessageEvent extends Event {
             server = new Servers({ guildID: message.guild?.id });
             await server.save();
         }
-        const prefix = (server ? server.prefix : process.env.BOT_PREFIX) as string;
-        const prefixes = [prefix, `<@${this.client.user?.id}>`, `<@!${this.client.user?.id}>`];
+
+        const prefix = server?.prefix ?? process.env.BOT_PREFIX;
+        const prefixes = [prefix, `<@${this.client.user!.id}>`, `<@!${this.client.user!.id}>`];
         const usedPrefix = prefixes.find((p) => message.content.startsWith(p));
         if (!usedPrefix) return;
 

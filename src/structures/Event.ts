@@ -1,17 +1,18 @@
 /* eslint-disable no-unused-vars */
+import { ClientEvents } from 'discord.js';
 import Agness from '../bot';
 
 interface EventOptions {
-    name: string;
+    name: keyof ClientEvents;
 }
 
-export default class Event {
-    name: string;
+export default abstract class Event {
+    name: keyof ClientEvents;
 
     constructor(public client: Agness, options: EventOptions) {
         this.name = options.name;
     }
 
     // eslint-disable-next-line
-    async run(...args: any[]): Promise<any> { }
+    abstract run(...args: any[]): Promise<any>;
 }
