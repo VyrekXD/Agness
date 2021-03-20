@@ -33,6 +33,7 @@ interface CommandErrorStrings {
     helpNo(): string;
     sayNoText(): string;
     sayNoPerms(): string;
+    blackList(reason: string, date: string): string
 }
 
 interface CommandDescriptionStrings {
@@ -44,6 +45,8 @@ interface CommandDescriptionStrings {
     say: string;
     avatar: string;
     vote: string;
+    lang: string;
+    bl: string;
 }
 
 interface LanguageStrings {

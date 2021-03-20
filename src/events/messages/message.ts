@@ -31,7 +31,7 @@ export default class MessageEvent extends Event {
         try {
             if (!cmd) return;
             cmd.prepare({ server });
-            if (!cmd.canRun(message)) return;
+            if (!(await cmd.canRun(message))) return;
             await cmd.run(message, args);
         } catch (e) {
             console.log(e.stack || e);

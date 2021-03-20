@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { Collection, Message, TextChannel, PermissionString } from 'discord.js';
+import { Collection, Message, TextChannel, PermissionString, MessageEmbed } from 'discord.js';
 import { Server } from '../database/server';
 import English from '../languages/English';
 import Language from './Language';
 import Agness from '../bot';
+import { Blacklists } from '../database/blacklist';
 
 const devs = process.env.DEVS ? process.env.DEVS.split(', ') : [];
 
@@ -78,12 +79,16 @@ export default abstract class Command {
     // eslint-disable-next-line
     abstract run(message: Message, args: string[]): Promise<Message | void>;
 
-    canRun(message: Message): boolean {
+    async canRun(message: Message): Promise<boolean> {
         const channel = (message.channel as TextChannel);
-        if (this.guildOnly && !message.guild) return !this.sendOrReply(message, this.lang.getError('cmdServer'));
         if (message.guild && !channel.permissionsFor(message.guild!.me!).has('SEND_MESSAGES')) return false;
         if (this.checkCooldowns(message) && !devs.includes(message.author.id))
             return !message.channel.send(this.lang.getError('cmdCooldown', Number(((this.cooldowns.get(message.author.id) as number) - Date.now()) / 1000).toFixed(2)));
+        if (this.guildOnly && !message.guild) return !this.sendOrReply(message, this.lang.getError('cmdServer'));
+        const blacklist = await Blacklists.findOne({ userID: message.author.id });
+        if (blacklist) return !message.channel.send(new MessageEmbed()
+            .setDescription(this.lang.getError('blackList', blacklist.reason, blacklist.date.toLocaleString()))
+            .setColor(this.client.color));
         if (!this.enabled && !devs.includes(message.author.id))
             return !this.sendOrReply(message, this.lang.getError('cmdEnabled'));
         if (this.devsOnly && !devs.includes(message.author.id))

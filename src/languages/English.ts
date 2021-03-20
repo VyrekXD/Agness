@@ -93,7 +93,12 @@ Remember that you can vote every 12 hours.`,
                     langNo: () => 'You must specify a valid language.',
                     helpNo: () => '> The command or category couldn\'t be found.',
                     sayNoText: () => 'Give me a text that you want me to say.',
-                    sayNoPerms: () => 'You must have the permission of mention everyone to execute this command.'
+                    sayNoPerms: () => 'You must have the permission of mention everyone to execute this command.',
+                    blackList: (reason, date) => `You are on the blacklist. Here you have more information:
+> **Reason:** \`${reason}\`
+> **Date:** \`${date}\`
+You can appeal by going to my support server.
+> [Support Server](https://discord.gg/K63NqEDm86)`
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',
@@ -103,7 +108,9 @@ Remember that you can vote every 12 hours.`,
                     guilds: 'Shows the guild count and users I have.',
                     say: 'I say everything you ask of me.',
                     avatar: 'Gets the avatar of any user.',
-                    vote: 'Shows the Top.gg link to vote for me.'
+                    vote: 'Shows the Top.gg link to vote for me.',
+                    lang: 'Change the language on your server for a more pleasant environment.',
+                    bl: 'Put a user on the blacklist.'
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrator',

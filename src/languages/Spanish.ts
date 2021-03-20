@@ -93,7 +93,12 @@ Recuerda que puedes votar cada 12 horas.`,
                     langNo: () => 'Debes especificar un idioma válido.',
                     helpNo: () => '> No se pudo encontrar el comando o la categoría.',
                     sayNoText: () => 'Dame un mensaje de texto que quieras que diga.',
-                    sayNoPerms: () => 'Debe tener el permiso de mencionar a todos para ejecutar este comando.'
+                    sayNoPerms: () => 'Debe tener el permiso de mencionar a todos para ejecutar este comando.',
+                    blackList: (reason, date) => `Estás en la lista negra. Aquí tienes más información:
+> **Razón:** \`${reason}\`
+> **Fecha:** \`${date}\`
+Puedes apelar entrando al servidor de soporte
+> [Support Server](https://discord.gg/K63NqEDm86)`
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',
@@ -103,7 +108,9 @@ Recuerda que puedes votar cada 12 horas.`,
                     guilds: 'Muestra la cantidad de servidores y usuarios que tengo.',
                     say: 'Digo todo lo que tú me pidas.',
                     avatar: 'Obtiene el avatar de cualquier usuario.',
-                    vote: 'Muestra el enlace de Top.gg para votar por mí.'
+                    vote: 'Muestra el enlace de Top.gg para votar por mí.',
+                    lang: 'Cambia el idioma en tu servidor para un ambiente más agradable.',
+                    bl: 'Pon un usuario en la lista negra.'
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrador',
