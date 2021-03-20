@@ -68,7 +68,9 @@ ${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).jo
 **Si quieres cambiar el idioma de Agness en el servidor usa:**
 > \`${prefix}lang <Código de lenguaje>\`
 
-${languages}`
+${languages}`,
+                    guildsDescription: (members, guilds) => `En este momento, estoy en: **${guilds}** servidores y con **${members}** usuarios.`,
+                    guildsFooter: (shardID) => `Este servidor está en la shard: ${shardID}`
                 },
                 commandErrors: {
                     cmdServer: () => 'Este comando solo está disponible para servidores.',
@@ -83,7 +85,9 @@ ${languages}`
                     prefixArgs: () => 'Debes especificar el nuevo prefijo.',
                     prefixLength: () => 'El nuevo prefijo no debe superar los 5 caracteres.',
                     langNo: () => 'Debes especificar un idioma válido.',
-                    helpNo: () => '> No se pudo encontrar el comando o la categoría.'
+                    helpNo: () => '> No se pudo encontrar el comando o la categoría.',
+                    sayNoText: () => 'Dame un mensaje de texto que quieras que diga.',
+                    sayNoPerms: () => 'Debe tener el permiso de mencionar a todos para ejecutar este comando.'
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',

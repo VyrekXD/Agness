@@ -10,6 +10,8 @@ interface CommandStrings {
     prefix(prefix: string): string;
     langTitle(): string;
     langDescription(prefix: string, languages: string): string;
+    guildsDescription(members: number, guilds: number): string;
+    guildsFooter(shardID: string): string;
 }
 
 interface CommandErrorStrings {
@@ -26,6 +28,8 @@ interface CommandErrorStrings {
     prefixLength(): string;
     langNo(): string;
     helpNo(): string;
+    sayNoText(): string;
+    sayNoPerms(): string;
 }
 
 interface CommandDescriptionStrings {
