@@ -12,6 +12,9 @@ interface CommandStrings {
     langDescription(prefix: string, languages: string): string;
     guildsDescription(members: number, guilds: number): string;
     guildsFooter(shardID: string): string;
+    voteDescription(): string;
+    voteFooter(): string;
+    avatar(user: string, avatar: string): string;
 }
 
 interface CommandErrorStrings {
@@ -37,6 +40,10 @@ interface CommandDescriptionStrings {
     ping: string;
     eval: string;
     prefix: string;
+    guilds: string;
+    say: string;
+    avatar: string;
+    vote: string;
 }
 
 interface LanguageStrings {
@@ -80,10 +87,8 @@ export default class Language {
         return value(...args);
     }
 
-    getDescription(string: string): string {
+    getDescription(string: string): string | undefined {
         const value = (this.strings.commandDescriptions)[string as keyof CommandDescriptionStrings];
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         return value;
     }
 

@@ -70,7 +70,13 @@ ${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).jo
 
 ${languages}`,
                     guildsDescription: (members, guilds) => `En este momento, estoy en: **${guilds}** servidores y con **${members}** usuarios.`,
-                    guildsFooter: (shardID) => `Este servidor está en la shard: ${shardID}`
+                    guildsFooter: (shardID) => `Este servidor está en la shard: ${shardID}`,
+                    voteDescription: () => `¡Realmente aprecio que quieras votar por mí!
+[¡Vota por mí aquí!](https://top.gg/bot/798573830645874718)
+Recuerda que puedes votar cada 12 horas.`,
+                    voteFooter: () => 'Con mucho amor ❤️',
+                    avatar: (user, avatar) => `Avatar de **${user}**
+> [Enlace al avatar](${avatar})`
                 },
                 commandErrors: {
                     cmdServer: () => 'Este comando solo está disponible para servidores.',
@@ -91,9 +97,13 @@ ${languages}`,
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',
-                    eval: 'Evalua un codigo',
+                    eval: 'Evalua un código',
                     ping: 'Muestra la latencia del bot.',
-                    prefix: 'Establece un prefijo personalizado en tu servidor.'
+                    prefix: 'Establece un prefijo personalizado en tu servidor.',
+                    guilds: 'Muestra la cantidad de servidores y usuarios que tengo.',
+                    say: 'Digo todo lo que tú me pidas.',
+                    avatar: 'Obtiene el avatar de cualquier usuario.',
+                    vote: 'Muestra el enlace de Top.gg para votar por mí.'
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrador',

@@ -8,7 +8,7 @@ export default class HelpCommand extends Command {
             name: 'help',
             usageArgs: ['<Category | Command>'],
             example: (p) => `${p}help prefix`,
-            botGuildPermissions: ['EMBED_LINKS'],
+            botChannelPermissions: ['EMBED_LINKS'],
             category
         });
     }
@@ -17,8 +17,7 @@ export default class HelpCommand extends Command {
         if (!args[0])
             return message.channel.send(new MessageEmbed()
                 .setDescription(this.lang.get('help', this.server!.prefix, 2, this.client.commands.size - this.client.commands.filter((c) => c.category === 'Developer').size))
-                .setColor(this.client.color)
-            );
+                .setColor(this.client.color));
         const category = this.client.commands.filter((c) => c.category.toLowerCase() == args[0].toLowerCase());
         const cmd = this.client.commands.get(args[0].toLowerCase());
         if (category.array().length)
