@@ -1,14 +1,15 @@
 import { Document, Schema, Model, model } from 'mongoose';
 
-export interface Reaction extends Document {
+export interface ReactionRole extends Document {
     guildID: string;
     messageID: string;
+    channelID: string;
     roleID: string;
-    reaction: string;
-    type: string;
+    emojiID: string;
+    type: 'normal' | 'unique' | 'only';
 }
 
-const reactions: Schema<Reaction> = new Schema({
+const reactionRoles: Schema<ReactionRole> = new Schema({
     guildID: {
         type: String,
         required: true
@@ -17,18 +18,23 @@ const reactions: Schema<Reaction> = new Schema({
         type: String,
         required: true
     },
+    channelID: {
+        type: String,
+        required: true
+    },
     roleID: {
         type: String,
         required: true
     },
-    reaction: {
+    emojiID: {
         type: String,
         required: true
     },
     type: {
         type: String,
-        required: true
+        required: true,
+        enum: ['normal', 'unique', 'only']
     }
 });
 
-export const Reactions: Model<Reaction> = model('Roles', reactions);
+export const ReactionRoles: Model<ReactionRole> = model('roles', reactionRoles);

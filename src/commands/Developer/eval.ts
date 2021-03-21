@@ -59,7 +59,7 @@ export default class EvalCommand extends Command {
         });
         try {
             await msg.react('🔨');
-            await msg.awaitReactions((reaction, user) => reaction.emoji.name === '🔨' && user.id === message.author.id, { time: 15000, max: 1, errors: ['time'] });
+            await msg.awaitReactions((r, u) => r.emoji.name === '🔨' && u.id === message.author.id, { time: 15000, max: 1, errors: ['time'] });
             await msg.delete();
         } catch {
             await msg.reactions.resolve('🔨')?.users.remove();

@@ -18,6 +18,8 @@ export default class Commands extends Collection<string, Command> {
             for (const command of commands) {
                 const commandFile = await import(join(folder, category, command));
                 const commandClass: Command = new commandFile.default(this.client, category);
+                const existentCommand = this.find((c) => commandClass.constructor.name === c.constructor.name || commandClass.name === c.name);
+                if (existentCommand) console.log(`A command with duplicate class name or name was found (${commandClass.name}/${commandClass.constructor.name} and ${existentCommand.name}/${existentCommand.constructor.name})`);
                 this.set(commandClass.name, commandClass);
             }
         }

@@ -34,8 +34,8 @@ export default class MessageEvent extends Event {
             if (!(await cmd.canRun(message))) return;
             await cmd.run(message, args);
         } catch (e) {
-            console.log(e.stack || e);
-            message.channel.send(`An unexpected error has occurred, here's a small reference: ${e.message || e}`);
+            console.log(e.stack ?? e);
+            message.channel.send(`An unexpected error has occurred, here's a small reference: ${e.message ?? e}`);
         }
     }
 }

@@ -22,6 +22,6 @@ export default class Languages extends Collection<string, Language> {
 
     get(name?: string): Language | undefined {
         if (!name) return undefined;
-        return this.find((c) => c.code === name) || this.find((c) => c.code === 'en');
+        return this.find((c) => c.code === name) ?? this.find((c) => c.code === 'en');
     }
 }

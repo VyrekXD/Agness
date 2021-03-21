@@ -50,16 +50,16 @@ export default abstract class Command {
 
     constructor(public client: Agness, options: CommandOptions) {
         this.name = options.name;
-        this.aliases = options.aliases || [];
-        this.category = (options.category || 'General') as Category;
-        this.description = options.description || '';
-        this.usageArgs = options.usageArgs || [];
-        this.example = options.example || ((p) => `${p}${this.name}`);
-        this.botGuildPermissions = options.botGuildPermissions || [];
-        this.botChannelPermissions = options.botChannelPermissions || [];
-        this.memberGuildPermissions = options.memberGuildPermissions || [];
-        this.memberChannelPermissions = options.memberChannelPermissions || [];
-        this.cooldown = options.cooldown || 2;
+        this.aliases = options.aliases ?? [];
+        this.category = (options.category ?? 'General') as Category;
+        this.description = options.description ?? '';
+        this.usageArgs = options.usageArgs ?? [];
+        this.example = options.example ?? ((p) => `${p}${this.name}`);
+        this.botGuildPermissions = options.botGuildPermissions ?? [];
+        this.botChannelPermissions = options.botChannelPermissions ?? [];
+        this.memberGuildPermissions = options.memberGuildPermissions ?? [];
+        this.memberChannelPermissions = options.memberChannelPermissions ?? [];
+        this.cooldown = options.cooldown ?? 2;
         this.enabled = !!options.enabled;
         this.guildOnly = typeof options.guildOnly === 'boolean' ? options.guildOnly : this.category !== 'General';
         this.nsfwOnly = !!options.nsfwOnly;
@@ -87,7 +87,7 @@ export default abstract class Command {
         if (this.guildOnly && !message.guild) return !this.sendOrReply(message, this.lang.getError('cmdServer'));
         const blacklist = await Blacklists.findOne({ userID: message.author.id });
         if (blacklist) return !message.channel.send(new MessageEmbed()
-            .setDescription(this.lang.getError('blackList', blacklist.reason, blacklist.date.toLocaleString()))
+            .setDescription(this.lang.getError('blacklist', blacklist.reason, blacklist.date.toLocaleString()))
             .setColor(this.client.color));
         if (!this.enabled && !devs.includes(message.author.id))
             return !this.sendOrReply(message, this.lang.getError('cmdEnabled'));
@@ -122,7 +122,7 @@ export default abstract class Command {
     }
 
     sendError(message: Message, text: string, arg: number): Promise<Message> {
-        const values = [`> ${(this.server!.prefix || process.env.BOT_PREFIX) as string}${this.name}`, ...this.usageArgs];
+        const values = [`> ${(this.server!.prefix ?? process.env.BOT_PREFIX) as string}${this.name}`, ...this.usageArgs];
         const characters = this.usageArgs[arg].replace(/[^a-z\s]/gi, '_').replace(/[a-z\s]/gi, '^').replace(/_/gi, ' ');
         return message.channel.send(`\`\`\`diff
 - ${text}

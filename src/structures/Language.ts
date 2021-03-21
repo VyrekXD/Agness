@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars, max-lines */
-import { PermissionString } from 'discord.js';
+import { PermissionString, MessageEmbed } from 'discord.js';
 import Command, { Category } from './Command';
 import Agness from '../bot';
 
@@ -15,6 +15,13 @@ interface CommandStrings {
     voteDescription(): string;
     voteFooter(): string;
     avatar(user: string, avatar: string): string;
+    rrHelp(prefix: string): MessageEmbed;
+    rrReact(role: string): string;
+    rr(role: string, emoji: string): string;
+    rrNormal(): MessageEmbed;
+    rrUnique(): MessageEmbed;
+    rrOnly(): MessageEmbed;
+    rrDelete(emoji: string): string;
 }
 
 interface CommandErrorStrings {
@@ -33,7 +40,24 @@ interface CommandErrorStrings {
     helpNo(): string;
     sayNoText(): string;
     sayNoPerms(): string;
-    blackList(reason: string, date: string): string
+    blacklist(reason: string, date: string): string;
+    rrNoOption(prefix: string): string;
+    rrNoRole(): string;
+    rrNoRoleAdd(): string;
+    rrNoType(prefix: string): string;
+    rrNoChannel(): string;
+    rrNoChannelView(): string;
+    rrNoChannelReactions(): string;
+    rrNoMessage(): string;
+    rrNoMessageFound(): string;
+    rrErrorMessage(): string;
+    rrNoEmoji(): string;
+    rrExists(): string;
+    rrTime(): string;
+    rrDeleteNoEmoji(): string;
+    rrDeleteNoMessage(): string;
+    rrDeleteEmoji(): string;
+    rrDeleteNo(): string;
 }
 
 interface CommandDescriptionStrings {
@@ -47,6 +71,7 @@ interface CommandDescriptionStrings {
     vote: string;
     lang: string;
     bl: string;
+    reactrole: string;
 }
 
 interface LanguageStrings {

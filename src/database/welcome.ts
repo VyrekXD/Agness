@@ -37,4 +37,4 @@ const welcomes: Schema<Welcome> = new Schema({
     }
 });
 
-export const Welcomes: Model<Welcome> = model('Welcome', welcomes);
+export const Welcomes: Model<Welcome> = model('welcome', welcomes);

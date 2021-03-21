@@ -24,7 +24,7 @@ export default class Agness extends Client {
             useNewUrlParser: true,
             useUnifiedTopology: true
         }, (err) => {
-            if (err) return console.log(`Mongo Error: ${err.stack || err}`);
+            if (err) return console.log(`Mongo Error: ${err.stack ?? err}`);
             console.log('MongoDB ready!');
         });
 

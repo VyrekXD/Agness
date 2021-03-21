@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import Language from '../structures/Language';
+import { MessageEmbed } from 'discord.js';
 import Agness from '../bot';
-
 
 export default class English extends Language {
     constructor(client: Agness) {
@@ -38,8 +38,8 @@ ${commands}
                     },
                     helpCommand: (prefix, command) => {
                         return `__**${command.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())} Command**__
-**Description:** ${this.getDescription(command.name) || 'No description.'}
-**Aliases:** ${command.aliases.join(' | ') || 'No aliases.'}
+**Description:** ${this.getDescription(command.name) ?? 'No description.'}
+**Aliases:** ${command.aliases.join(' | ') ?? 'No aliases.'}
 **Category:** ${command.category}
 **Usage:** ${command.usage(prefix)}
 **Example:** ${command.example(prefix)}
@@ -51,32 +51,55 @@ Developers Only?: ${command.devsOnly ? 'Yes.' : 'No.'}
 
 Bot Permissions:
 > Guild:
-${command.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
+${command.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'Doesn\'t need.'}
 > Channel:
-${command.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
+${command.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'Doesn\'t need.'}
 
 Member Permissions:
 > Guild:
-${command.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
+${command.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'Doesn\'t need.'}
 > Channel:
-${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
+${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'Doesn\'t need.'}
 \`\`\``;
                     },
                     prefix: (prefix) => `My new prefix is: \`${prefix}\``,
                     langTitle: () => 'List of Languages',
-                    langDescription: (prefix, languages) => `These are the languages currently available in Agness.
+                    langDescription: (prefix, languages) => `There're the languages currently available in Agness.
 **If you want to change the language of Agness on the server use:**
 > \`${prefix}lang <Language code>\`
 
 ${languages}`,
-                    guildsDescription: (members, guilds) => `At this moment, I'm in: **${guilds}** servers and with **${members}** users.`,
+                    guildsDescription: (members, guilds) => `At this moment, I'm in **${guilds}** servers and with **${members}** users.`,
                     guildsFooter: (shardID) => `This server is on the shard ${shardID}`,
                     voteDescription: () => `I really appreciate that you want to vote for me!
 [Vote for me here!](https://top.gg/bot/798573830645874718)
 Remember that you can vote every 12 hours.`,
                     voteFooter: () => 'With love ❤️',
                     avatar: (user, avatar) => `**${user}**'s avatar
-> [Avatar Link](${avatar})`
+> [Avatar Link](${avatar})`,
+                    rrHelp: (prefix) => new MessageEmbed()
+                        .addField('Reaction Role Types', `At the moment, there're 3 types of reaction roles. To get specific information about one, use:
+> \`${prefix}reactrole help normal\`
+> \`${prefix}reactrole help unique\`
+> \`${prefix}reactrole help only\``)
+                        .addField('How do I get the ID of a message?', `You must turn on the __Developer Mode__ in settings, right click a message and copy ID.
+Detalied information in the GIF below.`),
+                    rrReact: (role) => `I'm preparing the reaction role for ${role}.
+You have 30 seconds to react with the emoji with which you want the role to be given.`,
+                    rr: (role, emoji) => `The role **${role}** will be given the next time someone reacts with the emoji ${emoji} in that message.`,
+                    rrNormal: () => new MessageEmbed()
+                        .setTitle('Normal Type Reaction')
+                        .setDescription(`The reaction role of type **normal** allows you to add and remove the specified role when you react or when you remove the reaction.
+There's an example of how it works and setup:`),
+                    rrUnique: () => new MessageEmbed()
+                        .setTitle('Unique Type Reaction')
+                        .setDescription(`The reaction role of type **unique** allows you to add the specified role once and it'll not be removed.
+There's an example of how it works and setup:`),
+                    rrOnly: () => new MessageEmbed()
+                        .setTitle('Only Type Reaction')
+                        .setDescription(`The reaction role of type **only** allows you to have only one role from the others of the same type in the message.
+There's an example of how it works and setup:`),
+                    rrDelete: (emoji) => `Reaction role with emoji ${emoji} deleted successfully.`
                 },
                 commandErrors: {
                     cmdServer: () => 'This command is only available for servers.',
@@ -92,13 +115,33 @@ Remember that you can vote every 12 hours.`,
                     prefixLength: () => 'The new prefix must not exceed 5 characters.',
                     langNo: () => 'You must specify a valid language.',
                     helpNo: () => '> The command or category couldn\'t be found.',
-                    sayNoText: () => 'Give me a text that you want me to say.',
+                    sayNoText: () => 'You must specify the text that you want me to say.',
                     sayNoPerms: () => 'You must have the permission of mention everyone to execute this command.',
-                    blackList: (reason, date) => `You are on the blacklist. Here you have more information:
+                    blacklist: (reason, date) => `You're on the blacklist. Here you have more information:
 > **Reason:** \`${reason}\`
 > **Date:** \`${date}\`
 You can appeal by going to my support server.
-> [Support Server](https://discord.gg/K63NqEDm86)`
+> [Support Server](https://discord.gg/K63NqEDm86)`,
+                    rrNoOption: (prefix) => `You must specify a valid option or role.
+> \`${prefix}reactrole [@Role] [Type] [Message ID] <#Channel>\`
+> \`${prefix}reactrole delete [Emoji] [Message ID]\`
+If you need a little more help you can use: \`${prefix}reactrole help\``,
+                    rrNoRole: () => 'I couldn\'t find that role or it\'s invalid.',
+                    rrNoRoleAdd: () => 'I don\'t have enough permissions to give that role.',
+                    rrNoType: (prefix) => `That's not a type of reaction role. Use [${prefix}reactrole help] to see more about reaction roles.`,
+                    rrNoChannel: () => 'I couldn\'t find the channel or it\'s invalid.',
+                    rrNoChannelView: () => 'I don\'t have permissions to see that channel.',
+                    rrNoChannelReactions: () => 'I don\'t have permissions to add reactions in that channel.',
+                    rrNoMessage: () => 'You must specify the ID of a message.',
+                    rrNoMessageFound: () => 'The message wasn\'t found.',
+                    rrErrorMessage: () => 'There was an error finding the message, try again.',
+                    rrNoEmoji: () => 'I couldn\'t find that emoji in my cache, try adding the emoji on the server.',
+                    rrExists: () => 'There\'s already a reaction role with that emoji.',
+                    rrTime: () => 'Time is over ;(, Please try again.',
+                    rrDeleteNoEmoji: () => 'You must specify the emoji.',
+                    rrDeleteNoMessage: () => 'You must specify the message ID.',
+                    rrDeleteEmoji: () => 'You must specify a valid emoji.',
+                    rrDeleteNo: () => 'The reaction role couldn\'t be deleted, check if there\'s one with that message ID and emoji in the server.'
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',
@@ -106,11 +149,12 @@ You can appeal by going to my support server.
                     ping: 'Shows the latency of the bot.',
                     prefix: 'Lets you set a custom prefix on your server.',
                     guilds: 'Shows the guild count and users I have.',
-                    say: 'I say everything you ask of me.',
+                    say: 'I say everything that you want.',
                     avatar: 'Gets the avatar of any user.',
                     vote: 'Shows the Top.gg link to vote for me.',
-                    lang: 'Change the language on your server for a more pleasant environment.',
-                    bl: 'Put a user on the blacklist.'
+                    lang: 'Changes the language on your server for a more pleasant environment.',
+                    bl: 'Adds an user to the blacklist.',
+                    reactrole: 'Establishes roles with a specific emoji in the message you want, works for colored roles, roles for mentions. Everything is possible!'
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrator',

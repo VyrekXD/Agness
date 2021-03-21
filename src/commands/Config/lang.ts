@@ -2,7 +2,7 @@ import { Message, MessageEmbed } from 'discord.js';
 import Command from '../../structures/Command';
 import Agness from '../../bot';
 
-export default class PrefixCommand extends Command {
+export default class LanguageCommand extends Command {
     constructor(client: Agness, category: string) {
         super(client, {
             name: 'lang',

@@ -15,11 +15,11 @@ export default class AvatarCommand extends Command {
 
     async run(message: Message, args: string[]): Promise<Message> {
         const user = message.mentions.users.first()
-            || (await this.client.users.fetch(args[0]).catch(() => null))
-            || this.client.users.cache.find((u) => (u.username.toLowerCase() === args.join(' ').toLowerCase()) || (u.username.toLowerCase() === args.join(' ').toLowerCase()))
-            || message.guild?.members.cache.find((m) => m.nickname?.toLowerCase() === args.join(' ').toLowerCase())?.user
-            || message.author;
-        const extension = (user.avatar || '').startsWith('a_') ? 'gif' : 'png';
+            ?? (await this.client.users.fetch(args[0]).catch(() => null))
+            ?? this.client.users.cache.find((u) => (u.username.toLowerCase() === args.join(' ').toLowerCase()) ?? (u.username.toLowerCase() === args.join(' ').toLowerCase()))
+            ?? message.guild?.members.cache.find((m) => m.nickname?.toLowerCase() === args.join(' ').toLowerCase())?.user
+            ?? message.author;
+        const extension = (user.avatar ?? '').startsWith('a_') ? 'gif' : 'png';
         const avatar = user.displayAvatarURL({ format: extension, size: 4096 });
         return message.channel.send(new MessageEmbed()
             .setDescription(this.lang.get('avatar', user.username, avatar))
