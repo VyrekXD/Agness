@@ -99,7 +99,55 @@ There's an example of how it works and setup:`),
                         .setTitle('Only Type Reaction')
                         .setDescription(`The reaction role of type **only** allows you to have only one role from the others of the same type in the message.
 There's an example of how it works and setup:`),
-                    rrDelete: (emoji) => `Reaction role with emoji ${emoji} deleted successfully.`
+                    rrDelete: (emoji) => `Reaction role with emoji ${emoji} deleted successfully.`,
+                    embedHelp: (prefix) => new MessageEmbed()
+                        .setTitle('¿Para que sirve un embed?')
+                        .setDescription('Te permitirá crear un texto con mayor estética para insertarlos en tus bienvenidas, despedidas, reglas, etc., para mejorar en cuanto estética a tu servidor. Lo siguiente son pasos para poder crear y editar tu embed.')
+                        .addField('1. Create and name your embed.', `__First of all you should not include [] or <> in the command__
+The name will allow us to identify your embed so that everything looks more orderly when it comes to putting it in welcomes, leaves and custom commands. How? Well, adding \`{embed:[embed_name]}\` and Replacing \`embed_name\` with the name of your embed. For this, you can create it and give it the name you like, just like this:
+> \`${prefix}embed create [embed_name]\``)
+                        .addField('2. Editing our embed', `Well, it's time to edit it the way you like, your creativity matters! Here I show you the properties of an embed:
+> \`author\` - [text | <Image link>]
+> \`thumbnail\` - [Image link]
+> \`title\` - [text]
+> \`description\` - [text]
+> \`footer\` - [text | <Image link>]
+> \`image\` - [Image link]
+> \`color\` - [Hex Code]
+> \`timestamp\` - [yes/no]
+The way of use is intuitive with which it will be easier for you to learn each property. Well, without more, the embed editing mode, and it's as follows:
+> \`${prefix}embed edit [name] [property] [value]\``)
+                        .addField('**EXAMPLE**', `Now, let's look at a small example with some properties, which will allow you to familiarize yourself with the simple format.
+We start by creating an embed which we will call \`example\`.
+> \`${prefix}embed create example\`
+Now, to give it an attractive title
+> \`${prefix}embed edit example title I am learning how to edit an embed.\`
+Well, now let's put a description on it.
+> \`${prefix}embed edit example description This description looks very cute\`
+Let's put an image on it and we will have a simple embed, be careful and put links that really contain images. In this case we will put a funny gif.
+> \`${prefix}embed edit example image https://i.imgur.com/mXOijAT.gif\`
+Finally, let's put a color which has to be in hexadecimal code without the #, if you don't know them, you can see the colors [here](https://htmlcolorcodes.com/es/).
+> \`${prefix}embed edit example color e658ff\`
+Ready, this is a simple embed that if you want you can test yourself with:
+> \`${prefix}embed preview example`)
+                        .addField('Send it for welcomes/leaves', `Remember that in any case you would use: {embed:[embed name]}
+> In this case: \`{embed:example}\`
+To insert it in a welcome or leave, there are three options:
+- Message and embed:
+> \`${prefix}welcome message Welcome user! | {embed:example}\`
+- Message only:
+> \`${prefix}welcome message Welcome user!\`
+- Or just the embed:
+> \`${prefix}welcome message {embed:example}\``)
+                        .addField('**VARIABLES**', `First of all, what are variables? Well, for that I am, the variables will allow us to do "automated" things so that they can be replaced by names, channels, links and others, they can be used in embeds as well as in text, for welcomes, leaves and custom commands. Here are some:
+\`{user}\` - @Mention (e.j. @Aviii.#0721)
+\`{server}\` - Server name (e.j. ${client.user?.username}'s Support)
+You can find the full list with \`${prefix}variables\``)
+                        .setTimestamp()
+                        .setFooter('<> Optional | [] Required'),
+                    embedCreated: (embed) => `Embed with name ${embed} created successfully.
+Use \`a?embed properties\` to see how to modify it`,
+                    embedDeleted: (embed) => `Embed with name ${embed} deleted successfully`
                 },
                 commandErrors: {
                     cmdServer: () => 'This command is only available for servers.',
@@ -141,7 +189,11 @@ If you need a little more help you can use: \`${prefix}reactrole help\``,
                     rrDeleteNoEmoji: () => 'You must specify the emoji.',
                     rrDeleteNoMessage: () => 'You must specify the message ID.',
                     rrDeleteEmoji: () => 'You must specify a valid emoji.',
-                    rrDeleteNo: () => 'The reaction role couldn\'t be deleted, check if there\'s one with that message ID and emoji in the server.'
+                    rrDeleteNo: () => 'The reaction role couldn\'t be deleted, check if there\'s one with that message ID and emoji in the server.',
+                    embedMax: () => 'You can only have 10 embeds per server.',
+                    embedName: () => 'You must specify the name of the embed and must have a maximum of 10 characters.',
+                    embedExists: () => 'There\'s already an embed with that name. Try another.',
+                    embedNoExists: () => 'There\'s no embed with that name or you didn\'t specify one.'
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',
@@ -154,7 +206,8 @@ If you need a little more help you can use: \`${prefix}reactrole help\``,
                     vote: 'Shows the Top.gg link to vote for me.',
                     lang: 'Changes the language on your server for a more pleasant environment.',
                     bl: 'Adds an user to the blacklist.',
-                    reactrole: 'Establishes roles with a specific emoji in the message you want, works for colored roles, roles for mentions. Everything is possible!'
+                    reactrole: 'Establishes roles with a specific emoji in the message you want, works for colored roles, roles for mentions. Everything is possible!',
+                    embed: 'Create custom embeds for your tags, welcomes and leaves. You put the design!'
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrator',

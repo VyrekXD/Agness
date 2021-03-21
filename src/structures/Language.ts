@@ -22,6 +22,12 @@ interface CommandStrings {
     rrUnique(): MessageEmbed;
     rrOnly(): MessageEmbed;
     rrDelete(emoji: string): string;
+    embedHelp(prefix: string): MessageEmbed;
+    embedCreated(embed: string): string;
+    embedDeleted(embed: string): string;
+    embedList(embeds: string, serverIcon: string): MessageEmbed;
+    embedEdited(property: string, embedName: string): string;
+    embedProperties(): MessageEmbed;
 }
 
 interface CommandErrorStrings {
@@ -58,6 +64,16 @@ interface CommandErrorStrings {
     rrDeleteNoMessage(): string;
     rrDeleteEmoji(): string;
     rrDeleteNo(): string;
+    embedMax(): string;
+    embedName(): string;
+    embedExists(): string;
+    embedNoExists(): string;
+    embedNoValue(property: string): string;
+    embedMaxCharacters(property: string, max: number): string;
+    embedNoImage(): string;
+    embedNoTimestamp(): string;
+    embedNoColor(): string;
+    embedNoProperty(): string;
 }
 
 interface CommandDescriptionStrings {
@@ -72,6 +88,7 @@ interface CommandDescriptionStrings {
     lang: string;
     bl: string;
     reactrole: string;
+    embed: string;
 }
 
 interface LanguageStrings {

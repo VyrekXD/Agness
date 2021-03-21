@@ -100,7 +100,52 @@ Aquí hay ejemplo de cómo funciona y cómo se configura:`),
                         .setTitle('Reacción de tipo sola (only)')
                         .setDescription(`El rol por reacción de tipo **only** te permite tener solo un rol de los otros del mismo tipo en el mensaje.
 Aquí hay ejemplo de cómo funciona y cómo se configura:`),
-                    rrDelete: (emoji) => `Rol por reacción con emoji ${emoji} eliminado correctamente.`
+                    rrDelete: (emoji) => `Rol por reacción con emoji ${emoji} eliminado correctamente.`,
+                    embedHelp: (prefix) => new MessageEmbed()
+                        .setTitle('Why do I need an embed?')
+                        .setDescription('Es posible que lo necesite para que su servidor se vea mucho mejor estéticamente, ya que le permitirá crear texto enriquecido, que puede poner en sus bienvenidas, despedidas y comandos personalizados. ¡La creatividad depende de ti!')
+                        .addField('1. Crea y nombra a tu embed.', `__En primer lugar, no debe incluir [] o <> en el comando__
+                    El nombre nos permitirá identificar tu incrustación para que todo luzca más ordenado a la hora de ponerlo en bienvenidas, hojas y comandos personalizados. ¿Cómo? Bueno, agregando \`{embed:[embed_name]} \` y Reemplazando \`embed_name\` con el nombre de tu embed. Para ello, puedes crearlo y darle el nombre que quieras, así:
+        > \`${prefix}embed create [embed_name]\``)
+                        .addField('2. Editando nuestro embed.', `Bueno, es hora de editarlo como más te guste, ¡tú creatividad importa! Aquí te muestro las propiedades de un embed:
+        > \`author\` - [Texto | <Enlace Imagen>]
+        > \`thumbnail\` - [Enlace de Imágen]
+        > \`title\` - [Texto]
+        > \`description\` - [Texto]
+        > \`footer\` - [Texto | <Enlace de Imágen]>]
+        > \`image\` - [Enlace de Imágen | Attachment]
+        > \`color\` - [Codigo Hex]
+        > \`timestamp\` - [si/no]
+        La forma de uso es intuitiva con la que te será más fácil aprender cada propiedad. Bueno, sin más, el modo de edición del embed, y es el siguiente:> 
+        \`${prefix}embed edit [nombre] [propiedad] [valor]\``)
+                        .addField('**EJEMPLO**', `Ahora, veamos un pequeño ejemplo con algunas propiedades, que le permitirá familiarizarse con el formato simple.
+        Comenzamos creando un incrustado al que llamaremos \`ejemplo\`.
+        > \`${prefix}embed create ejemplo\`
+        Ahora, para darle un título atractivo
+        > \`${prefix}embed edit ejemplo title Estoy aprendiendo a editar una embed\`
+        Bueno, ahora pongamos una descripción.
+        > \`${prefix}embed edit ejemplo description Esta descripción se ve muy linda\`
+        Vamos a ponerle una imagen y tendremos un simple incrustado, cuidado y poner enlaces que realmente contengan imágenes. En este caso pondremos un gif divertido.
+        > \`${prefix}embed edit ejemplo image https://i.imgur.com/mXOijAT.gif\`
+        Por último, pongamos un color que tiene que estar en código hexadecimal sin el #, si no los conoces puedes ver los colores [aquí](https://htmlcolorcodes.com/es/).
+        > \`${prefix}embed edit ejemplo color e658ff\`
+        Listo, este es un embed simple con la que, si lo desea, puede probarse:
+        > \`${prefix}embed preview ejemplo`)
+                        .addField('Envíalo de bienvenida/despedida', `Recuerda que en cualquier caso usarías: {embed:[embed name]}
+        > En este caso: \`{embed:ejemplo}\`
+        Para insertarlo en una bienvenida o despedida, hay tres opciones:
+        - Mensaje y embed:
+        > \`${prefix}welcome message ¡Bienvenido usuario! | {embed:ejemplo}\`
+        - Solo mensaje:
+        > \`${prefix}welcome message ¡Bienvenido usuario!\`
+        - O solo embed:
+        > \`${prefix}welcome message {embed:ejemplo}\``)
+                        .addField('**VARIABLES**', `En primer lugar, ¿qué son las variables? Bueno, para lo que soy, las variables nos van a permitir hacer cosas "automatizadas" para que puedan ser reemplazadas por nombres, canales, enlaces y demás, se pueden usar tanto en incrustaciones como en texto, para bienvenidas, hojas y comandos personalizados. Aquí están algunas:
+        \`{user}\` - @Mención (e.j. @Aviii.#0721)
+        \`{server}\` - Nombre del servidor (e.j. ${client.user?.username}'s Support)
+        Puede encontrar la lista completa con \`${prefix}variables\``)
+                        .setTimestamp()
+                        .setFooter('<> Optional | [] Required')
                 },
                 commandErrors: {
                     cmdServer: () => 'Este comando solo está disponible para servidores.',
@@ -155,7 +200,8 @@ Si necesitas un poco más de ayuda, puede usar: \`${prefix}reactrole help\``,
                     vote: 'Muestra el enlace de Top.gg para votar por mí.',
                     lang: 'Cambia el idioma en tu servidor para un ambiente más agradable.',
                     bl: 'Añade a un usuario a la lista negra.',
-                    reactrole: 'Establece roles con determinado emoji en el mensaje que quieras, funciona para roles de colores, roles para menciones. ¡Todo es posible!'
+                    reactrole: 'Establece roles con determinado emoji en el mensaje que quieras, funciona para roles de colores, roles para menciones. ¡Todo es posible!',
+                    embed: 'Cree incrustaciones personalizadas para sus etiquetas, da la bienvenida y se va. ¡Tú pones el diseño!'
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrador',
