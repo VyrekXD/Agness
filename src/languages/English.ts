@@ -146,8 +146,25 @@ You can find the full list with \`${prefix}variables\``)
                         .setTimestamp()
                         .setFooter('<> Optional | [] Required'),
                     embedCreated: (embed) => `Embed with name ${embed} created successfully.
-Use \`a?embed properties\` to see how to modify it`,
-                    embedDeleted: (embed) => `Embed with name ${embed} deleted successfully`
+Use \`a?embed properties\` to see how to modify it.`,
+                    embedDeleted: (embed) => `Embed with name ${embed} deleted successfully`,
+                    embedList: (embeds, serverIcon) => new MessageEmbed()
+                        .setAuthor('Server embeds', serverIcon)
+                        .setDescription(embeds),
+                    embedEdited: (property, embedName) => `The **${property}** property of the embed a was edited correctly.
+You can add the embed to welcome, leave or tags (custom commands) with \`{embed:${embedName}}\`.
+**__Preview of the embed:__**`,
+                    embedProperties: () => new MessageEmbed()
+                        .addField('Properties of an embed', `> \`author\` - [text | <Image link>]
+> \`thumbnail\` - [Image link]
+> \`title\` - [text]
+> \`description\` - [text]
+> \`footer\` - [text | <Image link>]
+> \`image\` - [Image link]
+> \`color\` - [Hex Code]
+> \`timestamp\` - [yes/no]`)
+                        .setFooter('<> Optional | [] Required')
+                        .setTimestamp()
                 },
                 commandErrors: {
                     cmdServer: () => 'This command is only available for servers.',
@@ -193,7 +210,14 @@ If you need a little more help you can use: \`${prefix}reactrole help\``,
                     embedMax: () => 'You can only have 10 embeds per server.',
                     embedName: () => 'You must specify the name of the embed and must have a maximum of 10 characters.',
                     embedExists: () => 'There\'s already an embed with that name. Try another.',
-                    embedNoExists: () => 'There\'s no embed with that name or you didn\'t specify one.'
+                    embedNoExists: () => 'There\'s no embed with that name or you didn\'t specify one.',
+                    embedNoValue: (property) => `You must put the text to put as ${property}.`,
+                    embedMaxCharacters: (property, max) => `'The ${property} must have ${max} characters or less.`,
+                    embedNoImage: () => 'You must specify the URL of a valid image.',
+                    embedNoTimestamp: () => 'You must specify if you want the timestamp (yes/no).',
+                    embedNoColor: () => 'You must specify the color without #.',
+                    embedNoProperty: (prefix) => `The property that you put isn't valid.
+You can see the list of the properties with \`${prefix}embed properties\`.`
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',

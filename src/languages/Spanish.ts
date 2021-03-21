@@ -105,47 +105,67 @@ Aquí hay ejemplo de cómo funciona y cómo se configura:`),
                         .setTitle('Why do I need an embed?')
                         .setDescription('Es posible que lo necesite para que su servidor se vea mucho mejor estéticamente, ya que le permitirá crear texto enriquecido, que puede poner en sus bienvenidas, despedidas y comandos personalizados. ¡La creatividad depende de ti!')
                         .addField('1. Crea y nombra a tu embed.', `__En primer lugar, no debe incluir [] o <> en el comando__
-                    El nombre nos permitirá identificar tu incrustación para que todo luzca más ordenado a la hora de ponerlo en bienvenidas, hojas y comandos personalizados. ¿Cómo? Bueno, agregando \`{embed:[embed_name]} \` y Reemplazando \`embed_name\` con el nombre de tu embed. Para ello, puedes crearlo y darle el nombre que quieras, así:
-        > \`${prefix}embed create [embed_name]\``)
+El nombre nos permitirá identificar tu incrustación para que todo luzca más ordenado a la hora de ponerlo en bienvenidas, hojas y comandos personalizados. ¿Cómo? Bueno, agregando \`{embed:[embed_name]} \` y Reemplazando \`embed_name\` con el nombre de tu embed. Para ello, puedes crearlo y darle el nombre que quieras, así:
+> \`${prefix}embed create [embed_name]\``)
                         .addField('2. Editando nuestro embed.', `Bueno, es hora de editarlo como más te guste, ¡tú creatividad importa! Aquí te muestro las propiedades de un embed:
-        > \`author\` - [Texto | <Enlace Imagen>]
-        > \`thumbnail\` - [Enlace de Imágen]
-        > \`title\` - [Texto]
-        > \`description\` - [Texto]
-        > \`footer\` - [Texto | <Enlace de Imágen]>]
-        > \`image\` - [Enlace de Imágen | Attachment]
-        > \`color\` - [Codigo Hex]
-        > \`timestamp\` - [si/no]
-        La forma de uso es intuitiva con la que te será más fácil aprender cada propiedad. Bueno, sin más, el modo de edición del embed, y es el siguiente:> 
-        \`${prefix}embed edit [nombre] [propiedad] [valor]\``)
+> \`author\` - [Texto | <Enlace Imagen>]
+> \`thumbnail\` - [Enlace de Imágen]
+> \`title\` - [Texto]
+> \`description\` - [Texto]
+> \`footer\` - [Texto | <Enlace de Imágen]>]
+> \`image\` - [Enlace de Imágen | Attachment]
+> \`color\` - [Codigo Hex]
+> \`timestamp\` - [yes/no]
+La forma de uso es intuitiva con la que te será más fácil aprender cada propiedad. Bueno, sin más, el modo de edición del embed, y es el siguiente:> 
+\`${prefix}embed edit [nombre] [propiedad] [valor]\``)
                         .addField('**EJEMPLO**', `Ahora, veamos un pequeño ejemplo con algunas propiedades, que le permitirá familiarizarse con el formato simple.
-        Comenzamos creando un incrustado al que llamaremos \`ejemplo\`.
-        > \`${prefix}embed create ejemplo\`
-        Ahora, para darle un título atractivo
-        > \`${prefix}embed edit ejemplo title Estoy aprendiendo a editar una embed\`
-        Bueno, ahora pongamos una descripción.
-        > \`${prefix}embed edit ejemplo description Esta descripción se ve muy linda\`
-        Vamos a ponerle una imagen y tendremos un simple incrustado, cuidado y poner enlaces que realmente contengan imágenes. En este caso pondremos un gif divertido.
-        > \`${prefix}embed edit ejemplo image https://i.imgur.com/mXOijAT.gif\`
-        Por último, pongamos un color que tiene que estar en código hexadecimal sin el #, si no los conoces puedes ver los colores [aquí](https://htmlcolorcodes.com/es/).
-        > \`${prefix}embed edit ejemplo color e658ff\`
-        Listo, este es un embed simple con la que, si lo desea, puede probarse:
-        > \`${prefix}embed preview ejemplo`)
+Comenzamos creando un incrustado al que llamaremos \`ejemplo\`.
+> \`${prefix}embed create ejemplo\`
+Ahora, para darle un título atractivo
+> \`${prefix}embed edit ejemplo title Estoy aprendiendo a editar una embed\`
+Bueno, ahora pongamos una descripción.
+> \`${prefix}embed edit ejemplo description Esta descripción se ve muy linda\`
+Vamos a ponerle una imagen y tendremos un simple incrustado, cuidado y poner enlaces que realmente contengan imágenes. En este caso pondremos un gif divertido.
+> \`${prefix}embed edit ejemplo image https://i.imgur.com/mXOijAT.gif\`
+Por último, pongamos un color que tiene que estar en código hexadecimal sin el #, si no los conoces puedes ver los colores [aquí](https://htmlcolorcodes.com/es/).
+> \`${prefix}embed edit ejemplo color e658ff\`
+Listo, este es un embed simple con la que, si lo desea, puede probarse:
+> \`${prefix}embed preview ejemplo`)
                         .addField('Envíalo de bienvenida/despedida', `Recuerda que en cualquier caso usarías: {embed:[embed name]}
-        > En este caso: \`{embed:ejemplo}\`
-        Para insertarlo en una bienvenida o despedida, hay tres opciones:
-        - Mensaje y embed:
-        > \`${prefix}welcome message ¡Bienvenido usuario! | {embed:ejemplo}\`
-        - Solo mensaje:
-        > \`${prefix}welcome message ¡Bienvenido usuario!\`
-        - O solo embed:
-        > \`${prefix}welcome message {embed:ejemplo}\``)
+> En este caso: \`{embed:ejemplo}\`
+Para insertarlo en una bienvenida o despedida, hay tres opciones:
+- Mensaje y embed:
+> \`${prefix}welcome message ¡Bienvenido usuario! | {embed:ejemplo}\`
+- Solo mensaje:
+> \`${prefix}welcome message ¡Bienvenido usuario!\`
+- O solo embed:
+> \`${prefix}welcome message {embed:ejemplo}\``)
                         .addField('**VARIABLES**', `En primer lugar, ¿qué son las variables? Bueno, para lo que soy, las variables nos van a permitir hacer cosas "automatizadas" para que puedan ser reemplazadas por nombres, canales, enlaces y demás, se pueden usar tanto en incrustaciones como en texto, para bienvenidas, hojas y comandos personalizados. Aquí están algunas:
-        \`{user}\` - @Mención (e.j. @Aviii.#0721)
-        \`{server}\` - Nombre del servidor (e.j. ${client.user?.username}'s Support)
-        Puede encontrar la lista completa con \`${prefix}variables\``)
+\`{user}\` - @Mención (e.j. @Aviii.#0721)
+\`{server}\` - Nombre del servidor (e.j. ${client.user?.username}'s Support)
+Puede encontrar la lista completa con \`${prefix}variables\``)
                         .setTimestamp()
-                        .setFooter('<> Optional | [] Required')
+                        .setFooter('<> Optional | [] Required'),
+                    embedCreated: (embed) => `Embed con el nombre ${embed} creado correctamente.
+Usa \`a?embed properties\` para ver como modificarlo.`,
+                    embedDeleted: (embed) => `Embed con el nombre ${embed} eliminado correctamente.`,
+                    embedList: (embeds, serverIcon) => new MessageEmbed()
+                        .setAuthor('Embeds del servidor', serverIcon)
+                        .setDescription(embeds),
+                    embedEdited: (property, embedName) => `La propiedad **${property}** del embed se editó correctamente.
+Puede agregar la inserción para dar la bienvenida, salir o etiquetas (comandos personalizados) con \`{embed:${embedName}}\`.
+**__Vista previa del embed:__**`,
+                    embedProperties: () => new MessageEmbed()
+                        .addField('Propiedades de un embed', ` \`author\` - [Texto | <Enlace Imagen>]
+> \`thumbnail\` - [Enlace de Imágen]
+> \`title\` - [Texto]
+> \`description\` - [Texto]
+> \`footer\` - [Texto | <Enlace de Imágen]>]
+> \`image\` - [Enlace de Imágen | Attachment]
+> \`color\` - [Codigo Hex]
+> \`timestamp\` - [yes/no]`)
+                        .setFooter('<> Opcional | [] Requerido')
+                        .setTimestamp()
                 },
                 commandErrors: {
                     cmdServer: () => 'Este comando solo está disponible para servidores.',
@@ -187,7 +207,18 @@ Si necesitas un poco más de ayuda, puede usar: \`${prefix}reactrole help\``,
                     rrDeleteNoEmoji: () => 'Debes especificar el emoji.',
                     rrDeleteNoMessage: () => 'Debes especificar la ID del mensaje.',
                     rrDeleteEmoji: () => 'Debes especificar un emoji válido.',
-                    rrDeleteNo: () => 'El rol por reacción no se pudo eliminar, verifica si hay uno con esa ID de mensaje y emoji en el servidor.'
+                    rrDeleteNo: () => 'El rol por reacción no se pudo eliminar, verifica si hay uno con esa ID de mensaje y emoji en el servidor.',
+                    embedMax: () => 'Solo puede tener 10 embeds por servidor.',
+                    embedName: () => 'Debe especificar el nombre del embed y debe tener un máximo de 10 caracteres.',
+                    embedExists: () => 'Ya hay un embed con ese nombre. Prueba otro.',
+                    embedNoExists: () => 'No hay un embed con ese nombre o no especificaste ninguno.',
+                    embedNoValue: (property) => `Debes poner el texto para poner como ${property}.`,
+                    embedMaxCharacters: (property, max) => `'El ${property} debe tener ${max} caracteres o menos.`,
+                    embedNoImage: () => 'Debe especificar la URL de una imagen válida.',
+                    embedNoTimestamp: () => 'Debe especificar si desea la marca de tiempo (yes/no).',
+                    embedNoColor: () => 'Debe especificar el color sin #.',
+                    embedNoProperty: (prefix) => `La propiedad que pones no es válida.
+Puede ver la lista de propiedades con \`${prefix}embed properties\`.`
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',

@@ -25,7 +25,7 @@ interface CommandStrings {
     embedHelp(prefix: string): MessageEmbed;
     embedCreated(embed: string): string;
     embedDeleted(embed: string): string;
-    embedList(embeds: string, serverIcon: string): MessageEmbed;
+    embedList(embeds: string, serverIcon: string | undefined): MessageEmbed;
     embedEdited(property: string, embedName: string): string;
     embedProperties(): MessageEmbed;
 }
@@ -73,7 +73,7 @@ interface CommandErrorStrings {
     embedNoImage(): string;
     embedNoTimestamp(): string;
     embedNoColor(): string;
-    embedNoProperty(): string;
+    embedNoProperty(prefix: string): string;
 }
 
 interface CommandDescriptionStrings {

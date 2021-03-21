@@ -1,4 +1,4 @@
-import { Message, TextChannel } from 'discord.js';
+import { GuildMember, Message, TextChannel } from 'discord.js';
 import Command from '../../structures/Command';
 import { Embeds } from '../../database/embed';
 import isImageURL from 'image-url-validator';
@@ -18,6 +18,7 @@ export default class EmbedCommand extends Command {
     }
 
     async run(message: Message, args: string[]): Promise<Message> {
+        const replaceText = (text: string) => this.client.replaceText(text, { channel: message.channel as TextChannel, member: message.member as GuildMember, prefix: this.server!.prefix });
         switch (args[0]?.toLowerCase() ?? '') {
             case 'add':
             case 'create': {
@@ -43,7 +44,7 @@ export default class EmbedCommand extends Command {
             }
             case 'list': {
                 const embeds = await Embeds.find({ guildID: message.guild!.id });
-                return message.channel.send(this.lang.get('embedList', embeds.map((e, i) => `**${i + 1}**. ${e.name}`).join('\n'), message.guild!.iconURL()!)
+                return message.channel.send(this.lang.get('embedList', embeds.map((e, i) => `**${i + 1}**. ${e.name}`).join('\n'), message.guild!.iconURL({dynamic: true}) ?? undefined)
                     .setColor(this.client.color));
             }
             case 'edit': {
@@ -58,7 +59,7 @@ export default class EmbedCommand extends Command {
                     case 'author': {
                         if (!args[3]) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
                         const parts = args.slice(3).join(' ').split(' | ');
-                        if (property === 'footer' && parts[0].length > 2048) return message.channel.send(this.lang.getError('embedMaxCharacters', property, 2048)); // 'The --- must have --- characters or less.'
+                        if (property === 'footer' && parts[0].length > 2048) return message.channel.send(this.lang.getError('embedMaxCharacters', property, 2048));
                         if (property === 'author' && parts[0].length > 256) return message.channel.send(this.lang.getError('embedMaxCharacters', property, 2048));
                         if (args[3].toLowerCase() !== 'null') {
                             if (parts.length === 1) {
@@ -66,7 +67,7 @@ export default class EmbedCommand extends Command {
                                 embed[property].image = '';
                             } else {
                                 if (!this.exceptions.includes(parts[1]))
-                                    if (!(await isImageURL(parts[1]))) return message.channel.send(this.lang.getError('embedNoImage')); // You must specify the URL of a valid image.
+                                    if (!(await isImageURL(parts[1]))) return message.channel.send(this.lang.getError('embedNoImage'));
                                 embed[property].text = parts[0];
                                 embed[property].image = parts[1];
                             }
@@ -95,33 +96,27 @@ export default class EmbedCommand extends Command {
                     }
                     case 'timestamp': {
                         if (!args[3]) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
-                        if (!['yes', 'no'].includes(args[3])) return message.channel.send(this.lang.getError('embedNoTimestamp')); // You must specify if you want the timestamp (yes/no).
+                        if (!['yes', 'no'].includes(args[3])) return message.channel.send(this.lang.getError('embedNoTimestamp'));
                         embed[property] = args[3] === 'yes' ? true : false;
                         break;
                     }
                     case 'color': {
                         if (!args[3]) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
-                        if (!this.colorRegex.test(args[3])) return message.channel.send(this.lang.getError('embedNoColor')); // You must specify the color without #.
+                        if (!this.colorRegex.test(args[3])) return message.channel.send(this.lang.getError('embedNoColor'));
                         break;
                     }
                     default:
-                        return this.sendError(message, this.lang.getError('embedNoProperty'), 2); // `The property that you put isn't valid.\nYou can see the list of the properties with \`${this.prefix}embed properties\`.`
+                        return this.sendError(message, this.lang.getError('embedNoProperty', this.server!.prefix), 2);
                 }
 
                 await embed.save();
-                return message.channel.send(this.lang.get('embedEdited', property, embed.name)); // The ----- property of the embed --- was edited successfully
+                return message.channel.send(this.lang.get('embedEdited', property, embed.name), await this.client.generateEmbed(embed, replaceText));
             }
             case 'show':
             case 'preview': {
                 const embed = await Embeds.findOne({ guildID: message.guild!.id, name: args[1] });
                 if (!embed) return this.sendError(message, this.lang.getError('embedNoExists'), 1);
-                return message.channel.send(this.client.generateEmbed(embed,
-                    (text) => this.client.replaceText(text, {
-                        channel: message.channel as TextChannel,
-                        member: message.member!,
-                        prefix: this.server!.prefix
-                    })
-                ));
+                return message.channel.send(this.client.generateEmbed(embed, replaceText));
             }
             case 'props':
             case 'properties': {
