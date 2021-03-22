@@ -52,6 +52,7 @@ interface CommandStrings {
     leaveConfig(leave: Leave, prefix: string): MessageEmbed;
     emitEvent(event: string): string;
     variables(): MessageEmbed;
+    invite(): MessageEmbed;
 }
 
 interface CommandErrorStrings {

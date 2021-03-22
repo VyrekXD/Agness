@@ -17,20 +17,19 @@ export default class MessageReactionRemoveEvent extends Event {
 
         if (!guild || user.bot) return;
         try {
-            const miembro = await guild.members.fetch(user.id);
-
+            const member = await guild.members.fetch(user.id);
             const reactionRole = await ReactionRoles.findOne({
                 messageID: mensaje.id,
                 emojiID
             });
             if (!reactionRole) return;
 
-            const rol = guild.roles.cache.get(reactionRole.roleID);
-            if (!rol || !rol.editable) return;
+            const role = guild.roles.cache.get(reactionRole.roleID);
+            if (!role || !role.editable) return;
 
             switch (reactionRole.type) {
                 case 'normal':
-                    miembro.roles.remove(rol.id);
+                    member.roles.remove(role.id);
                     break;
                 default:
                     break;

@@ -16,10 +16,8 @@ export default class MessageEvent extends Event {
         if (!message.author || message.author.bot) return;
 
         let server = await Servers.findOne({ guildID: message.guild?.id });
-        if (!server && message.guild) {
-            server = new Servers({ guildID: message.guild?.id });
-            await server.save();
-        }
+        if (message.guild && !server)
+            server = await Servers.create({ guildID: message.guild.id });
 
         const prefix = server?.prefix ?? process.env.BOT_PREFIX;
         const prefixes = [prefix, `<@${this.client.user!.id}>`, `<@!${this.client.user!.id}>`];
@@ -31,7 +29,7 @@ export default class MessageEvent extends Event {
         const args = message.content.slice(usedPrefix.length).trim().split(/ +/g);
         const command = args.shift()?.toLowerCase();
 
-        if (await this.isTag(message, command ?? '', server!.prefix)) return;
+        if (message.guild && (await this.isTag(message, command ?? '', server?.prefix ?? process.env.BOT_PREFIX))) return;
 
         const cmd = this.client.commands.get(command);
 
@@ -76,8 +74,8 @@ export default class MessageEvent extends Event {
             if (!role || !role.editable || !message.guild!.me!.permissions.has('MANAGE_ROLES')) return;
             message.member!.roles.remove(roleID).catch(() => void 0);
         });
-        if (!tag.message && !embed && !files) return false;
-        message.channel.send(replaceText(tag.message), { files, embed });
-        return true;
+        if ((tag.addRoleID[0] || tag.removeRoleID[0]) && !tag.message && !embed && !files[0]) return true;
+        if (!tag.message && !embed && !files[0]) return false;
+        return !!message.channel.send(replaceText(tag.message), { files, embed });
     }
 }

@@ -11,7 +11,7 @@ export default class English extends Language {
             nativeName: 'English',
             strings: {
                 commands: {
-                    help: (prefix, categories, commands) => `<:world:820783752489074748> **${client.user?.username} Help Panel**
+                    help: (prefix, categories, commands) => `<:world:820783752489074748> **${client.user!.username} Help Panel**
 Hi! At the moment I have **${categories}** categories and  **${commands}** commands.
 **Categories:**
 > \`${prefix}help Config\` • Configuration Commands <:config:820788840654307348>
@@ -20,7 +20,7 @@ Hi! At the moment I have **${categories}** categories and  **${commands}** comma
 If you need more detailed information about each command, you can use:
 > \`${prefix}help <Command>\`
 **Links**
-**[Bot Invite](https://discord.com/api/oauth2/authorize?client_id=${client.user?.id}&permissions=8&scope=bot) | [Support Server](https://discord.gg/K63NqEDm86) | [GitHub](https://github.com/AgnessBot/Agness) | [Top.gg](https://top.gg/bot/798573830645874718)**`,
+**[Bot Invite](https://discord.com/api/oauth2/authorize?client_id=${client.user!.id}&permissions=8&scope=bot) | [Support Server](https://discord.gg/K63NqEDm86) | [GitHub](https://github.com/AgnessBot/Agness) | [Top.gg](https://top.gg/bot/798573830645874718)**`,
                     helpCategory: (prefix, category, commands, quantity) => {
                         const categories = {
                             Config: '**Config** <:config:820788840654307348>',
@@ -141,7 +141,7 @@ To insert it in a welcome or leave, there are three options:
 > \`${prefix}welcome message {embed:example}\``)
                         .addField('**VARIABLES**', `First of all, what are variables? Well, for that I am, the variables will allow us to do "automated" things so that they can be replaced by names, channels, links and others, they can be used in embeds as well as in text, for welcomes, leaves and custom commands. Here are some:
 \`{user}\` - @Mention (e.j. @Aviii.#0721)
-\`{server}\` - Server name (e.j. ${client.user?.username}'s Support)
+\`{server}\` - Server name (e.j. ${client.user!.username}'s Support)
 You can find the full list with \`${prefix}variables\``)
                         .setTimestamp()
                         .setFooter('<> Optional | [] Required'),
@@ -293,7 +293,12 @@ If you need to delete any property use:
 \`{channel.id}\` - Channel ID (e.j. 773629394894848033)
 \`{channel.name}\` - Channel name (e.j. memes)
 \`{channel.createdate}\` - Channel creation date`)
-                        .setTimestamp()
+                        .setTimestamp(),
+                    invite: () => new MessageEmbed()
+                        .setDescription(`Thank you for inviting me to your server! You will not regret.
+> [This is my invite link.](https://discord.com/api/oauth2/authorize?client_id=${client.user!.id}&permissions=8&scope=bot)
+In case you have any doubts, here's the invitation link from my support server.
+> [Support Server](https://discord.gg/K63NqEDm86)`)
                 },
                 commandErrors: {
                     noImage: () => 'You must specify the URL of a valid image.',

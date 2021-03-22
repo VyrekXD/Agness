@@ -11,7 +11,7 @@ export default class Spanish extends Language {
             nativeName: 'Español',
             strings: {
                 commands: {
-                    help: (prefix) => `<:world:820783752489074748> **Panel de ayuda de ${client.user?.username}**
+                    help: (prefix) => `<:world:820783752489074748> **Panel de ayuda de ${client.user!.username}**
 ¡Hola! En este momento cuento con **2** categorias y **${client.commands.size - client.commands.filter(c => c.category === 'Developer').size}** comandos.
 **Categorias:**
 > \`${prefix}help Config\` • Comandos de configuración <:config:820788840654307348>
@@ -20,7 +20,7 @@ export default class Spanish extends Language {
 Si necesita información más detallada sobre cada comando, puede usar:
 > \`${prefix}help <Comando>\`
 **Enlaces**
-**[Invitacion del Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user?.id}&permissions=8&scope=bot) | [Servidor de Soporte](https://discord.gg/K63NqEDm86) | [GitHub](https://github.com/AgnessBot/Agness) | [Top.gg](https://top.gg/bot/798573830645874718)**`,
+**[Invitacion del Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user!.id}&permissions=8&scope=bot) | [Servidor de Soporte](https://discord.gg/K63NqEDm86) | [GitHub](https://github.com/AgnessBot/Agness) | [Top.gg](https://top.gg/bot/798573830645874718)**`,
                     helpCategory: (prefix, category, commands, quantity) => {
                         const categories = {
                             Config: '**Config** <:config:820788840654307348>',
@@ -142,7 +142,7 @@ Para insertarlo en una bienvenida o despedida, hay tres opciones:
 > \`${prefix}welcome message {embed:ejemplo}\``)
                         .addField('**VARIABLES**', `En primer lugar, ¿qué son las variables? Bueno, para lo que soy, las variables nos van a permitir hacer cosas "automatizadas" para que puedan ser reemplazadas por nombres, canales, enlaces y demás, se pueden usar tanto en incrustaciones como en texto, para bienvenidas, hojas y comandos personalizados. Aquí están algunas:
 \`{user}\` - @Mención (e.j. @Aviii.#0721)
-\`{server}\` - Nombre del servidor (e.j. ${client.user?.username}'s Support)
+\`{server}\` - Nombre del servidor (e.j. ${client.user!.username}'s Support)
 Puede encontrar la lista completa con \`${prefix}variables\``)
                         .setTimestamp()
                         .setFooter('<> Optional | [] Required'),
@@ -294,7 +294,12 @@ Si necesita eliminar alguna propiedad, utilice:
 \`{channel.id}\` - ID del canal (e.j. 773629394894848033)
 \`{channel.name}\` - Nombre del canal (e.j. memes)
 \`{channel.createdate}\` - Fecha de creación del canal`)
-                        .setTimestamp()
+                        .setTimestamp(),
+                    invite: () => new MessageEmbed()
+                        .setDescription(`¡Gracias por invitarme a tu servidor! No te arrepentirás.
+> [Este es mi enlace de invitación.](https://discord.com/api/oauth2/authorize?client_id=${client.user!.id}&permissions=8&scope=bot)
+En caso de que tengas alguna duda, aquí está el enlace de invitación de mi servidor de soporte.
+> [Servidor de soporte](https://discord.gg/K63NqEDm86)`)
                 },
                 commandErrors: {
                     noImage: () => 'Debes especificar la URL de una imagen válida.',
