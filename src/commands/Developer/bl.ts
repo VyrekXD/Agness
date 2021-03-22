@@ -9,6 +9,7 @@ export default class BlacklistCommand extends Command {
             name: 'bl',
             aliases: ['blacklist'],
             usageArgs: ['[@User | User ID]', '[Reason]'],
+            devsOnly: true,
             category
         });
     }

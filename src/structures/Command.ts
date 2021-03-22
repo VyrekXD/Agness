@@ -80,7 +80,6 @@ export default abstract class Command {
     abstract run(message: Message, args: string[]): Promise<Message | void>;
 
     async canRun(message: Message): Promise<boolean> {
-        console.log(this.devsOnly)
         const channel = (message.channel as TextChannel);
         if (message.guild && !channel.permissionsFor(message.guild!.me!).has('SEND_MESSAGES')) return false;
         if (this.checkCooldowns(message) && !devs.includes(message.author.id))

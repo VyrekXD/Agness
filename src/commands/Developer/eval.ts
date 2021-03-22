@@ -10,8 +10,8 @@ export default class EvalCommand extends Command {
             name: 'eval',
             aliases: ['e'],
             usageArgs: ['<Code | Type>'],
-            category,
-            devsOnly: true
+            devsOnly: true,
+            category
         });
     }
 
