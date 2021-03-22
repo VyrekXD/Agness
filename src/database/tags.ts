@@ -6,7 +6,7 @@ export interface Tag extends Document {
     message: string;
     embedName: string;
     addRoleID: string[];
-    deleteRoleID: string[];
+    removeRoleID: string[];
     image: string;
 }
 
@@ -31,7 +31,7 @@ const tag: Schema<Tag> = new Schema({
         type: [String],
         default: []
     },
-    deleteRoleID: {
+    removeRoleID: {
         type: [String],
         default: []
     },

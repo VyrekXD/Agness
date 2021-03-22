@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars, max-lines */
 import { PermissionString, MessageEmbed } from 'discord.js';
 import Command, { Category } from './Command';
+import { Welcome } from '../database/welcome';
+import { Leave } from '../database/leave';
 import Agness from '../bot';
 
 interface CommandStrings {
@@ -25,12 +27,38 @@ interface CommandStrings {
     embedHelp(prefix: string): MessageEmbed;
     embedCreated(embed: string): string;
     embedDeleted(embed: string): string;
-    embedList(embeds: string, serverIcon: string | undefined): MessageEmbed;
-    embedEdited(property: string, embedName: string): string;
+    embedList(embeds: string, icon: string | undefined): MessageEmbed;
+    embedEdited(property: string, name: string): string;
     embedProperties(): MessageEmbed;
+    tagsHelp(prefix: string): MessageEmbed;
+    tagsCreated(name: string): string;
+    tagsEdited(name: string): string;
+    tagsDeleted(name: string): string;
+    tagsList(tags: string, icon: string | undefined): MessageEmbed;
+    tagsProperties(): MessageEmbed;
+    welcomeHelp(prefix: string): MessageEmbed;
+    leaveHelp(prefix: string): MessageEmbed;
+    welcomeChannel(channel: string): string;
+    leaveChannel(channel: string): string;
+    channelRemoved(): string;
+    messageRemoved(): string;
+    welcomeEmbed(prefix: string, embed: string): string;
+    leaveEmbed(prefix: string, embed: string): string;
+    welcomeMessage(prefix: string, embed: boolean): string;
+    leaveMessage(prefix: string, embed: boolean): string;
+    welcomeRoleRemoved(type: string): string;
+    welcomeRole(role: string, type: string, prefix: string): string;
+    welcomeConfig(welcome: Welcome, prefix: string): MessageEmbed;
+    leaveConfig(leave: Leave, prefix: string): MessageEmbed;
 }
 
 interface CommandErrorStrings {
+    noImage(): string;
+    noChannel(): string;
+    noChannelView(): string;
+    noChannelWrite(): string;
+    noRole(): string;
+    noRoleAdd(): string;
     cmdServer(): string;
     cmdCooldown(cooldown: string): string;
     cmdEnabled(): string;
@@ -48,11 +76,7 @@ interface CommandErrorStrings {
     sayNoPerms(): string;
     blacklist(reason: string, date: string): string;
     rrNoOption(prefix: string): string;
-    rrNoRole(): string;
-    rrNoRoleAdd(): string;
     rrNoType(prefix: string): string;
-    rrNoChannel(): string;
-    rrNoChannelView(): string;
     rrNoChannelReactions(): string;
     rrNoMessage(): string;
     rrNoMessageFound(): string;
@@ -70,10 +94,20 @@ interface CommandErrorStrings {
     embedNoExists(): string;
     embedNoValue(property: string): string;
     embedMaxCharacters(property: string, max: number): string;
-    embedNoImage(): string;
     embedNoTimestamp(): string;
     embedNoColor(): string;
     embedNoProperty(prefix: string): string;
+    tagsMax(): string;
+    tagsName(): string;
+    tagsExists(): string;
+    tagsNoMessage(): string;
+    tagsNoRolePerms(): string;
+    tagsNoRole(): string;
+    tagsNoExists(): string;
+    tagsNoCommand(): string;
+    welcomeNoMessage(): string;
+    leaveNoMessage(): string;
+    welcomeRoleType(): string;
 }
 
 interface CommandDescriptionStrings {
@@ -89,6 +123,7 @@ interface CommandDescriptionStrings {
     bl: string;
     reactrole: string;
     embed: string;
+    tags: string;
 }
 
 interface LanguageStrings {

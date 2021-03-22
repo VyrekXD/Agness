@@ -13,6 +13,6 @@ export default abstract class Event {
         this.name = options.name;
     }
 
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
     abstract run(...args: any[]): Promise<any>;
 }

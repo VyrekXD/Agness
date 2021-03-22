@@ -1,4 +1,4 @@
-import { GuildMember, Message, TextChannel } from 'discord.js';
+import { Message, TextChannel } from 'discord.js';
 import Command from '../../structures/Command';
 import { Embeds } from '../../database/embed';
 import isImageURL from 'image-url-validator';
@@ -13,12 +13,18 @@ export default class EmbedCommand extends Command {
             name: 'embed',
             aliases: ['eb', 'emb'],
             usageArgs: ['[add/del/list/edit/show/props]', '<Name>', '[Property]', '[Value | null]'],
+            memberGuildPermissions: ['ADMINISTRATOR'],
+            example: (p) => `${p}embed create rules`,
             category
         });
     }
 
     async run(message: Message, args: string[]): Promise<Message> {
-        const replaceText = (text: string) => this.client.replaceText(text, { channel: message.channel as TextChannel, member: message.member as GuildMember, prefix: this.server!.prefix });
+        const replaceText = (text: string) => this.client.replaceText(text, {
+            channel: message.channel as TextChannel,
+            member: message.member!,
+            prefix: this.server!.prefix
+        });
         switch (args[0]?.toLowerCase() ?? '') {
             case 'add':
             case 'create': {
@@ -44,7 +50,7 @@ export default class EmbedCommand extends Command {
             }
             case 'list': {
                 const embeds = await Embeds.find({ guildID: message.guild!.id });
-                return message.channel.send(this.lang.get('embedList', embeds.map((e, i) => `**${i + 1}**. ${e.name}`).join('\n'), message.guild!.iconURL({dynamic: true}) ?? undefined)
+                return message.channel.send(this.lang.get('embedList', embeds.map((e, i) => `**${i + 1}**. ${e.name}`).join('\n'), message.guild!.iconURL({ dynamic: true }) ?? undefined)
                     .setColor(this.client.color));
             }
             case 'edit': {
@@ -67,7 +73,7 @@ export default class EmbedCommand extends Command {
                                 embed[property].image = '';
                             } else {
                                 if (!this.exceptions.includes(parts[1]))
-                                    if (!(await isImageURL(parts[1]))) return message.channel.send(this.lang.getError('embedNoImage'));
+                                    if (!(await isImageURL(parts[1]))) return message.channel.send(this.lang.getError('noImage'));
                                 embed[property].text = parts[0];
                                 embed[property].image = parts[1];
                             }
@@ -88,7 +94,7 @@ export default class EmbedCommand extends Command {
                         if (!args[3]) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
                         if (args[3].toLowerCase() !== 'null') {
                             if (!this.exceptions.includes(args[3]))
-                                if (!(await isImageURL(args[3]))) return message.channel.send(this.lang.getError('embedNoImage'));
+                                if (!(await isImageURL(args[3]))) return message.channel.send(this.lang.getError('noImage'));
                             embed[property] = args[3];
                             embed[property] = args[3];
                         } else embed[property] = '';
@@ -110,7 +116,7 @@ export default class EmbedCommand extends Command {
                 }
 
                 await embed.save();
-                return message.channel.send(this.lang.get('embedEdited', property, embed.name), await this.client.generateEmbed(embed, replaceText));
+                return message.channel.send(this.lang.get('embedEdited', property, embed.name), this.client.generateEmbed(embed, replaceText));
             }
             case 'show':
             case 'preview': {

@@ -6,7 +6,7 @@ export default class PrefixCommand extends Command {
     constructor(client: Agness, category: string) {
         super(client, {
             name: 'prefix',
-            aliases: ['setprefix'],
+            aliases: ['setprefix', 'customprefix'],
             usageArgs: ['<New Prefix>'],
             example: (p) => `${p}prefix a-`,
             memberGuildPermissions: ['ADMINISTRATOR'],

@@ -76,7 +76,7 @@ export default abstract class Command {
             this.lang = this.client.languages.get(this.server.language) as Language;
     }
 
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-unused-vars
     abstract run(message: Message, args: string[]): Promise<Message | void>;
 
     async canRun(message: Message): Promise<boolean> {

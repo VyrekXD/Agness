@@ -11,7 +11,7 @@ export default class ReactionRoleCommand extends Command {
     constructor(client: Agness, category: string) {
         super(client, {
             name: 'reactrole',
-            aliases: ['rr', 'reactionrole'],
+            aliases: ['rr', 'reactionrole', 'reactionroles'],
             usageArgs: ['[@Role]', '[normal/unique/only]', '[Message ID]', '<#Channel>'],
             botGuildPermissions: ['MANAGE_ROLES'],
             memberGuildPermissions: ['ADMINISTRATOR'],
@@ -58,8 +58,8 @@ export default class ReactionRoleCommand extends Command {
             default: {
                 const matchRole = args[0]?.match(/^<@&(\d+)>$/)?.[1] ?? args[0];
                 const role = message.guild!.roles.resolve(matchRole);
-                if (!role) return this.sendError(message, this.lang.getError('rrNoRole'), 0);
-                if (!role.editable) return message.channel.send(this.lang.getError('rrNoRoleAdd'));
+                if (!role) return this.sendError(message, this.lang.getError('noRole'), 0);
+                if (!role.editable) return message.channel.send(this.lang.getError('noRoleAdd'));
 
                 if (!args[1] || !this.types.includes(args[1].toLowerCase())) return this.sendError(message, this.lang.getError('rrNoType', this.server!.prefix), 1);
 
@@ -68,8 +68,8 @@ export default class ReactionRoleCommand extends Command {
 
                 const matchChannel = args[3]?.match(/^<#(\d+)>$/)?.[1] ?? args[3];
                 const channel = (message.guild!.channels.resolve(matchChannel) ?? message.channel) as TextChannel;
-                if (!channel || channel.type !== 'text') return this.sendError(message, this.lang.getError('rrNoChannel'), 3);
-                if (!channel.viewable) return message.channel.send(this.lang.getError('rrNoChannelView'));
+                if (!channel || channel.type !== 'text') return this.sendError(message, this.lang.getError('noChannel'), 3);
+                if (!channel.viewable) return message.channel.send(this.lang.getError('noChannelView'));
                 if (!channel.permissionsFor(message.guild!.me!).has('ADD_REACTIONS')) return message.channel.send(this.lang.getError('rrNoChannelReactions'));
 
                 try {

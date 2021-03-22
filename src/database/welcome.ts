@@ -5,8 +5,10 @@ export interface Welcome extends Document {
     channelID: string;
     embedName: string;
     message: string;
-    userRoleID: string;
-    botRoleID: string;
+    autorole: {
+        user: string;
+        bot: string;
+    };
 }
 
 const welcomes: Schema<Welcome> = new Schema({
@@ -27,13 +29,15 @@ const welcomes: Schema<Welcome> = new Schema({
         type: String,
         default: ''
     },
-    userRoleID: {
-        type: String,
-        default: ''
-    },
-    botRoleID: {
-        type: String,
-        default: ''
+    autorole: {
+        user: {
+            type: String,
+            default: ''
+        },
+        bot: {
+            type: String,
+            default: ''
+        }
     }
 });
 

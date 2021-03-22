@@ -150,7 +150,7 @@ Use \`a?embed properties\` to see how to modify it.`,
                     embedDeleted: (embed) => `Embed with name ${embed} deleted successfully`,
                     embedList: (embeds, serverIcon) => new MessageEmbed()
                         .setAuthor('Server embeds', serverIcon)
-                        .setDescription(embeds),
+                        .setDescription(embeds || 'This server doesn\'t has any embed.'),
                     embedEdited: (property, embedName) => `The **${property}** property of the embed a was edited correctly.
 You can add the embed to welcome, leave or tags (custom commands) with \`{embed:${embedName}}\`.
 **__Preview of the embed:__**`,
@@ -164,9 +164,103 @@ You can add the embed to welcome, leave or tags (custom commands) with \`{embed:
 > \`color\` - [Hex Code]
 > \`timestamp\` - [yes/no]`)
                         .setFooter('<> Optional | [] Required')
-                        .setTimestamp()
+                        .setTimestamp(),
+                    tagsHelp: (prefix) => new MessageEmbed()
+                        .setDescription(`You must specify a valid option.
+> \`${prefix}tag create [Name] [Properties]\`
+> \`${prefix}tag edit [Name] [Properties]\`
+> \`${prefix}tag delete [Name]\`
+
+To see all tags in the server use:
+> \`${prefix}tag list\`
+
+To see the properties use:
+> \`${prefix}tag properties\`
+
+To use a tag, use:
+> \`${prefix}[tag name]\``),
+                    tagsCreated: (tagName) => `Tag with the name **${tagName}** created successfully.`,
+                    tagsEdited: (tagName) => `Tag with the name **${tagName}** edited successfully.`,
+                    tagsDeleted: (tagName) => `Tag with the name **${tagName}** deleted successfully.`,
+                    tagsList: (tags, icon) => new MessageEmbed()
+                        .setAuthor('Server tag list', icon)
+                        .setDescription(tags || 'This server doesn\'t has any tag.'),
+                    tagsProperties: () => new MessageEmbed()
+                        .addField('**Properties of a tag**', `
+> \`(message:[Text])\` - The normal text of the message to send.
+> \`(image:[URL])\` - Send an image as attachment.
+> \`{embed:[Embed Name]}\` - Send an embed already created (embed command).
+> \`{addRole:[RoleID]}\` - Adds a role (put another \\*:roleID\\* to add one more role).
+> \`{removeRole:[RoleID]}\` - Removes a role (put another \\*:roleID\\* to remove one more role).`),
+                    welcomeHelp: (prefix) => new MessageEmbed()
+                        .setDescription(`You must specify a valid property.
+> \`${prefix}welcome channel [#Canal]\`
+> \`${prefix}welcome message [ <Text> | {embed[embed name]} ]\`
+> \`${prefix}welcome autorole [user|bot] [@Role | Role ID |]\`
+To insert a message or embed, there are three options:
+- Message and embed:
+> \`${prefix}welcome message Welcome {user}! | {embed:[embed name]}\`
+- Message only:
+> \`${prefix}welcome message Welcome {user}!\`
+- Or just the embed:
+> \`${prefix}welcome message {embed:[embed name]}\`
+If you need to delete any property use:
+> \`${prefix}welcome [property] null\``)
+                        .setFooter(`You can see the configuration using: ${prefix}welcome config`),
+                    leaveHelp: (prefix) => new MessageEmbed()
+                        .setDescription(`You must specify a valid property.
+> \`${prefix}leave channel [#Channel | null]\`
+> \`${prefix}leave message  [<Text>| {embed[embed name]} ]\`
+To insert messages into a leave, there are three options:
+- Message and embed:
+> \`${prefix}leave message A user left the server! | {embed:[embed name]}\`
+- Message only:
+> \`${prefix}leave message A User left the server!\`
+- Or just the embed:
+> \`${prefix}leave message {embed:[embed name]}\`
+If you need to delete any property use:
+> \`${prefix}leave [property] null\``)
+                        .setFooter(`You can see the configuration using: ${prefix}leave config`),
+                    welcomeChannel: (channel) => `The welcomes channel is now ${channel}.`,
+                    leaveChannel: (channel) => `The leaves channel is now ${channel}.`,
+                    channelRemoved: () => 'The channel was successfully removed.',
+                    messageRemoved: () => 'The message was successfully deleted.',
+                    welcomeEmbed: (prefix, embed) => `The new embed to use in the welcomes is now **${embed}**. To test it use: \`${prefix}test welcome\`.`,
+                    leaveEmbed: (prefix, embed) => `The new embed to use in the leaves is now **${embed}**. To test it use: \`${prefix}test leave\`.`,
+                    welcomeMessage: (prefix, embed) => `The message ${embed ? 'and embed ' : ''}of welcomes has been updated correctly. To test it use: \`${prefix}test welcome\`.`,
+                    leaveMessage: (prefix, embed) => `The message ${embed ? 'and embed ' : ''}of leaves has been updated correctly. To test it use: \`${prefix}test leave\`.`,
+                    welcomeRoleRemoved: (option) => `A role will not be given now when a ${option} joins the server.`,
+                    welcomeRole: (role, option, prefix) => `Now, the role **${role}** will be given when a ${option} joins the server. To test it use: \`${prefix}test welcome\``,
+                    welcomeConfig: (welcome, prefix) => {
+                        const configEmbed = new MessageEmbed()
+                            .setTitle('Server Welcome Configuration')
+                            .setDescription(`**Channel:** ${welcome.channelID ? `<#${welcome.channelID}>` : 'Doesn\'t have.'}
+**User AutoRole:** ${welcome.autorole.user ? `<@&${welcome.autorole.user}>` : 'Doesn\'t have.'}
+**Bot AutoRole:** ${welcome.autorole.bot ? `<@&${welcome.autorole.bot}>` : 'Doesn\'t have.'}
+**Embed Name:** ${welcome.embedName ? welcome.embedName : 'Doesn\'t have.'}`)
+                            .addField('Message:', `${welcome.message ? welcome.message.length > 1024 ? `${welcome.message.substring(0, 1000)}. And more..` : welcome.message : 'Doesn\'t have.'}`);
+                        if (welcome.embedName)
+                            configEmbed.setFooter(`If you want to see the embed use: ${prefix}embed preview ${welcome.embedName}`);
+                        return configEmbed;
+                    },
+                    leaveConfig: (leave, prefix) => {
+                        const configEmbed = new MessageEmbed()
+                            .setTitle('Server Welcome Configuration')
+                            .setDescription(`**Channel:** ${leave.channelID ? `<#${leave.channelID}>` : 'Doesn\'t have.'}
+**Embed Name:** ${leave.embedName ? leave.embedName : 'Doesn\'t have.'}`)
+                            .addField('Message:', `${leave.message ? leave.message.length > 1024 ? `${leave.message.substring(0, 1000)}. And more..` : leave.message : 'Doesn\'t have.'}`);
+                        if (leave.embedName)
+                            configEmbed.setFooter(`If you want to see the embed use: ${prefix}embed preview ${leave.embedName}`);
+                        return configEmbed;
+                    }
                 },
                 commandErrors: {
+                    noImage: () => 'You must specify the URL of a valid image.',
+                    noChannel: () => 'I couldn\'t find the channel or it\'s invalid.',
+                    noChannelView: () => 'I don\'t have permissions to see that channel.',
+                    noChannelWrite: () => 'I can\'t send messages in that channel.',
+                    noRole: () => 'I couldn\'t find that role or it\'s invalid.',
+                    noRoleAdd: () => 'I don\'t have enough permissions to give that role.',
                     cmdServer: () => 'This command is only available for servers.',
                     cmdCooldown: (cooldown) => `You have to wait **${cooldown}s** to execute this command.`,
                     cmdEnabled: () => 'This command is under maintenance.',
@@ -191,11 +285,7 @@ You can appeal by going to my support server.
 > \`${prefix}reactrole [@Role] [Type] [Message ID] <#Channel>\`
 > \`${prefix}reactrole delete [Emoji] [Message ID]\`
 If you need a little more help you can use: \`${prefix}reactrole help\``,
-                    rrNoRole: () => 'I couldn\'t find that role or it\'s invalid.',
-                    rrNoRoleAdd: () => 'I don\'t have enough permissions to give that role.',
                     rrNoType: (prefix) => `That's not a type of reaction role. Use [${prefix}reactrole help] to see more about reaction roles.`,
-                    rrNoChannel: () => 'I couldn\'t find the channel or it\'s invalid.',
-                    rrNoChannelView: () => 'I don\'t have permissions to see that channel.',
                     rrNoChannelReactions: () => 'I don\'t have permissions to add reactions in that channel.',
                     rrNoMessage: () => 'You must specify the ID of a message.',
                     rrNoMessageFound: () => 'The message wasn\'t found.',
@@ -212,12 +302,22 @@ If you need a little more help you can use: \`${prefix}reactrole help\``,
                     embedExists: () => 'There\'s already an embed with that name. Try another.',
                     embedNoExists: () => 'There\'s no embed with that name or you didn\'t specify one.',
                     embedNoValue: (property) => `You must put the text to put as ${property}.`,
-                    embedMaxCharacters: (property, max) => `'The ${property} must have ${max} characters or less.`,
-                    embedNoImage: () => 'You must specify the URL of a valid image.',
+                    embedMaxCharacters: (property, max) => `The **${property}** must have ${max} characters or less.`,
                     embedNoTimestamp: () => 'You must specify if you want the timestamp (yes/no).',
                     embedNoColor: () => 'You must specify the color without #.',
                     embedNoProperty: (prefix) => `The property that you put isn't valid.
-You can see the list of the properties with \`${prefix}embed properties\`.`
+You can see the list of the propertsies with \`${prefix}embed properties\`.`,
+                    tagsMax: () => 'You can only have 10 tags per server.',
+                    tagsName: () => 'You must specify the name of the tag and must have a maximum of 10 characters.',
+                    tagsExists: () => 'There\'s already an tag with that name. Try another.',
+                    tagsNoMessage: () => 'You must specify a message, embed or image to send or all three.',
+                    tagsNoRolePerms: () => 'I don\'t have enough permissions to add or remove roles.',
+                    tagsNoRole: () => 'I can\'t add or remove the roles you have specified or they don\'t exist.',
+                    tagsNoExists: () => 'There\'s no tag with that name or you didn\'t specify one.',
+                    tagsNoCommand: () => 'You can\'t create a tag with the name of a command.',
+                    welcomeNoMessage: () => 'You must specify a welcome message.',
+                    leaveNoMessage: () => 'You must specify a welcome message.',
+                    welcomeRoleType: () => 'You must specify the type of user that will receive the role (user/bot)'
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',
@@ -230,8 +330,9 @@ You can see the list of the properties with \`${prefix}embed properties\`.`
                     vote: 'Shows the Top.gg link to vote for me.',
                     lang: 'Changes the language on your server for a more pleasant environment.',
                     bl: 'Adds an user to the blacklist.',
-                    reactrole: 'Establishes roles with a specific emoji in the message you want, works for colored roles, roles for mentions. Everything is possible!',
-                    embed: 'Create custom embeds for your tags, welcomes and leaves. You put the design!'
+                    reactrole: 'Lets you establish roles with a specific emoji in the message you want, works for colored roles, roles for mentions. Everything is possible!',
+                    embed: 'Lets you create custom embeds for your tags, welcomes and leaves. You do the design!',
+                    tags: 'Lets you create custom commands (tags) that can send messages, photos and add or delete roles. Everything is possible!'
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrator',
