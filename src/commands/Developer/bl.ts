@@ -19,8 +19,8 @@ export default class BlacklistCommand extends Command {
         if (!args[0]) return message.channel.send(embed.setDescription(`You must give me a username.
 **Correct Use:**
 > ${this.server?.prefix}bl [@mention] <reason>`));
-        const matchUser = args[0].match(/^<@!?(\d+)>$/);
-        const user = matchUser ? await this.client.users.fetch(matchUser[1]).catch(() => null) : await this.client.users.fetch(args[0]).catch(() => null);
+        const matchUser = args[0]?.match(/^<@!?(\d+)>$/)?.[1] ?? args[0];
+        const user = await this.client.users.fetch(matchUser).catch(() => null);
         if (!user) return message.channel.send(new MessageEmbed()
             .setDescription(`You have provided an invalid user.
 **Correct Use:**

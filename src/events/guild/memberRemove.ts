@@ -1,37 +1,27 @@
 import { GuildMember, TextChannel } from 'discord.js';
-import { Welcomes } from '../../database/welcome';
 import { Servers } from '../../database/server';
 import { Embeds } from '../../database/embed';
+import { Leaves } from '../../database/leave';
 import Event from '../../structures/Event';
 import Agness from '../../bot';
 
-export default class MemberAddEvent extends Event {
+export default class MemberRemoveEvent extends Event {
     constructor(client: Agness) {
         super(client, {
-            name: 'guildMemberAdd'
+            name: 'guildMemberRemove'
         });
     }
 
     async run(member: GuildMember): Promise<void> {
-        const welcome = await Welcomes.findOne({ guildID: member.guild.id });
-        if (!welcome) return;
-
-        if (!member.user.bot && welcome.autorole.user) {
-            const role = member.guild.roles.resolve(welcome.autorole.user);
-            if (role && role.editable) member.roles.add(role.id).catch(() => void 0);
-        }
-        if (member.user.bot && welcome.autorole.bot) {
-            const role = member.guild.roles.resolve(welcome.autorole.bot);
-            if (role && role.editable) member.roles.add(role.id).catch(() => void 0);
-        }
-
-        const channel = member.guild.channels.resolve(welcome.channelID);
+        const leave = await Leaves.findOne({ guildID: member.guild.id });
+        if (!leave) return;
+        const channel = member.guild.channels.resolve(leave.channelID);
         if (!channel) return;
 
         let embed;
         const embedData = await Embeds.findOne({
             guildID: member.guild.id,
-            name: welcome.embedName
+            name: leave.embedName
         });
         let server = await Servers.findOne({ guildID: member.guild.id });
         if (!server)
@@ -47,7 +37,7 @@ export default class MemberAddEvent extends Event {
             });
         if (embedData)
             embed = await this.client.generateEmbed(embedData, replaceText);
-        if (!welcome.message && !embed) return;
-        (channel as TextChannel).send(await replaceText(welcome.message), { embed }).catch(() => void 0);
+        if (!leave.message && !embed) return;
+        (channel as TextChannel).send(await replaceText(leave.message), { embed }).catch(() => void 0);
     }
 }

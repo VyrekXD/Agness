@@ -9,11 +9,8 @@ export default class MemberUpdateEvent extends Event {
         });
     }
 
-    async run(oldM: GuildMember, newM: GuildMember): Promise<void> {
-        if (newM.guild.id !== '798551506202394654') return;
-        if (
-            !oldM.roles.cache.has('819270744034246696') &&
-            newM.roles.cache.has('819270744034246696')
-        ) newM.roles.add('819270811759542353')
+    async run(oldMember: GuildMember, newMember: GuildMember): Promise<void> {
+        if (newMember.guild.id === '798551506202394654') return;
+        if (!oldMember.roles.cache.has('819270744034246696') && newMember.roles.cache.has('819270744034246696')) newMember.roles.add('819270811759542353');
     }
 }
