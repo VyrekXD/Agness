@@ -11,6 +11,7 @@ export default class LeaveCommand extends Command {
             aliases: ['setleave'],
             usageArgs: ['[channel/message/config]', '[Value | null]'],
             memberGuildPermissions: ['ADMINISTRATOR'],
+            botChannelPermissions: ['EMBED_LINKS'],
             example: (p) => `${p}leave channel #goodbye`,
             category
         });

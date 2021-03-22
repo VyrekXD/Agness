@@ -14,6 +14,7 @@ export default class EmbedCommand extends Command {
             aliases: ['eb', 'emb'],
             usageArgs: ['[add/del/list/edit/show/props]', '<Name>', '[Property]', '[Value | null]'],
             memberGuildPermissions: ['ADMINISTRATOR'],
+            botChannelPermissions: ['EMBED_LINKS'],
             example: (p) => `${p}embed create rules`,
             category
         });
@@ -91,12 +92,12 @@ export default class EmbedCommand extends Command {
                     }
                     case 'image':
                     case 'thumbnail': {
-                        if (!args[3]) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
-                        if (args[3].toLowerCase() !== 'null') {
-                            if (!this.exceptions.includes(args[3]))
-                                if (!(await isImageURL(args[3]))) return message.channel.send(this.lang.getError('noImage'));
-                            embed[property] = args[3];
-                            embed[property] = args[3];
+                        const imageLink = args[3] || message.attachments.first()?.url || '';
+                        if (!imageLink) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
+                        if (imageLink.toLowerCase() !== 'null') {
+                            if (!this.exceptions.includes(imageLink))
+                                if (!(await isImageURL(imageLink))) return message.channel.send(this.lang.getError('noImage'));
+                            embed[property] = imageLink;
                         } else embed[property] = '';
                         break;
                     }

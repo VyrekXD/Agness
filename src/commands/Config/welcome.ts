@@ -11,6 +11,7 @@ export default class WelcomeCommand extends Command {
             aliases: ['setwelcome'],
             usageArgs: ['[channel/message/config/role]', '[Value | null]'],
             memberGuildPermissions: ['ADMINISTRATOR'],
+            botChannelPermissions: ['EMBED_LINKS'],
             example: (p) => `${p}welcome channel #welcomes`,
             category
         });

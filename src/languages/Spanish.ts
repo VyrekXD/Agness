@@ -226,12 +226,12 @@ Si necesita eliminar alguna propiedad, utilice:
                     leaveChannel: (channel) => `El canal de despedidas es ahora ${channel}.`,
                     channelRemoved: () => 'El canal se eliminó correctamente.',
                     messageRemoved: () => 'El mensaje se eliminó correctamente.',
-                    welcomeEmbed: (prefix, embed) => `El nuevo embed para usar en las bienvenidas ahora es **${embed}**. Para probarlo usa: \`${prefix}test welcome\`.`,
-                    leaveEmbed: (prefix, embed) => `El nuevo embed para usar en las despedidas ahora es **${embed}**. Para probarlo usa: \`${prefix}test leave\`.`,
-                    welcomeMessage: (prefix, embed) => `El mensaje ${embed ? 'y embed ' : ''}de las bienvenidas se ha actualizado correctamente. Para probarlo usa: \`${prefix}test leave\`.`,
-                    leaveMessage: (prefix, embed) => `El mensaje ${embed ? 'y embed ' : ''}de las bienvenidas se ha actualizado correctamente. Para probarlo usa: \`${prefix}test leave\`.`,
+                    welcomeEmbed: (prefix, embed) => `El nuevo embed para usar en las bienvenidas ahora es **${embed}**. Para probarlo usa: \`${prefix}emit welcome\`.`,
+                    leaveEmbed: (prefix, embed) => `El nuevo embed para usar en las despedidas ahora es **${embed}**. Para probarlo usa: \`${prefix}emit leave\`.`,
+                    welcomeMessage: (prefix, embed) => `El mensaje ${embed ? 'y embed ' : ''}de las bienvenidas se ha actualizado correctamente. Para probarlo usa: \`${prefix}emit leave\`.`,
+                    leaveMessage: (prefix, embed) => `El mensaje ${embed ? 'y embed ' : ''}de las bienvenidas se ha actualizado correctamente. Para probarlo usa: \`${prefix}emit leave\`.`,
                     welcomeRoleRemoved: (option) => `No se dará un rol ahora cuando un ${option} se una al servidor.`,
-                    welcomeRole: (role, option, prefix) => `Ahora, el rol **${role}** se dará cuando un ${option} se una al servidor. Para probarlo usa: \`${prefix}test welcome\``,
+                    welcomeRole: (role, option, prefix) => `Ahora, el rol **${role}** se dará cuando un ${option} se una al servidor. Para probarlo usa: \`${prefix}emit welcome\``,
                     welcomeConfig: (welcome, prefix) => {
                         const configEmbed = new MessageEmbed()
                             .setTitle('Configuración de bienvenida del servidor')
@@ -253,7 +253,48 @@ Si necesita eliminar alguna propiedad, utilice:
                         if (welcome.embedName)
                             configEmbed.setFooter(`Si deseas ver el embed usa: ${prefix}embed preview ${welcome.embedName}`);
                         return configEmbed;
-                    }
+                    },
+                    emitEvent: (event) => `Se emitió el evento **${event}** correctamente.`,
+                    variables: () => new MessageEmbed()
+                    .setTitle(`${client.user!.username} Variables`)
+                    .setDescription('Estas variables se pueden usar al editar embeds, en mensajes de bienvenida / despedida y comandos personalizados(tags).')
+                    .addField('Informacion del usuario',
+                        `\`{user}\` - @Mención (e.j. @Aviii.#0721 ❤️)
+\`{user.name}\` - Username (e.j. Aviii.)
+\`{user.discrim}\` - User tag (e.j. 0721)
+\`{user.nick}\` - Apodo del miembro, si no lo tiene, mostrará "No nickname".
+\`{user.createdate}\` - Fecha de creación de la cuenta
+\`{user.joindate}\` - Fecha en que se unió al servidor
+\`{user.id}\` - ID del usuario (e.j. 710880777662890095)
+\`{user.avatar}\` - Enlace al avatar del usuario`)
+                    .addField('Server Information',
+                        `\`{server}\` - Nombre del servidor (e.j. ${client.user!.username}'s Support)
+\`{server.prefix}\` - Prefijo del servidor (by default, a?)
+\`{server.id}\` - ID del servidor (e.j. 773629394894848030)
+\`{server.membercount}\` - Número total de miembros
+\`{server.membercount.nobots}\` - Número total de miembros (no bots)
+\`{server.membercount.bots}\` - Número total de miembros (bots)
+\`{server.rolecount}\` - Número de roles
+\`{server.channelcount}\` - Número de canales
+\`{server.channelcount.voice}\` - Número de canales de voz
+\`{server.emojiscount}\` - Numero total de emojis
+\`{server.emojiscount.animate}\` - Número de emojis animados
+\`{server.emojiscount.noanimate}\` - Número de emojis no animados
+\`{server.createdate}\` - Fecha de creación del servidor
+\`{server.boostlevel}\` - Nivel de boost del servidor
+\`{server.boostcount}\` - Número de boosts  en el servidor
+\`{server.icon}\` - Enlace al icono del servidor`)
+                    .addField('Server Owner Information',
+                        `\`{server.owner}\` - @Mención al propietario (e.j. @Aviii.#0721)
+\`{server.owner.id}\` - ID del propietario (e.j. 710880777662890095)
+\`{server.owner.nick}\` - Apodo del propietario, si no lo tiene, mostrará 'No nickname.'
+\`{server.owner.avatar}\` - Enlace al avatar del propietario`)
+                    .addField('Channel Information',
+                        `\`{channel}\` - Mencion del canal (e.j. #memes)
+\`{channel.id}\` - ID del canal (e.j. 773629394894848033)
+\`{channel.name}\` - Nombre del canal (e.j. memes)
+\`{channel.createdate}\` - Fecha de creación del canal`)
+                    .setTimestamp()
                 },
                 commandErrors: {
                     noImage: () => 'Debes especificar la URL de una imagen válida.',
@@ -286,6 +327,7 @@ Puedes apelar entrando al servidor de soporte
 > \`${prefix}reactrole [@Rol] [Tipo] [ID Mensaje] <#Canal>\`
 > \`${prefix}reactrole delete [Emoji] [ID Mensaje]\`
 Si necesitas un poco más de ayuda, puede usar: \`${prefix}reactrole help\``,
+                    rrMax: () => 'Solo puede tener 32 roles por reacción por servidor.',
                     rrNoType: (prefix) => `Ese no es un tipo de rol por reacción. Usa [${prefix}reactrole help] para ver más sobre los roles por reacción.`,
                     rrNoChannelReactions: () => 'No tengo permisos para agregar reacciones en ese canal.',
                     rrNoMessage: () => 'Debes especificar la ID de un mensaje.',
@@ -318,7 +360,8 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     tagsNoCommand: () => 'No puedes crear un tag con el nombre de un comando.',
                     welcomeNoMessage: () => 'Debe especificar un mensaje de bienvenida.',
                     leaveNoMessage: () => 'Debe especificar un mensaje de despedida.',
-                    welcomeRoleType: () => 'Debes especificar el tipo de usuario que recibirá el rol (user/bot)'
+                    welcomeRoleType: () => 'Debes especificar el tipo de usuario que recibirá el rol (user/bot)',
+                    emitNoEvent: () => 'Debes especificar el evento a probar.'
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',
@@ -333,7 +376,12 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     bl: 'Añade a un usuario a la lista negra.',
                     reactrole: 'Establece roles con determinado emoji en el mensaje que quieras, funciona para roles de colores, roles para menciones. ¡Todo es posible!',
                     embed: 'Crea embeds personalizados para tus tags, bienvenidas y salidas. ¡Tú haces el diseño!',
-                    tags: 'Crea comandos personalizados que pueden enviar mensajes, fotos y añadir o eliminar roles. ¡Todo es posible!'
+                    tags: 'Crea comandos personalizados que pueden enviar mensajes, fotos y añadir o eliminar roles. ¡Todo es posible!',
+                    welcome: 'Configura el canal, los mensajes, y roles que más prefieras cuando alguien se une a tu servidor c:',
+                    leave: 'Establezca el canal y los mensajes que prefiera cuando alguien abandone su servidor >:c',
+                    emit: 'Haz una simulación de eventos en el bot.',
+                    varibles: 'Mira los distintos tipos de variables que puedes usar con el bot.'
+
                 },
                 permissions: {
                     ADMINISTRATOR: 'Administrador',

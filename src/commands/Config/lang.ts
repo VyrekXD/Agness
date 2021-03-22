@@ -10,6 +10,7 @@ export default class LanguageCommand extends Command {
             usageArgs: ['<New Language>'],
             example: (p) => `${p}lang es`,
             memberGuildPermissions: ['ADMINISTRATOR'],
+            botChannelPermissions: ['EMBED_LINKS'],
             category
         });
     }

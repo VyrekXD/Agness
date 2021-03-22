@@ -50,6 +50,8 @@ interface CommandStrings {
     welcomeRole(role: string, type: string, prefix: string): string;
     welcomeConfig(welcome: Welcome, prefix: string): MessageEmbed;
     leaveConfig(leave: Leave, prefix: string): MessageEmbed;
+    emitEvent(event: string): string;
+    variables(): MessageEmbed;
 }
 
 interface CommandErrorStrings {
@@ -75,6 +77,7 @@ interface CommandErrorStrings {
     sayNoText(): string;
     sayNoPerms(): string;
     blacklist(reason: string, date: string): string;
+    rrMax(): string;
     rrNoOption(prefix: string): string;
     rrNoType(prefix: string): string;
     rrNoChannelReactions(): string;
@@ -108,6 +111,7 @@ interface CommandErrorStrings {
     welcomeNoMessage(): string;
     leaveNoMessage(): string;
     welcomeRoleType(): string;
+    emitNoEvent(): string;
 }
 
 interface CommandDescriptionStrings {
@@ -124,6 +128,10 @@ interface CommandDescriptionStrings {
     reactrole: string;
     embed: string;
     tags: string;
+    welcome: string;
+    leave: string;
+    emit: string;
+    varibles: string;
 }
 
 interface LanguageStrings {

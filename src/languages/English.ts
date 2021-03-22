@@ -225,12 +225,12 @@ If you need to delete any property use:
                     leaveChannel: (channel) => `The leaves channel is now ${channel}.`,
                     channelRemoved: () => 'The channel was successfully removed.',
                     messageRemoved: () => 'The message was successfully deleted.',
-                    welcomeEmbed: (prefix, embed) => `The new embed to use in the welcomes is now **${embed}**. To test it use: \`${prefix}test welcome\`.`,
-                    leaveEmbed: (prefix, embed) => `The new embed to use in the leaves is now **${embed}**. To test it use: \`${prefix}test leave\`.`,
-                    welcomeMessage: (prefix, embed) => `The message ${embed ? 'and embed ' : ''}of welcomes has been updated correctly. To test it use: \`${prefix}test welcome\`.`,
-                    leaveMessage: (prefix, embed) => `The message ${embed ? 'and embed ' : ''}of leaves has been updated correctly. To test it use: \`${prefix}test leave\`.`,
+                    welcomeEmbed: (prefix, embed) => `The new embed to use in the welcomes is now **${embed}**. To test it use: \`${prefix}emit welcome\`.`,
+                    leaveEmbed: (prefix, embed) => `The new embed to use in the leaves is now **${embed}**. To test it use: \`${prefix}emit leave\`.`,
+                    welcomeMessage: (prefix, embed) => `The message ${embed ? 'and embed ' : ''}of welcomes has been updated correctly. To test it use: \`${prefix}emit welcome\`.`,
+                    leaveMessage: (prefix, embed) => `The message ${embed ? 'and embed ' : ''}of leaves has been updated correctly. To test it use: \`${prefix}emit leave\`.`,
                     welcomeRoleRemoved: (option) => `A role will not be given now when a ${option} joins the server.`,
-                    welcomeRole: (role, option, prefix) => `Now, the role **${role}** will be given when a ${option} joins the server. To test it use: \`${prefix}test welcome\``,
+                    welcomeRole: (role, option, prefix) => `Now, the role **${role}** will be given when a ${option} joins the server. To test it use: \`${prefix}emit welcome\``,
                     welcomeConfig: (welcome, prefix) => {
                         const configEmbed = new MessageEmbed()
                             .setTitle('Server Welcome Configuration')
@@ -252,122 +252,169 @@ If you need to delete any property use:
                         if (leave.embedName)
                             configEmbed.setFooter(`If you want to see the embed use: ${prefix}embed preview ${leave.embedName}`);
                         return configEmbed;
-                    }
-                },
-                commandErrors: {
-                    noImage: () => 'You must specify the URL of a valid image.',
-                    noChannel: () => 'I couldn\'t find the channel or it\'s invalid.',
-                    noChannelView: () => 'I don\'t have permissions to see that channel.',
-                    noChannelWrite: () => 'I can\'t send messages in that channel.',
-                    noRole: () => 'I couldn\'t find that role or it\'s invalid.',
-                    noRoleAdd: () => 'I don\'t have enough permissions to give that role.',
-                    cmdServer: () => 'This command is only available for servers.',
-                    cmdCooldown: (cooldown) => `You have to wait **${cooldown}s** to execute this command.`,
-                    cmdEnabled: () => 'This command is under maintenance.',
-                    cmdDevs: () => 'This command can only be used by developers.',
-                    cmdNSFW: () => 'This command can only be used on NSFW channels.',
-                    cmdMemberGuild: (perms) => `You need the following permissions:\n\`\`\`diff\n${perms}\n\`\`\``,
-                    cmdMemberChannel: (perms) => `You need the following permissions on this channel:\n\`\`\`diff\n${perms}\n\`\`\``,
-                    cmdBotGuild: (perms) => `I need the following permissions:\n\`\`\`diff\n${perms}\n\`\`\``,
-                    cmdBotChannel: (perms) => `I need the following permissions on this channel:\n\`\`\`diff\n${perms}\n\`\`\``,
-                    prefixArgs: () => 'You must specify the new prefix.',
-                    prefixLength: () => 'The new prefix must not exceed 5 characters.',
-                    langNo: () => 'You must specify a valid language.',
-                    helpNo: () => '> The command or category couldn\'t be found.',
-                    sayNoText: () => 'You must specify the text that you want me to say.',
-                    sayNoPerms: () => 'You must have the permission of mention everyone to execute this command.',
-                    blacklist: (reason, date) => `You're on the blacklist. Here you have more information:
+                    },
+                    emitEvent: (event) => `Emitted **${event}** event successfully.`,
+                    variables: () => new MessageEmbed()
+                        .setTitle(`${client.user!.username} Variables`)
+                        .setDescription('These variables can be used when editing embeds, in welcomes/leaves messages, and custom commands (tags).')
+                        .addField('User Information',
+                            `\`{user}\` - @Mention (e.j. @Aviii.#0721 ❤️)
+\`{user.name}\` - Username (e.j. Aviii.)
+\`{user.discrim}\` - User tag (e.j. 0721)
+\`{user.nick}\` - Member's nickname, if none, it will show 'No nickname.'
+\`{user.createdate}\` - Account creation date
+\`{user.joindate}\` - Date you joined the server
+\`{user.id}\` - User ID (e.j. 710880777662890095)
+\`{user.avatar}\` - Link to the user avatar`)
+                        .addField('Server Information',
+                            `\`{server}\` - Server name (e.j. ${client.user!.username}'s Support)
+\`{server.prefix}\` - Server prefix (by default, a?)
+\`{server.id}\` - Server ID (e.j. 773629394894848030)
+\`{server.membercount}\` - Number of total members
+\`{server.membercount.nobots}\` - Number of total members (no bots)
+\`{server.membercount.bots}\` - Number of total members (bots)
+\`{server.rolecount}\` - Number of roles
+\`{server.channelcount}\` - Number of channels
+\`{server.channelcount.voice}\` - Number of voice channels
+\`{server.emojiscount}\` - Number of total emojis
+\`{server.emojiscount.animate}\` - Number of animated emojis
+\`{server.emojiscount.noanimate}\` - Number of non-animated emojis
+\`{server.createdate}\` - Server creation date
+\`{server.boostlevel}\` - Boost level of the server
+\`{server.boostcount}\` - Number of boosts in the server
+\`{server.icon}\` - Link to the server icon`)
+                        .addField('Server Owner Information',
+                            `\`{server.owner}\` - @Mention to the owner (e.j. @Aviii.#0721)
+\`{server.owner.id}\` - Owner ID (e.j. 710880777662890095)
+\`{server.owner.nick}\` - Owner's nickname, if none, it will show 'No nickname.'
+\`{server.owner.avatar}\` - Link to the owner avatar`)
+                        .addField('Channel Information',
+                            `\`{channel}\` - Mention to the channel (e.j. #memes)
+\`{channel.id}\` - Channel ID (e.j. 773629394894848033)
+\`{channel.name}\` - Channel name (e.j. memes)
+\`{channel.createdate}\` - Channel creation date`)
+                        .setTimestamp()
+    },
+    commandErrors: {
+        noImage: () => 'You must specify the URL of a valid image.',
+        noChannel: () => 'I couldn\'t find the channel or it\'s invalid.',
+        noChannelView: () => 'I don\'t have permissions to see that channel.',
+        noChannelWrite: () => 'I can\'t send messages in that channel.',
+        noRole: () => 'I couldn\'t find that role or it\'s invalid.',
+        noRoleAdd: () => 'I don\'t have enough permissions to give that role.',
+        cmdServer: () => 'This command is only available for servers.',
+        cmdCooldown: (cooldown) => `You have to wait **${cooldown}s** to execute this command.`,
+        cmdEnabled: () => 'This command is under maintenance.',
+        cmdDevs: () => 'This command can only be used by developers.',
+        cmdNSFW: () => 'This command can only be used on NSFW channels.',
+        cmdMemberGuild: (perms) => `You need the following permissions:\n\`\`\`diff\n${perms}\n\`\`\``,
+        cmdMemberChannel: (perms) => `You need the following permissions on this channel:\n\`\`\`diff\n${perms}\n\`\`\``,
+        cmdBotGuild: (perms) => `I need the following permissions:\n\`\`\`diff\n${perms}\n\`\`\``,
+        cmdBotChannel: (perms) => `I need the following permissions on this channel:\n\`\`\`diff\n${perms}\n\`\`\``,
+        prefixArgs: () => 'You must specify the new prefix.',
+        prefixLength: () => 'The new prefix must not exceed 5 characters.',
+        langNo: () => 'You must specify a valid language.',
+        helpNo: () => '> The command or category couldn\'t be found.',
+        sayNoText: () => 'You must specify the text that you want me to say.',
+        sayNoPerms: () => 'You must have the permission of mention everyone to execute this command.',
+        blacklist: (reason, date) => `You're on the blacklist. Here you have more information:
 > **Reason:** \`${reason}\`
 > **Date:** \`${date}\`
 You can appeal by going to my support server.
 > [Support Server](https://discord.gg/K63NqEDm86)`,
-                    rrNoOption: (prefix) => `You must specify a valid option or role.
+        rrMax: () => 'You can only have 32 reaction roles per server.',
+        rrNoOption: (prefix) => `You must specify a valid option or role.
 > \`${prefix}reactrole [@Role] [Type] [Message ID] <#Channel>\`
 > \`${prefix}reactrole delete [Emoji] [Message ID]\`
 If you need a little more help you can use: \`${prefix}reactrole help\``,
-                    rrNoType: (prefix) => `That's not a type of reaction role. Use [${prefix}reactrole help] to see more about reaction roles.`,
-                    rrNoChannelReactions: () => 'I don\'t have permissions to add reactions in that channel.',
-                    rrNoMessage: () => 'You must specify the ID of a message.',
-                    rrNoMessageFound: () => 'The message wasn\'t found.',
-                    rrErrorMessage: () => 'There was an error finding the message, try again.',
-                    rrNoEmoji: () => 'I couldn\'t find that emoji in my cache, try adding the emoji on the server.',
-                    rrExists: () => 'There\'s already a reaction role with that emoji.',
-                    rrTime: () => 'Time is over ;(, Please try again.',
-                    rrDeleteNoEmoji: () => 'You must specify the emoji.',
-                    rrDeleteNoMessage: () => 'You must specify the message ID.',
-                    rrDeleteEmoji: () => 'You must specify a valid emoji.',
-                    rrDeleteNo: () => 'The reaction role couldn\'t be deleted, check if there\'s one with that message ID and emoji in the server.',
-                    embedMax: () => 'You can only have 10 embeds per server.',
-                    embedName: () => 'You must specify the name of the embed and must have a maximum of 10 characters.',
-                    embedExists: () => 'There\'s already an embed with that name. Try another.',
-                    embedNoExists: () => 'There\'s no embed with that name or you didn\'t specify one.',
-                    embedNoValue: (property) => `You must put the text to put as ${property}.`,
-                    embedMaxCharacters: (property, max) => `The **${property}** must have ${max} characters or less.`,
-                    embedNoTimestamp: () => 'You must specify if you want the timestamp (yes/no).',
-                    embedNoColor: () => 'You must specify the color without #.',
-                    embedNoProperty: (prefix) => `The property that you put isn't valid.
+        rrNoType: (prefix) => `That's not a type of reaction role. Use [${prefix}reactrole help] to see more about reaction roles.`,
+        rrNoChannelReactions: () => 'I don\'t have permissions to add reactions in that channel.',
+        rrNoMessage: () => 'You must specify the ID of a message.',
+        rrNoMessageFound: () => 'The message wasn\'t found.',
+        rrErrorMessage: () => 'There was an error finding the message, try again.',
+        rrNoEmoji: () => 'I couldn\'t find that emoji in my cache, try adding the emoji on the server.',
+        rrExists: () => 'There\'s already a reaction role with that emoji.',
+        rrTime: () => 'Time is over ;(, Please try again.',
+        rrDeleteNoEmoji: () => 'You must specify the emoji.',
+        rrDeleteNoMessage: () => 'You must specify the message ID.',
+        rrDeleteEmoji: () => 'You must specify a valid emoji.',
+        rrDeleteNo: () => 'The reaction role couldn\'t be deleted, check if there\'s one with that message ID and emoji in the server.',
+        embedMax: () => 'You can only have 10 embeds per server.',
+        embedName: () => 'You must specify the name of the embed and must have a maximum of 10 characters.',
+        embedExists: () => 'There\'s already an embed with that name. Try another.',
+        embedNoExists: () => 'There\'s no embed with that name or you didn\'t specify one.',
+        embedNoValue: (property) => `You must put the text to put as ${property}.`,
+        embedMaxCharacters: (property, max) => `The **${property}** must have ${max} characters or less.`,
+        embedNoTimestamp: () => 'You must specify if you want the timestamp (yes/no).',
+        embedNoColor: () => 'You must specify the color without #.',
+        embedNoProperty: (prefix) => `The property that you put isn't valid.
 You can see the list of the propertsies with \`${prefix}embed properties\`.`,
-                    tagsMax: () => 'You can only have 10 tags per server.',
-                    tagsName: () => 'You must specify the name of the tag and must have a maximum of 10 characters.',
-                    tagsExists: () => 'There\'s already an tag with that name. Try another.',
-                    tagsNoMessage: () => 'You must specify a message, embed or image to send or all three.',
-                    tagsNoRolePerms: () => 'I don\'t have enough permissions to add or remove roles.',
-                    tagsNoRole: () => 'I can\'t add or remove the roles you have specified or they don\'t exist.',
-                    tagsNoExists: () => 'There\'s no tag with that name or you didn\'t specify one.',
-                    tagsNoCommand: () => 'You can\'t create a tag with the name of a command.',
-                    welcomeNoMessage: () => 'You must specify a welcome message.',
-                    leaveNoMessage: () => 'You must specify a welcome message.',
-                    welcomeRoleType: () => 'You must specify the type of user that will receive the role (user/bot)'
-                },
-                commandDescriptions: {
-                    help: 'Displays helpful links and help for the bot.',
-                    eval: 'Evaluates code.',
-                    ping: 'Shows the latency of the bot.',
-                    prefix: 'Lets you set a custom prefix on your server.',
-                    guilds: 'Shows the guild count and users I have.',
-                    say: 'I say everything that you want.',
-                    avatar: 'Gets the avatar of any user.',
-                    vote: 'Shows the Top.gg link to vote for me.',
-                    lang: 'Changes the language on your server for a more pleasant environment.',
-                    bl: 'Adds an user to the blacklist.',
-                    reactrole: 'Lets you establish roles with a specific emoji in the message you want, works for colored roles, roles for mentions. Everything is possible!',
-                    embed: 'Lets you create custom embeds for your tags, welcomes and leaves. You do the design!',
-                    tags: 'Lets you create custom commands (tags) that can send messages, photos and add or delete roles. Everything is possible!'
-                },
-                permissions: {
-                    ADMINISTRATOR: 'Administrator',
-                    MANAGE_GUILD: 'Manage Server',
-                    BAN_MEMBERS: 'Ban Members',
-                    KICK_MEMBERS: 'Kick Members',
-                    READ_MESSAGE_HISTORY: 'Read Message History',
-                    SEND_MESSAGES: 'Send Messages',
-                    EMBED_LINKS: 'Embed Links',
-                    ADD_REACTIONS: 'Add Reactions',
-                    CREATE_INSTANT_INVITE: 'Create Invite',
-                    MANAGE_CHANNELS: 'Manage Channels',
-                    VIEW_AUDIT_LOG: 'View Audit Log',
-                    PRIORITY_SPEAKER: 'Priority Speaker',
-                    STREAM: 'Stream',
-                    VIEW_CHANNEL: 'View Channel',
-                    SEND_TTS_MESSAGES: 'Send Text-to-Speach Messages',
-                    MANAGE_MESSAGES: 'Manage Messages',
-                    ATTACH_FILES: 'Attach Files',
-                    MENTION_EVERYONE: 'Mention Everyone',
-                    USE_EXTERNAL_EMOJIS: 'Use External Emojis',
-                    VIEW_GUILD_INSIGHTS: 'View Guild Insights',
-                    CONNECT: 'Connect',
-                    SPEAK: 'Speak',
-                    MUTE_MEMBERS: 'Mute Members',
-                    DEAFEN_MEMBERS: 'Defean Members',
-                    MOVE_MEMBERS: 'Move Members',
-                    USE_VAD: 'Use Voice Activity',
-                    CHANGE_NICKNAME: 'Change Nickname',
-                    MANAGE_NICKNAMES: 'Manage Nicknames',
-                    MANAGE_ROLES: 'Manage Roles',
-                    MANAGE_WEBHOOKS: 'Manage Webhooks',
-                    MANAGE_EMOJIS: 'Manage Emojis'
-                }
-            }
+        tagsMax: () => 'You can only have 10 tags per server.',
+        tagsName: () => 'You must specify the name of the tag and must have a maximum of 10 characters.',
+        tagsExists: () => 'There\'s already an tag with that name. Try another.',
+        tagsNoMessage: () => 'You must specify a message, embed or image to send or all three.',
+        tagsNoRolePerms: () => 'I don\'t have enough permissions to add or remove roles.',
+        tagsNoRole: () => 'I can\'t add or remove the roles you have specified or they don\'t exist.',
+        tagsNoExists: () => 'There\'s no tag with that name or you didn\'t specify one.',
+        tagsNoCommand: () => 'You can\'t create a tag with the name of a command.',
+        welcomeNoMessage: () => 'You must specify a welcome message.',
+        leaveNoMessage: () => 'You must specify a welcome message.',
+        welcomeRoleType: () => 'You must specify the type of user that will receive the role (user/bot)',
+        emitNoEvent: () => 'You must specify the event to test.'
+    },
+    commandDescriptions: {
+        help: 'Displays helpful links and help for the bot.',
+        eval: 'Evaluates code.',
+        ping: 'Shows the latency of the bot.',
+        prefix: 'Lets you set a custom prefix on your server.',
+        guilds: 'Shows the guild count and users I have.',
+        say: 'I say everything that you want.',
+        avatar: 'Gets the avatar of any user.',
+        vote: 'Shows the Top.gg link to vote for me.',
+        lang: 'Changes the language on your server for a more pleasant environment.',
+        bl: 'Adds an user to the blacklist.',
+        reactrole: 'Lets you establish roles with a specific emoji in the message you want, works for colored roles, roles for mentions. Everything is possible!',
+        embed: 'Lets you create custom embeds for your tags, welcomes and leaves. You do the design!',
+        tags: 'Lets you create custom commands (tags) that can send messages, photos and add or delete roles. Everything is possible!',
+        welcome: 'Configure the channel, messages, and roles that you prefer the most when someone joins your server c:',
+        leave: 'Set the channel and messages you prefer when someone leaves your server>: c',
+        emit: 'Do a simulation of events in the bot.',
+        varibles: 'Look at the different types of variables that you can use with the bot.'
+    },
+    permissions: {
+        ADMINISTRATOR: 'Administrator',
+        MANAGE_GUILD: 'Manage Server',
+        BAN_MEMBERS: 'Ban Members',
+        KICK_MEMBERS: 'Kick Members',
+        READ_MESSAGE_HISTORY: 'Read Message History',
+        SEND_MESSAGES: 'Send Messages',
+        EMBED_LINKS: 'Embed Links',
+        ADD_REACTIONS: 'Add Reactions',
+        CREATE_INSTANT_INVITE: 'Create Invite',
+        MANAGE_CHANNELS: 'Manage Channels',
+        VIEW_AUDIT_LOG: 'View Audit Log',
+        PRIORITY_SPEAKER: 'Priority Speaker',
+        STREAM: 'Stream',
+        VIEW_CHANNEL: 'View Channel',
+        SEND_TTS_MESSAGES: 'Send Text-to-Speach Messages',
+        MANAGE_MESSAGES: 'Manage Messages',
+        ATTACH_FILES: 'Attach Files',
+        MENTION_EVERYONE: 'Mention Everyone',
+        USE_EXTERNAL_EMOJIS: 'Use External Emojis',
+        VIEW_GUILD_INSIGHTS: 'View Guild Insights',
+        CONNECT: 'Connect',
+        SPEAK: 'Speak',
+        MUTE_MEMBERS: 'Mute Members',
+        DEAFEN_MEMBERS: 'Defean Members',
+        MOVE_MEMBERS: 'Move Members',
+        USE_VAD: 'Use Voice Activity',
+        CHANGE_NICKNAME: 'Change Nickname',
+        MANAGE_NICKNAMES: 'Manage Nicknames',
+        MANAGE_ROLES: 'Manage Roles',
+        MANAGE_WEBHOOKS: 'Manage Webhooks',
+        MANAGE_EMOJIS: 'Manage Emojis'
+    }
+}
         });
     }
 }

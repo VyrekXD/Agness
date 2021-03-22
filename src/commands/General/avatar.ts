@@ -8,6 +8,7 @@ export default class AvatarCommand extends Command {
             name: 'avatar',
             aliases: ['av', 'pfp', 'foto'],
             usageArgs: ['<@User | ID>'],
+            botChannelPermissions: ['EMBED_LINKS'],
             example: (p) => `${p}avatar @Aviii.`,
             category
         });

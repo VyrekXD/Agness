@@ -13,7 +13,7 @@ export default class ReactionRoleCommand extends Command {
             name: 'reactrole',
             aliases: ['rr', 'reactionrole', 'reactionroles'],
             usageArgs: ['[@Role]', '[normal/unique/only]', '[Message ID]', '<#Channel>'],
-            botGuildPermissions: ['MANAGE_ROLES'],
+            botGuildPermissions: ['MANAGE_ROLES', 'EMBED_LINKS'],
             memberGuildPermissions: ['ADMINISTRATOR'],
             example: (p) => `${p}reactrole @Watermelon normal 12345789101112 #self-roles`,
             category
@@ -56,6 +56,8 @@ export default class ReactionRoleCommand extends Command {
                 return message.channel.send(this.lang.get('rrDelete', args[1]));
             }
             default: {
+                const reactionRoles = await ReactionRoles.find({ guildID: message.guild!.id });
+                if(reactionRoles.length > 30) return message.channel.send('No.'); 
                 const matchRole = args[0]?.match(/^<@&(\d+)>$/)?.[1] ?? args[0];
                 const role = message.guild!.roles.resolve(matchRole);
                 if (!role) return this.sendError(message, this.lang.getError('noRole'), 0);

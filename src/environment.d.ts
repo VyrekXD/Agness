@@ -6,8 +6,6 @@ declare global {
             MONGO_URL: string;
             DEVS: string;
             SERVERS_CHANNEL: string;
-            SUGGEST_CHANNEL: string;
-            REPORT_CHANNEL: string;
         }
     }
 }

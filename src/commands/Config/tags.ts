@@ -12,6 +12,7 @@ export default class TagsCommand extends Command {
             aliases: ['tag', 'customcommands', 'customcmd', 'commands'],
             usageArgs: ['[add/edit/del/list]', '<Name>', '[Properties]'],
             memberGuildPermissions: ['ADMINISTRATOR'],
+            botChannelPermissions: ['EMBED_LINKS'],
             example: (p) => `${p}tags create rules (message:Use common sense.)`,
             category
         });
