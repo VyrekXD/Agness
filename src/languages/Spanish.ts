@@ -380,7 +380,7 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     welcome: 'Configura el canal, los mensajes, y roles que más prefieras cuando alguien se une a tu servidor c:',
                     leave: 'Establezca el canal y los mensajes que prefiera cuando alguien abandone su servidor >:c',
                     emit: 'Haz una simulación de eventos en el bot.',
-                    varibles: 'Mira los distintos tipos de variables que puedes usar con el bot.'
+                    variables: 'Mira los distintos tipos de variables que puedes usar con el bot.'
 
                 },
                 permissions: {

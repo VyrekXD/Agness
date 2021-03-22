@@ -379,7 +379,7 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
         welcome: 'Configure the channel, messages, and roles that you prefer the most when someone joins your server c:',
         leave: 'Set the channel and messages you prefer when someone leaves your server>: c',
         emit: 'Do a simulation of events in the bot.',
-        varibles: 'Look at the different types of variables that you can use with the bot.'
+        variables: 'Look at the different types of variables that you can use with the bot.'
     },
     permissions: {
         ADMINISTRATOR: 'Administrator',

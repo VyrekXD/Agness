@@ -131,7 +131,7 @@ interface CommandDescriptionStrings {
     welcome: string;
     leave: string;
     emit: string;
-    varibles: string;
+    variables: string;
 }
 
 interface LanguageStrings {
