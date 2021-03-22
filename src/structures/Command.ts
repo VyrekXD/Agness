@@ -60,10 +60,10 @@ export default abstract class Command {
         this.memberGuildPermissions = options.memberGuildPermissions ?? [];
         this.memberChannelPermissions = options.memberChannelPermissions ?? [];
         this.cooldown = options.cooldown ?? 2;
-        this.enabled = typeof options.enabled === 'boolean' ? options.enabled : false
+        this.enabled = options.devsOnly ?? false;
         this.guildOnly = typeof options.guildOnly === 'boolean' ? options.guildOnly : this.category !== 'General';
-        this.nsfwOnly = typeof options.nsfwOnly === 'boolean' ? options.nsfwOnly : false
-        this.devsOnly = typeof options.devsOnly === 'boolean' ? options.devsOnly : false
+        this.nsfwOnly = options.nsfwOnly ?? false;
+        this.devsOnly = options.devsOnly ?? false;
     }
 
     usage(p: string): string {
@@ -80,6 +80,7 @@ export default abstract class Command {
     abstract run(message: Message, args: string[]): Promise<Message | void>;
 
     async canRun(message: Message): Promise<boolean> {
+        console.log(this.devsOnly)
         const channel = (message.channel as TextChannel);
         if (message.guild && !channel.permissionsFor(message.guild!.me!).has('SEND_MESSAGES')) return false;
         if (this.checkCooldowns(message) && !devs.includes(message.author.id))
