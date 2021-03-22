@@ -39,7 +39,7 @@ ${commands}
                     helpCommand: (prefix, command) => {
                         return `__**Comando ${command.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())}**__
 **Descripción:** ${command.description ?? 'No tiene descripción.'}
-**Alias:** ${command.aliases.join(' | ') ?? 'No tiene alias.'}
+**Alias:** ${command.aliases.join(' | ') || 'No tiene alias.'}
 **Categoria:** ${command.category}
 **Uso:** ${command.usage(prefix)}
 **Ejemplo:** ${command.example(prefix)}
@@ -51,15 +51,15 @@ ${commands}
 
 Permisos del bot:
 > Servidor:
-${command.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'No necesita'}
+${command.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 > Canal:
-${command.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'No necesita'}
+${command.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 
 Permisos del miembro:
 > Servidor:
-${command.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'No necesita'}
+${command.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 > Canal:
-${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'No necesita'}
+${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 \`\`\`
 `;
                     },

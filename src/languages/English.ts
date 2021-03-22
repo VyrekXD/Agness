@@ -39,7 +39,7 @@ ${commands}
                     helpCommand: (prefix, command) => {
                         return `__**${command.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())} Command**__
 **Description:** ${this.getDescription(command.name) ?? 'No description.'}
-**Aliases:** ${command.aliases.join(' | ') ?? 'No aliases.'}
+**Aliases:** ${command.aliases.join(' | ') || 'No aliases.'}
 **Category:** ${command.category}
 **Usage:** ${command.usage(prefix)}
 **Example:** ${command.example(prefix)}
@@ -51,15 +51,15 @@ Developers Only?: ${command.devsOnly ? 'Yes.' : 'No.'}
 
 Bot Permissions:
 > Guild:
-${command.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'Doesn\'t need.'}
+${command.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
 > Channel:
-${command.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'Doesn\'t need.'}
+${command.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
 
 Member Permissions:
 > Guild:
-${command.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'Doesn\'t need.'}
+${command.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
 > Channel:
-${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') ?? 'Doesn\'t need.'}
+${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
 \`\`\``;
                     },
                     prefix: (prefix) => `My new prefix is: \`${prefix}\``,
