@@ -256,10 +256,10 @@ Si necesita eliminar alguna propiedad, utilice:
                     },
                     emitEvent: (event) => `Se emitió el evento **${event}** correctamente.`,
                     variables: () => new MessageEmbed()
-                    .setTitle(`${client.user!.username} Variables`)
-                    .setDescription('Estas variables se pueden usar al editar embeds, en mensajes de bienvenida / despedida y comandos personalizados(tags).')
-                    .addField('Informacion del usuario',
-                        `\`{user}\` - @Mención (e.j. @Aviii.#0721 ❤️)
+                        .setTitle(`${client.user!.username} Variables`)
+                        .setDescription('Estas variables se pueden usar al editar embeds, en mensajes de bienvenida / despedida y comandos personalizados(tags).')
+                        .addField('Informacion del usuario',
+                            `\`{user}\` - @Mención (e.j. @Aviii.#0721 ❤️)
 \`{user.name}\` - Username (e.j. Aviii.)
 \`{user.discrim}\` - User tag (e.j. 0721)
 \`{user.nick}\` - Apodo del miembro, si no lo tiene, mostrará "No nickname".
@@ -267,8 +267,8 @@ Si necesita eliminar alguna propiedad, utilice:
 \`{user.joindate}\` - Fecha en que se unió al servidor
 \`{user.id}\` - ID del usuario (e.j. 710880777662890095)
 \`{user.avatar}\` - Enlace al avatar del usuario`)
-                    .addField('Server Information',
-                        `\`{server}\` - Nombre del servidor (e.j. ${client.user!.username}'s Support)
+                        .addField('Server Information',
+                            `\`{server}\` - Nombre del servidor (e.j. ${client.user!.username}'s Support)
 \`{server.prefix}\` - Prefijo del servidor (by default, a?)
 \`{server.id}\` - ID del servidor (e.j. 773629394894848030)
 \`{server.membercount}\` - Número total de miembros
@@ -284,17 +284,17 @@ Si necesita eliminar alguna propiedad, utilice:
 \`{server.boostlevel}\` - Nivel de boost del servidor
 \`{server.boostcount}\` - Número de boosts  en el servidor
 \`{server.icon}\` - Enlace al icono del servidor`)
-                    .addField('Server Owner Information',
-                        `\`{server.owner}\` - @Mención al propietario (e.j. @Aviii.#0721)
+                        .addField('Server Owner Information',
+                            `\`{server.owner}\` - @Mención al propietario (e.j. @Aviii.#0721)
 \`{server.owner.id}\` - ID del propietario (e.j. 710880777662890095)
 \`{server.owner.nick}\` - Apodo del propietario, si no lo tiene, mostrará 'No nickname.'
 \`{server.owner.avatar}\` - Enlace al avatar del propietario`)
-                    .addField('Channel Information',
-                        `\`{channel}\` - Mencion del canal (e.j. #memes)
+                        .addField('Channel Information',
+                            `\`{channel}\` - Mencion del canal (e.j. #memes)
 \`{channel.id}\` - ID del canal (e.j. 773629394894848033)
 \`{channel.name}\` - Nombre del canal (e.j. memes)
 \`{channel.createdate}\` - Fecha de creación del canal`)
-                    .setTimestamp()
+                        .setTimestamp()
                 },
                 commandErrors: {
                     noImage: () => 'Debes especificar la URL de una imagen válida.',

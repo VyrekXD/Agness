@@ -15,7 +15,7 @@ export default class EmitCommand extends Command {
     }
 
     async run(message: Message, args: string[]): Promise<Message> {
-        switch (args[0].toLowerCase() ?? '') {
+        switch (args[0]?.toLowerCase() ?? '') {
             case 'leave': {
                 this.client.emit('guildMemberRemove', message.member as GuildMember);
                 return message.channel.send(this.lang.get('emitEvent', 'leave'));

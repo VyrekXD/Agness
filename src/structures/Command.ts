@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { Collection, Message, TextChannel, PermissionString, MessageEmbed } from 'discord.js';
+import { Blacklists } from '../database/blacklist';
 import { Server } from '../database/server';
 import English from '../languages/English';
 import Language from './Language';
 import Agness from '../bot';
-import { Blacklists } from '../database/blacklist';
 
 const devs = process.env.DEVS ? process.env.DEVS.split(', ') : [];
 
