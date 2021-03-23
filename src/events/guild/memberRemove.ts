@@ -36,8 +36,8 @@ export default class MemberRemoveEvent extends Event {
                 member
             });
         if (embedData)
-            embed = await this.client.generateEmbed(embedData, replaceText);
+            embed = this.client.generateEmbed(embedData, replaceText);
         if (!leave.message && !embed) return;
-        (channel as TextChannel).send(await replaceText(leave.message), { embed }).catch(() => void 0);
+        (channel as TextChannel).send(replaceText(leave.message), { embed }).catch(() => void 0);
     }
 }

@@ -74,7 +74,7 @@ export default class EmbedCommand extends Command {
                                 embed[property].image = '';
                             } else {
                                 if (!this.exceptions.includes(parts[1]))
-                                    if (!(await isImageURL(parts[1]))) return message.channel.send(this.lang.getError('noImage'));
+                                    if (!(await isImageURL(parts[1]).catch(() => false))) return message.channel.send(this.lang.getError('noImage'));
                                 embed[property].text = parts[0];
                                 embed[property].image = parts[1];
                             }
@@ -92,11 +92,11 @@ export default class EmbedCommand extends Command {
                     }
                     case 'image':
                     case 'thumbnail': {
-                        const imageLink = args[3] || message.attachments.first()?.url || '';
+                        const imageLink = args[3] ?? message.attachments.first()?.url ?? '';
                         if (!imageLink) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
                         if (imageLink.toLowerCase() !== 'null') {
                             if (!this.exceptions.includes(imageLink))
-                                if (!(await isImageURL(imageLink))) return message.channel.send(this.lang.getError('noImage'));
+                                if (!(await isImageURL(imageLink).catch(() => false))) return message.channel.send(this.lang.getError('noImage'));
                             embed[property] = imageLink;
                         } else embed[property] = '';
                         break;

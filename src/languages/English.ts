@@ -194,8 +194,8 @@ To use a tag, use:
 > \`{removeRole:[RoleID]}\` - Removes a role (put another \\*:roleID\\* to remove one more role).`),
                     welcomeHelp: (prefix) => new MessageEmbed()
                         .setDescription(`You must specify a valid property.
-> \`${prefix}welcome channel [#Canal]\`
-> \`${prefix}welcome message [ <Text> | {embed[embed name]} ]\`
+> \`${prefix}welcome channel [#Channel | null]\`
+> \`${prefix}welcome message [ <Text> | {embed:[embed name]} ]\`
 > \`${prefix}welcome autorole [user|bot] [@Role | Role ID |]\`
 To insert a message or embed, there are three options:
 - Message and embed:

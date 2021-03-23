@@ -108,12 +108,12 @@ Aquí hay ejemplo de cómo funciona y cómo se configura:`),
 El nombre nos permitirá identificar tu incrustación para que todo luzca más ordenado a la hora de ponerlo en bienvenidas, hojas y comandos personalizados. ¿Cómo? Bueno, agregando \`{embed:[embed_name]} \` y Reemplazando \`embed_name\` con el nombre de tu embed. Para ello, puedes crearlo y darle el nombre que quieras, así:
 > \`${prefix}embed create [embed_name]\``)
                         .addField('2. Editando nuestro embed.', `Bueno, es hora de editarlo como más te guste, ¡tú creatividad importa! Aquí te muestro las propiedades de un embed:
-> \`author\` - [Texto | <Enlace Imagen>]
+> \`author\` - [Texto | <Enlace imagen>]
 > \`thumbnail\` - [Enlace de Imágen]
 > \`title\` - [Texto]
 > \`description\` - [Texto]
-> \`footer\` - [Texto | <Enlace de Imágen]>]
-> \`image\` - [Enlace de Imágen | Attachment]
+> \`footer\` - [Texto | <Enlace de imagen]>]
+> \`image\` - [Enlace de imagen | Archivo adjunto]
 > \`color\` - [Codigo Hex]
 > \`timestamp\` - [yes/no]
 La forma de uso es intuitiva con la que te será más fácil aprender cada propiedad. Bueno, sin más, el modo de edición del embed, y es el siguiente:> 
@@ -145,7 +145,7 @@ Para insertarlo en una bienvenida o despedida, hay tres opciones:
 \`{server}\` - Nombre del servidor (e.j. ${client.user!.username}'s Support)
 Puede encontrar la lista completa con \`${prefix}variables\``)
                         .setTimestamp()
-                        .setFooter('<> Optional | [] Required'),
+                        .setFooter('<> Opcional | [] Requerido'),
                     embedCreated: (name) => `Embed con el nombre ${name} creado correctamente.
 Usa \`a?embed properties\` para ver como modificarlo.`,
                     embedDeleted: (name) => `Embed con el nombre ${name} eliminado correctamente.`,
@@ -196,7 +196,7 @@ Para usar un tag usa:
                     welcomeHelp: (prefix) => new MessageEmbed()
                         .setDescription(`Debes especificar una propiedad válida.
 > \`${prefix}welcome channel [#Canal | null]\`
-> \`${prefix}welcome message [ <Text> | {embed[embed name]} ]\`
+> \`${prefix}welcome message [ <Text> | {embed:[embed name]} ]\`
 > \`${prefix}welcome autorole [user|bot] [@Role | ID Rol | null]\`
 Para insertar un mensaje o embed, hay tres opciones:
 - Mensaje y embed:

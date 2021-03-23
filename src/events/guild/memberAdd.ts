@@ -46,8 +46,8 @@ export default class MemberAddEvent extends Event {
                 member
             });
         if (embedData)
-            embed = await this.client.generateEmbed(embedData, replaceText);
+            embed = this.client.generateEmbed(embedData, replaceText);
         if (!welcome.message && !embed) return;
-        (channel as TextChannel).send(await replaceText(welcome.message), { embed }).catch(() => void 0);
+        (channel as TextChannel).send(replaceText(welcome.message), { embed }).catch(() => void 0);
     }
 }

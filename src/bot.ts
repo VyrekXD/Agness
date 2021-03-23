@@ -93,7 +93,7 @@ export default class Agness extends Client {
         if (embedData.thumbnail)
             embed.setThumbnail(replaceText(embedData.thumbnail));
         if (embedData.image)
-            embed.setThumbnail(replaceText(embedData.image));
+            embed.setImage(replaceText(embedData.image));
         if (embedData.footer.text)
             embed.setAuthor(replaceText(embedData.footer.text), embedData.footer.image ? replaceText(embedData.footer.image) : undefined);
         if (embedData.timestamp)
