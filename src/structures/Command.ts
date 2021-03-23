@@ -60,7 +60,7 @@ export default abstract class Command {
         this.memberGuildPermissions = options.memberGuildPermissions ?? [];
         this.memberChannelPermissions = options.memberChannelPermissions ?? [];
         this.cooldown = options.cooldown ?? 2;
-        this.enabled = options.devsOnly ?? false;
+        this.enabled = options.enabled ?? true;
         this.guildOnly = typeof options.guildOnly === 'boolean' ? options.guildOnly : this.category !== 'General';
         this.nsfwOnly = options.nsfwOnly ?? false;
         this.devsOnly = options.devsOnly ?? false;
