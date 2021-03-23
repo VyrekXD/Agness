@@ -8,7 +8,7 @@ export default class HelpCommand extends Command {
             name: 'help',
             usageArgs: ['<Category | Command>'],
             example: (p) => `${p}help prefix`,
-            botChannelPermissions: ['EMBED_LINKS'],
+            botChannelPermissions: ['EMBED_LINKS', 'USE_EXTERNAL_EMOJIS'],
             category
         });
     }

@@ -13,7 +13,7 @@ export default class ReactionRoleCommand extends Command {
             name: 'reactrole',
             aliases: ['rr', 'reactionrole', 'reactionroles'],
             usageArgs: ['[@Role]', '[normal/unique/only]', '[Message ID]', '<#Channel>'],
-            botGuildPermissions: ['MANAGE_ROLES', 'EMBED_LINKS'],
+            botGuildPermissions: ['MANAGE_ROLES', 'EMBED_LINKS', 'USE_EXTERNAL_EMOJIS'],
             memberGuildPermissions: ['ADMINISTRATOR'],
             example: (p) => `${p}reactrole @Watermelon normal 12345789101112 #self-roles`,
             category
