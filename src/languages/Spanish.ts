@@ -44,7 +44,7 @@ ${commands}
 **Uso:** ${command.usage(prefix)}
 **Ejemplo:** ${command.example(prefix)}
 \`\`\`diff
-¿En mantenimiento?: ${command.enabled ? 'Sí.' : 'No.'}
+¿En mantenimiento?: ${command.enabled ? 'No.' : 'Sí.'}
 ¿Solo servidores?: ${command.guildOnly ? 'Sí.' : 'No.'}
 ¿Solo NSFW?: ${command.nsfwOnly ? 'Sí.' : 'No.'}
 ¿Solo desarrolladores?: ${command.devsOnly ? 'Sí.' : 'No.'}
