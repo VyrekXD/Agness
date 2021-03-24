@@ -55,7 +55,7 @@ export default class EvalCommand extends Command {
         }
 
         const msg = await message.channel.send(evalued.slice(0, 1950), {
-            code: args[0].toLowerCase() === '-sh' ? 'sh' : 'js'
+            code: args[0]?.toLowerCase() === '-sh' ? 'sh' : 'js'
         });
         try {
             await msg.react('🔨');
