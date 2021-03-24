@@ -51,13 +51,17 @@ export default class ReactionRoleCommand extends Command {
                 if (!args[1].match(this.emojiUnicode) && !args[1].match(this.emojiDiscord))
                     return message.channel.send(this.lang.getError('rrDeleteEmoji'));
                 const emojiID = args[1].includes(':') ? args[1].split(':')[2].slice(0, -1) : args[1];
-                const reactionRole = await ReactionRoles.findOneAndDelete({ guildID: message.guild!.id, messageID: message.id, emojiID });
+                const reactionRole = await ReactionRoles.findOneAndDelete({
+                    guildID: message.guild!.id,
+                    messageID: args[2],
+                    emojiID
+                });
                 if (!reactionRole) return message.channel.send(this.lang.getError('rrDeleteNo'));
                 return message.channel.send(this.lang.get('rrDelete', args[1]));
             }
             default: {
                 const reactionRoles = await ReactionRoles.find({ guildID: message.guild!.id });
-                if(reactionRoles.length > 30) return message.channel.send('No.'); 
+                if (reactionRoles.length > 30) return message.channel.send('No.');
                 const matchRole = args[0]?.match(/^<@&(\d+)>$/)?.[1] ?? args[0];
                 const role = message.guild!.roles.resolve(matchRole);
                 if (!role) return this.sendError(message, this.lang.getError('noRole'), 0);
