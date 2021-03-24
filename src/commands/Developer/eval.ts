@@ -16,13 +16,12 @@ export default class EvalCommand extends Command {
     }
 
     async run(message: Message, args: string[]): Promise<Message> {
-        if (!args[0]) return message.channel.send('What do you wanna evaluate?');
         let evalued = 'undefined';
-        switch (args[0].toLowerCase()) {
+        switch (args[0]?.toLowerCase() ?? '') {
             case '-a': {
                 if (!args[1]) return message.channel.send('What do you wanna evaluate?');
                 try {
-                    evalued = await eval('(async() => {\n' + args.slice(1).join(' ') + '\n})();');
+                    evalued = await eval('(async() => {\n' + args.slice(1).join(' ').split('\n').map((l, i, a) => i === a.length - 1 ? `return ${l}` : l).join('\n') + '\n})();');
                     evalued = inspect(evalued, { depth: 0 });
                 } catch (err) {
                     evalued = err.toString();
@@ -61,9 +60,11 @@ export default class EvalCommand extends Command {
         try {
             await msg.react('🔨');
             await msg.awaitReactions((r, u) => r.emoji.name === '🔨' && u.id === message.author.id, { time: 15000, max: 1, errors: ['time'] });
-            await msg.delete();
+            if (msg.deletable)
+                await msg.delete();
         } catch {
-            await msg.reactions.resolve('🔨')?.users.remove();
+            if (!msg.deleted)
+                await msg.reactions.resolve('🔨')?.users.remove();
         }
 
         return msg;
