@@ -21,7 +21,7 @@ export default class EvalCommand extends Command {
             case '-a': {
                 if (!args[1]) return message.channel.send('What do you wanna evaluate?');
                 try {
-                    evalued = await eval('(async() => {\n' + args.slice(1).join(' ').split('\n').map((l, i, a) => i === a.length - 1 ? `return ${l}` : l).join('\n') + '\n})();');
+                    evalued = await eval('(async() => {\n' + args.slice(1).join(' ') + '\n})();');
                     evalued = inspect(evalued, { depth: 0 });
                 } catch (err) {
                     evalued = err.toString();
@@ -45,7 +45,7 @@ export default class EvalCommand extends Command {
             }
             default: {
                 try {
-                    evalued = eval(args.join(' '));
+                    evalued = await eval(args.join(' '));
                     evalued = inspect(evalued, { depth: 0 });
                 } catch (err) {
                     evalued = err.toString();
