@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars, max-lines */
-import { PermissionString, MessageEmbed } from 'discord.js';
+import { PermissionString, MessageEmbed, User, Guild } from 'discord.js';
 import Command, { Category } from './Command';
 import { Welcome } from '../database/welcome';
 import { Leave } from '../database/leave';
@@ -53,6 +53,7 @@ interface CommandStrings {
     emitEvent(event: string): string;
     variables(): MessageEmbed;
     invite(): MessageEmbed;
+    userInfo(user: User, guild: Guild | null, author: User): MessageEmbed;
 }
 
 interface CommandErrorStrings {

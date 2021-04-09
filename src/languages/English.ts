@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import Language from '../structures/Language';
-import { MessageEmbed } from 'discord.js';
+import { Guild, MessageEmbed } from 'discord.js';
 import Agness from '../bot';
 
 export default class English extends Language {
@@ -298,7 +298,20 @@ If you need to delete any property use:
                         .setDescription(`Thank you for inviting me to your server! You will not regret.
 > [This is my invite link.](https://discord.com/api/oauth2/authorize?client_id=${client.user!.id}&permissions=8&scope=bot)
 In case you have any doubts, here's the invitation link from my support server.
-> [Support Server](https://discord.gg/K63NqEDm86)`)
+> [Support Server](https://discord.gg/K63NqEDm86)`),
+                    userInfo: (user, guild, author) => {
+                        let member;
+                        if (guild) member = (guild as Guild).members.cache.get(user.id)
+                        return new MessageEmbed()
+                            .setTitle(`${user.username}'s Information`)
+                            .setThumbnail(user.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }))
+                            .setDescription(`**ID:** ${user.id}
+**Tag** ${user.tag}
+**Mention:** ${user.toString()}
+**Joined Discord:** ${user.createdAt.toLocaleString()}
+${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString() || 'I did not find it.'}` : ''}`)
+                            .setFooter(`Requested by: ${author.tag}`, author.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }))
+                    }
                 },
                 commandErrors: {
                     noImage: () => 'You must specify the URL of a valid image.',

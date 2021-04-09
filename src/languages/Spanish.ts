@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import Language from '../structures/Language';
-import { MessageEmbed } from 'discord.js';
+import { Guild, Message, MessageEmbed } from 'discord.js';
 import Agness from '../bot';
 
 export default class Spanish extends Language {
@@ -38,13 +38,14 @@ ${commands}
                     },
                     helpCommand: (prefix, command) => {
                         return `__**Comando ${command.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())}**__
-**Descripción:** ${command.description ?? 'No tiene descripción.'}
-**Alias:** ${command.aliases.join(' | ') || 'No tiene alias.'}
-**Categoria:** ${command.category}
-**Uso:** ${command.usage(prefix)}
-**Ejemplo:** ${command.example(prefix)}
+**\`Descripción:\`** ${command.description ?? 'No tiene descripción.'}
+**\`Alias:\`** ${command.aliases.join(' | ') || 'No tiene alias.'}
+**\`Categoria:\`** ${command.category}
+**\`Cooldown:\`** ${command.cooldown} segundos.
+**\`Uso:\`** ${command.usage(prefix)}
+**\`Ejemplo:\`** ${command.example(prefix)}
 \`\`\`diff
-¿En mantenimiento?: ${command.enabled ? 'No.' : 'Sí.'}
+¿En mantenimiento?: ${command.enabled ? 'Sí.' : 'No.'}
 ¿Solo servidores?: ${command.guildOnly ? 'Sí.' : 'No.'}
 ¿Solo NSFW?: ${command.nsfwOnly ? 'Sí.' : 'No.'}
 ¿Solo desarrolladores?: ${command.devsOnly ? 'Sí.' : 'No.'}
@@ -130,7 +131,7 @@ Vamos a ponerle una imagen y tendremos un simple incrustado, cuidado y poner enl
 Por último, pongamos un color que tiene que estar en código hexadecimal sin el #, si no los conoces puedes ver los colores [aquí](https://htmlcolorcodes.com/es/).
 > \`${prefix}embed edit ejemplo color e658ff\`
 Listo, este es un embed simple con la que, si lo desea, puede probarse:
-> \`${prefix}embed preview ejemplo`)
+> \`${prefix}embed preview ejemplo\``)
                         .addField('Envíalo de bienvenida/despedida', `Recuerda que en cualquier caso usarías: {embed:[embed name]}
 > En este caso: \`{embed:ejemplo}\`
 Para insertarlo en una bienvenida o despedida, hay tres opciones:
@@ -299,7 +300,20 @@ Si necesita eliminar alguna propiedad, utilice:
                         .setDescription(`¡Gracias por invitarme a tu servidor! No te arrepentirás.
 > [Este es mi enlace de invitación.](https://discord.com/api/oauth2/authorize?client_id=${client.user!.id}&permissions=8&scope=bot)
 En caso de que tengas alguna duda, aquí está el enlace de invitación de mi servidor de soporte.
-> [Servidor de soporte](https://discord.gg/K63NqEDm86)`)
+> [Servidor de soporte](https://discord.gg/K63NqEDm86)`),
+                    userInfo: (user, guild, author) => {
+                        let member;
+                        if(guild) member = (guild as Guild).members.cache.get(user.id)
+                        return new MessageEmbed()
+                            .setTitle(`Información de ${user.username}`)
+                            .setThumbnail(user.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }))
+                            .setDescription(`**ID:** ${user.id}
+**Etiqueta:** ${user.tag}
+**Mención:** ${user.toString()}
+**Se unió a Discord:** ${user.createdAt.toLocaleString()}
+${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString() || 'No lo encontré.'}` : '' }`)
+                            .setFooter(`Pedido por: ${author.tag}`, author.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }))
+                    }
                 },
                 commandErrors: {
                     noImage: () => 'Debes especificar la URL de una imagen válida.',

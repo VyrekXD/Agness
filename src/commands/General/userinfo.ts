@@ -2,14 +2,14 @@ import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import Command from '../../structures/Command';
 import Agness from '../../bot';
 
-export default class AvatarCommand extends Command {
+export default class UserInfoCommand extends Command {
     constructor(client: Agness, category: string) {
         super(client, {
-            name: 'avatar',
-            aliases: ['av', 'pfp', 'foto'],
+            name: 'userinfo',
+            aliases: ['ui', 'user'],
             usageArgs: ['<@User | ID>'],
             botChannelPermissions: ['EMBED_LINKS'],
-            example: (p) => `${p}avatar @Aviii.`,
+            example: (p) => `${p}userinfo @Aviii.`,
             category
         });
     }
@@ -21,12 +21,9 @@ export default class AvatarCommand extends Command {
             ?? this.client.users.cache.find((u) => (u.username.toLowerCase() === args.join(' ').toLowerCase()) ?? (u.username.toLowerCase() === args.join(' ').toLowerCase()))
             ?? message.guild?.members.cache.find((m) => m.nickname?.toLowerCase() === args.join(' ').toLowerCase())?.user
             ?? message.author;
-        const extension = (user.avatar ?? '').startsWith('a_') ? 'gif' : 'png';
-        const avatar = user.displayAvatarURL({ format: extension, size: 4096 });
-        return message.channel.send(new MessageEmbed()
-            .setDescription(this.lang.get('avatar', user.username, avatar))
-            .attachFiles([new MessageAttachment(avatar, `avatar.${extension}`)])
-            .setImage(`attachment://avatar.${extension}`)
-            .setColor(this.client.color));
+        return message.channel.send(this.lang.get('userInfo', user, message.guild, message.author)
+        .setColor(this.client.color)
+        .setTimestamp())
+
     }
 }
