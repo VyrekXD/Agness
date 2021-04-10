@@ -300,17 +300,34 @@ If you need to delete any property use:
 In case you have any doubts, here's the invitation link from my support server.
 > [Support Server](https://discord.gg/K63NqEDm86)`),
                     userInfo: (user, guild, author) => {
+                        let flags = {
+                            DISCORD_EMPLOYEE: '<:DiscordStaff:830458954927570974>',
+                            PARTNERED_SERVER_OWNER: '<:partner:830458955666423829>',
+                            HYPESQUAD_EVENTS: '<:HypeSquadEvents:830458955134271560>',
+                            BUGHUNTER_LEVEL_1: '<:BugHunter1:830458954089365564>',
+                            HOUSE_BRAVERY: '<:Bravery:830458952730279980>',
+                            HOUSE_BRILLIANCE: '<:Brilliance:830458953611477013>',
+                            HOUSE_BALANCE: '<:Balance:830458952503787571>',
+                            EARLY_SUPPORTER: '<:EarlySupporter:830458955234672663>',
+                            TEAM_USER: '<:TeamUser:830464435914407948>',
+                            SYSTEM: '<:System:830462197036875829>',
+                            BUGHUNTER_LEVEL_2: '<:BugHunter2:830458954541826138>',
+                            VERIFIED_BOT: '<:VerifiedBot:830462197503229952>',
+                            EARLY_VERIFIED_BOT_DEVELOPER: '<:dev:830458954857185310>'
+                        }
                         let member;
-                        if (guild) member = (guild as Guild).members.cache.get(user.id)
+                        if (guild) member = (guild as Guild).members.cache.get(user.id);
                         return new MessageEmbed()
                             .setTitle(`${user.username}'s Information`)
-                            .setThumbnail(user.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }))
+                            .setThumbnail(user.displayAvatarURL({ size: 4096, dynamic: true }))
                             .setDescription(`**ID:** ${user.id}
 **Tag** ${user.tag}
-**Mention:** ${user.toString()}
-**Joined Discord:** ${user.createdAt.toLocaleString()}
-${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString() || 'I did not find it.'}` : ''}`)
-                            .setFooter(`Requested by: ${author.tag}`, author.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }))
+**Mention:** ${user.toString()} ${user.bot ? '| <:bot:830462923590598736>' : ''}
+**Badges:** ${member ? guild?.ownerID === member.id ? '<:Owner:830458955545051167>' : '' : ''} ${user.flags?.toArray().map(x => flags[x]).join(' ') ?? 'Doesn\'t have.'}
+**Last Message:** ${user.lastMessage ? `[Click here](${user.lastMessage?.url})` : 'I did not find it.'}
+**Joined Discord:** ${user.createdAt.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}
+${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}` : ''}`)
+                            .setFooter(`(◍•ᴗ•◍)❤️ Requested by: ${author.tag}`, author.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }));
                     }
                 },
                 commandErrors: {

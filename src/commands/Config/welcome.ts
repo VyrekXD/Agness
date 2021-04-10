@@ -33,7 +33,7 @@ export default class WelcomeCommand extends Command {
                 }
                 const matchChannel = args[1]?.match(/^<#(\d+)>$/)?.[1] ?? args[1];
                 const channel = (message.guild!.channels.resolve(matchChannel) ?? message.channel) as TextChannel;
-                if (!channel || channel.type !== 'text') return this.sendError(message, this.lang.getError('noChannel'), 3);
+                if (!channel || channel.type !== 'text') return this.sendError(message, this.lang.getError('noChannel'), 1);
                 if (!channel.viewable) return message.channel.send(this.lang.getError('noChannelView'));
                 if (!channel.permissionsFor(message.guild!.me!).has('SEND_MESSAGES')) return message.channel.send(this.lang.getError('noChannelWrite'));
                 welcome.channelID = channel.id;

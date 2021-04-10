@@ -1,4 +1,4 @@
-import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
+import { Message } from 'discord.js';
 import Command from '../../structures/Command';
 import Agness from '../../bot';
 
@@ -23,7 +23,7 @@ export default class UserInfoCommand extends Command {
             ?? message.author;
         return message.channel.send(this.lang.get('userInfo', user, message.guild, message.author)
         .setColor(this.client.color)
-        .setTimestamp())
+        .setTimestamp());
 
     }
 }

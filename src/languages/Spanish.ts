@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import Language from '../structures/Language';
-import { Guild, Message, MessageEmbed } from 'discord.js';
+import { Guild, MessageEmbed } from 'discord.js';
 import Agness from '../bot';
 
 export default class Spanish extends Language {
@@ -302,17 +302,34 @@ Si necesita eliminar alguna propiedad, utilice:
 En caso de que tengas alguna duda, aquí está el enlace de invitación de mi servidor de soporte.
 > [Servidor de soporte](https://discord.gg/K63NqEDm86)`),
                     userInfo: (user, guild, author) => {
+                        let flags = {
+                            DISCORD_EMPLOYEE: '<:DiscordStaff:830458954927570974>',
+                            PARTNERED_SERVER_OWNER: '<:partner:830458955666423829>',
+                            HYPESQUAD_EVENTS: '<:HypeSquadEvents:830458955134271560>',
+                            BUGHUNTER_LEVEL_1: '<:BugHunter1:830458954089365564>',
+                            HOUSE_BRAVERY: '<:Bravery:830458952730279980>',
+                            HOUSE_BRILLIANCE: '<:Brilliance:830458953611477013>',
+                            HOUSE_BALANCE: '<:Balance:830458952503787571>',
+                            EARLY_SUPPORTER: '<:EarlySupporter:830458955234672663>',
+                            TEAM_USER: '<:TeamUser:830464435914407948>',
+                            SYSTEM: '<:System:830462197036875829>',
+                            BUGHUNTER_LEVEL_2: '<:BugHunter2:830458954541826138>',
+                            VERIFIED_BOT: '<:VerifiedBot:830462197503229952>',
+                            EARLY_VERIFIED_BOT_DEVELOPER: '<:dev:830458954857185310>'
+                        }
                         let member;
-                        if(guild) member = (guild as Guild).members.cache.get(user.id)
+                        if (guild) member = (guild as Guild).members.cache.get(user.id);
                         return new MessageEmbed()
                             .setTitle(`Información de ${user.username}`)
-                            .setThumbnail(user.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }))
+                            .setThumbnail(user.displayAvatarURL({ size: 4096, dynamic: true }))
                             .setDescription(`**ID:** ${user.id}
 **Etiqueta:** ${user.tag}
-**Mención:** ${user.toString()}
-**Se unió a Discord:** ${user.createdAt.toLocaleString()}
-${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString() || 'No lo encontré.'}` : '' }`)
-                            .setFooter(`Pedido por: ${author.tag}`, author.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }))
+**Mención:** ${user.toString()} ${user.bot ? '| <:bot:830462923590598736>' : ''}
+**Insignias:** ${member ? guild?.ownerID === member.id ? '<:Owner:830458955545051167>' : '' : ''} ${user.flags?.toArray().map(x => flags[x]).join(' ') ?? 'No tiene.'}
+**Último mensaje:** ${user.lastMessage ? `[Click Aquí](${user.lastMessage?.url})` : 'No lo encontre.'}
+**Se unió a Discord:** ${user.createdAt.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}
+${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}` : ''}`)
+                            .setFooter(`(◍•ᴗ•◍)❤️ Pedido por: ${author.tag}`, author.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }));
                     }
                 },
                 commandErrors: {
