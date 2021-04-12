@@ -325,7 +325,7 @@ En caso de que tengas alguna duda, aquí está el enlace de invitación de mi se
                             .setDescription(`**ID:** ${user.id}
 **Etiqueta:** ${user.tag}
 **Mención:** ${user.toString()} ${user.bot ? '| <:bot:830462923590598736>' : ''}
-**Insignias:** ${member ? guild?.ownerID === member.id ? '<:Owner:830458955545051167>' : '' : ''} ${user.flags?.toArray().map(x => flags[x]).join(' ') ?? 'No tiene.'}
+**Insignias:** ${member ? guild?.ownerID === member.id ? '<:Owner:830458955545051167> ' : '' : ''}${user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'}
 **Último mensaje:** ${user.lastMessage ? `[Click Aquí](${user.lastMessage?.url})` : 'No lo encontre.'}
 **Se unió a Discord:** ${user.createdAt.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}
 ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}` : ''}`)
