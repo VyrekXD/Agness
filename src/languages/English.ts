@@ -317,13 +317,17 @@ In case you have any doubts, here's the invitation link from my support server.
                         }
                         let member;
                         if (guild) member = (guild as Guild).members.cache.get(user.id);
+                        let badges = user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.'
+                        if(member)  badges = `${
+                            guild?.ownerID === member.id ? `<:Owner:830458955545051167> ${user.flags?.toArray().map(x => flags[x]).join(' ')}` : 
+                            user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.'}`
                         return new MessageEmbed()
                             .setTitle(`${user.username}'s Information`)
                             .setThumbnail(user.displayAvatarURL({ size: 4096, dynamic: true }))
                             .setDescription(`**ID:** ${user.id}
 **Tag:** ${user.tag}
 **Mention:** ${user.toString()} ${user.bot ? '| <:bot:830462923590598736>' : ''}
-**Badges:** ${member ? guild?.ownerID === member.id ? '<:Owner:830458955545051167> ' : '' : ''}${user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.'}
+**Badges:** ${badges}
 **Last Message:** ${user.lastMessage ? `[Click here](${user.lastMessage?.url})` : 'I did not find it.'}
 **Joined Discord:** ${user.createdAt.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}
 ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}` : ''}`)

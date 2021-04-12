@@ -319,13 +319,16 @@ En caso de que tengas alguna duda, aquí está el enlace de invitación de mi se
                         }
                         let member;
                         if (guild) member = (guild as Guild).members.cache.get(user.id);
+                        let badges = user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'
+                        if (member) badges = `${guild?.ownerID === member.id ? `<:Owner:830458955545051167> ${user.flags?.toArray().map(x => flags[x]).join(' ')}` :
+                                user.flags?.toArray.length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'}`
                         return new MessageEmbed()
                             .setTitle(`Información de ${user.username}`)
                             .setThumbnail(user.displayAvatarURL({ size: 4096, dynamic: true }))
                             .setDescription(`**ID:** ${user.id}
 **Etiqueta:** ${user.tag}
 **Mención:** ${user.toString()} ${user.bot ? '| <:bot:830462923590598736>' : ''}
-**Insignias:** ${member ? guild?.ownerID === member.id ? '<:Owner:830458955545051167> ' : '' : ''}${user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'}
+**Insignias:** ${badges}
 **Último mensaje:** ${user.lastMessage ? `[Click Aquí](${user.lastMessage?.url})` : 'No lo encontre.'}
 **Se unió a Discord:** ${user.createdAt.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}
 ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}` : ''}`)
