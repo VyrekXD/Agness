@@ -55,6 +55,7 @@ interface CommandStrings {
     invite(): MessageEmbed;
     userInfo(user: User, guild: Guild | null, author: User): MessageEmbed;
     kill(author: User, mention: User): string;
+    smug(author: User): string;
 }
 
 interface CommandErrorStrings {
@@ -117,6 +118,7 @@ interface CommandErrorStrings {
     emitNoEvent(): string;
     killNoMention(): string;
     killMentionMe(): string;
+    killMentionAuthor(): string;
 }
 
 interface CommandDescriptionStrings {

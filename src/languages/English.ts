@@ -335,11 +335,20 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString("en-US", { 
                     },
                     kill: (author, mention) => {
                         let frases = [
-                            `${author} has killed ${mention}.`,
-                            `${mention} has been killed by ${author}.`,
-                            `${mention} died at the hands of ${author} D:`,
-                            `${author} destroyed ${mention}.`,
-                            `${mention} has gone to heaven thanks to ${author}.`
+                            `**${author} has killed ${mention}.**`,
+                            `**${mention} has been killed by ${author}.**`,
+                            `**${mention} died at the hands of ${author}** D:`,
+                            `**${author} destroyed ${mention}.**`,
+                            `**${mention} has gone to heaven thanks to ${author}.**`
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
+                    },
+                    smug: (author) => {
+                        let frases = [
+                            `**${author} boasts of himself**`,
+                            `**${author} will always be the best.**`,
+                            `**Everyone look at how ${author} boasts.**`,
                         ]
                         let random = frases[Math.floor(Math.random() *  frases.length)]
                         return random
@@ -412,7 +421,8 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     welcomeRoleType: () => 'You must specify the type of user that will receive the role (user/bot)',
                     emitNoEvent: () => 'You must specify the event to test.',
                     killNoMention: () => 'Who do you want to kill? *walks away* (~_~;)',
-                    killMentionMe: () => 'No- Not me please ;w;'
+                    killMentionMe: () => 'No- Not me please ;w;',
+                    killMentionAuthor: () => 'You can\'t kill yourself >:c'
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',
