@@ -56,6 +56,7 @@ interface CommandStrings {
     userInfo(user: User, guild: Guild | null, author: User): MessageEmbed;
     kill(author: User, mention: User): string;
     smug(author: User): string;
+    disgust(author: User): string;
 }
 
 interface CommandErrorStrings {

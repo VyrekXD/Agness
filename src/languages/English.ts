@@ -352,6 +352,15 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString("en-US", { 
                         ]
                         let random = frases[Math.floor(Math.random() *  frases.length)]
                         return random
+                    },
+                    disgust: (author) => {
+                        let frases = [
+                            `**${author} doesn't like it at all 🤮**`,
+                            `**${author} would rather kill himself :(**`,
+                            `**No, for ${author} it's not nice.**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
                     }
                 },
                 commandErrors: {
