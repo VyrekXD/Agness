@@ -25,6 +25,7 @@
   "homepage": "https://github.com/AgnessBot/Agness#readme",
   "devDependencies": {
     "@types/node": "^14.14.35",
+    "@types/node-fetch": "^2.5.10",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.21.0",

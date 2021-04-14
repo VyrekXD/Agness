@@ -333,6 +333,17 @@ En caso de que tengas alguna duda, aquí está el enlace de invitación de mi se
 **Se unió a Discord:** ${user.createdAt.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}
 ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}` : ''}`)
                             .setFooter(`(◍•ᴗ•◍)❤️ Pedido por: ${author.tag}`, author.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }));
+                    },
+                    kill: (author, mention) => {
+                        let frases = [
+                            `${author} ha matado a ${mention}.`,
+                            `${mention} ha sido asesinado por ${author}`,
+                            `${mention} a muerto a manos de ${author} D:`,
+                            `${author} hizo picadillos a ${mention}.`,
+                            `${mention} se ha ido al cielo gracias a ${author}.`
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
                     }
                 },
                 commandErrors: {
@@ -400,7 +411,9 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     welcomeNoMessage: () => 'Debe especificar un mensaje de bienvenida.',
                     leaveNoMessage: () => 'Debe especificar un mensaje de despedida.',
                     welcomeRoleType: () => 'Debes especificar el tipo de usuario que recibirá el rol (user/bot)',
-                    emitNoEvent: () => 'Debes especificar el evento a probar.'
+                    emitNoEvent: () => 'Debes especificar el evento a probar.',
+                    killNoMention: () => '¿A quién quieres matar? *se aleja* (~_~;)',
+                    killMentionMe: () => 'No- A mí no porfavor ;w;'
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',

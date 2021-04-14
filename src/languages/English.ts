@@ -332,6 +332,17 @@ In case you have any doubts, here's the invitation link from my support server.
 **Joined Discord:** ${user.createdAt.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}
 ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}` : ''}`)
                             .setFooter(`(◍•ᴗ•◍)❤️ Requested by: ${author.tag}`, author.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }));
+                    },
+                    kill: (author, mention) => {
+                        let frases = [
+                            `${author} has killed ${mention}.`,
+                            `${mention} has been killed by ${author}.`,
+                            `${mention} died at the hands of ${author} D:`,
+                            `${author} destroyed ${mention}.`,
+                            `${mention} has gone to heaven thanks to ${author}.`
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
                     }
                 },
                 commandErrors: {
@@ -399,7 +410,9 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     welcomeNoMessage: () => 'You must specify a welcome message.',
                     leaveNoMessage: () => 'You must specify a welcome message.',
                     welcomeRoleType: () => 'You must specify the type of user that will receive the role (user/bot)',
-                    emitNoEvent: () => 'You must specify the event to test.'
+                    emitNoEvent: () => 'You must specify the event to test.',
+                    killNoMention: () => 'Who do you want to kill? *walks away* (~_~;)',
+                    killMentionMe: () => 'No- Not me please ;w;'
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',
