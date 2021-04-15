@@ -63,6 +63,7 @@ interface CommandStrings {
     hug(author: User, mention: User): string;
     cuddle(author: User, mention: User): string;
     pat(author: User, mention: User): string;
+    kiss(author: User, mention: User): string;
 }
 
 interface CommandErrorStrings {
@@ -138,6 +139,8 @@ interface CommandErrorStrings {
     cuddleMentionAuthor(): string;
     patNoMention(): string;
     patMentionAuthor(): string;
+    kissNoMention(): string;
+    kissMentionAuthor(): string;
 }
 
 interface CommandDescriptionStrings {

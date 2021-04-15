@@ -413,6 +413,14 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                         ];
                         const random = frases[Math.floor(Math.random() *  frases.length)];
                         return random;
+                    },
+                    kiss: (author, mention) => {
+                        const frases = [
+                            `**${author} gave ${mention} a kiss** -w-`,
+                            `**${mention} got a kiss from ${author}**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     }
                 },
                 commandErrors: {
@@ -495,7 +503,9 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     cuddleNoMention: () => 'Mention who you want to cuddle u.u',
                     cuddleMentionAuthor: () => 'Hmm.. You can not do that :(',
                     patNoMention: () => 'Mention the person who will receive your patties c:',
-                    patMentionAuthor: () => 'You can\'t caress yourself D:'
+                    patMentionAuthor: () => 'You can\'t caress yourself D:',
+                    kissNoMention: () => 'Mention who you want to kiss 7w7',
+                    kissMentionAuthor: () => 'Hmm.. you can\'t kiss yourself  ._.'
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',
