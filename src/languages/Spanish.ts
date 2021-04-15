@@ -325,9 +325,9 @@ En caso de que tengas alguna duda, aquí está el enlace de invitación de mi se
                         };
                         let member;
                         if (guild) member = (guild as Guild).members.cache.get(user.id);
-                        let badges = user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.';
+                        let badges = user.flags?.toArray().length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.';
                         if (member) badges = `${guild?.ownerID === member.id ? `<:Owner:830458955545051167> ${user.flags?.toArray().map(x => flags[x]).join(' ')}` :
-                                user.flags?.toArray.length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'}`;
+                                user.flags?.toArray().length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'}`;
                         return new MessageEmbed()
                             .setTitle(`Información de ${user.username}`)
                             .setThumbnail(user.displayAvatarURL({ size: 4096, dynamic: true }))

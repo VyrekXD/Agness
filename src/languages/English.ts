@@ -323,10 +323,10 @@ In case you have any doubts, here's the invitation link from my support server.
                         };
                         let member;
                         if (guild) member = (guild as Guild).members.cache.get(user.id);
-                        let badges = user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.';
+                        let badges = user.flags?.toArray().length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.';
                         if(member)  badges = `${
                             guild?.ownerID === member.id ? `<:Owner:830458955545051167> ${user.flags?.toArray().map(x => flags[x]).join(' ')}` : 
-                            user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.'}`;
+                            user.flags?.toArray().length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.'}`;
                         return new MessageEmbed()
                             .setTitle(`${user.username}'s Information`)
                             .setThumbnail(user.displayAvatarURL({ size: 4096, dynamic: true }))
