@@ -16,7 +16,7 @@ export default class HelpCommand extends Command {
     async run(message: Message, args: string[]): Promise<Message> {
         if (!args[0])
             return message.channel.send(new MessageEmbed()
-                .setDescription(this.lang.get('help', this.server?.prefix ?? process.env.BOT_PREFIX, 2, this.client.commands.size - this.client.commands.filter((c) => c.category === 'Developer').size))
+                .setDescription(this.lang.get('help', this.server?.prefix ?? process.env.BOT_PREFIX))
                 .setColor(this.client.color));
         const category = this.client.commands.filter((c) => c.category.toLowerCase() == args[0].toLowerCase());
         const cmd = this.client.commands.get(args[0].toLowerCase());
@@ -34,7 +34,7 @@ export default class HelpCommand extends Command {
                 .setColor(this.client.color));
         else
             return message.channel.send(this.lang.getError('helpNo'), new MessageEmbed()
-                .setDescription(this.lang.get('help', this.server?.prefix ?? process.env.BOT_PREFIX, 2, this.client.commands.size - this.client.commands.filter((c) => c.category === 'Developer').size))
+                .setDescription(this.lang.get('help', this.server?.prefix ?? process.env.BOT_PREFIX))
                 .setColor(this.client.color));
     }
 }

@@ -12,19 +12,25 @@ export default class Spanish extends Language {
             strings: {
                 commands: {
                     help: (prefix) => `<:world:820783752489074748> **Panel de ayuda de ${client.user!.username}**
-¡Hola! En este momento cuento con **2** categorias y **${client.commands.size - client.commands.filter(c => c.category === 'Developer').size}** comandos.
+¡Hola! En este momento cuento con **5** categorias y **${client.commands.size - client.commands.filter(c => c.category === 'Developer').size}** comandos.
 **Categorias:**
-> \`${prefix}help Config\` • Comandos de configuración <:config:820788840654307348>
-> \`${prefix}help General\` • Comandos útiles <:general:820791014872449055>
+> \`${prefix}help Config\` • Comandos de configuración <:DiscordStaff:830458954927570974>
+> \`${prefix}help General\` • Comandos útiles <a:ALsaludo:809942573065699338>
+> \`${prefix}help Fun\` • Comandos divertidos <:ALwaiting:823673033625436210>
+> \`${prefix}help Reaction\` • Comandos expresivos <:ALsadChamp:823671653694832681>
+> \`${prefix}help Interact\` • Comandos de interacción <a:kill:832357744123576361>
 **¿Necesitas mas ayuda?**
 Si necesita información más detallada sobre cada comando, puede usar:
 > \`${prefix}help <Comando>\`
 **Enlaces**
-**[Invitacion del Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user!.id}&permissions=8&scope=bot) | [Servidor de Soporte](https://discord.gg/K63NqEDm86) | [GitHub](https://github.com/AgnessBot/Agness) | [Top.gg](https://top.gg/bot/798573830645874718)**`,
+**[Invitacion del Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user!.id}&permissions=8&scope=bot) | [Servidor de Soporte](https://discord.gg/K63NqEDm86) | [Top.gg](https://top.gg/bot/798573830645874718)**`,
                     helpCategory: (prefix, category, commands, quantity) => {
                         const categories = {
-                            Config: '**Config** <:config:820788840654307348>',
-                            General: '**General** <:general:820791014872449055>',
+                            Config: '**Config** <:DiscordStaff:830458954927570974>',
+                            General: '**General** <a:ALsaludo:809942573065699338>',
+                            Fun: 'Diversión <a:kill:832357744123576361>',
+                            Reaction: 'Reacciones <:ALsadChamp:823671653694832681>',
+                            Interact: 'Interacción <a:kill:832357744123576361>',
                             Developer: '**Developer**'
                         };
                         return `**Comandos en la categoria:** ${categories[category]}
@@ -422,7 +428,19 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                         ];
                         const random = frases[Math.floor(Math.random() *  frases.length)];
                         return random;
-                    }
+                    },
+                    feed: (author, mention) => {
+                        const frases = [
+                            `**${author} ha dado de comer a ${mention}** .w.`,
+                            `**${mention} ha comido gracias a ${author}**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
+                    },
+                    dog: () => '¡Mira un perrito! :3 ❤️',
+                    cat: () => '¿Querías un lindo gatito? 🥰',
+                    bunny: () => 'Este es un conejo hermoso 😋',
+                    duck: () => '¿Alguien dijo pato? 🦆'
                 },
                 commandErrors: {
                     noImage: () => 'Debes especificar la URL de una imagen válida.',
@@ -506,7 +524,9 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     patNoMention: () => 'Menciona a la persona que recibirá tus palmatidas c:',
                     patMentionAuthor: () => 'No puedes acariciarte a ti mismo D:',
                     kissNoMention: () => 'Menciona a quien quieres besar 7w7',
-                    kissMentionAuthor: () => 'Hmm.. no te puedes besar a ti mismo ._.'
+                    kissMentionAuthor: () => 'Hmm.. no te puedes besar a ti mismo ._.',
+                    feedNoMention: () => 'Menciona a quien quieres dar de comer .w.',
+                    feedMentionAuthor: () => 'Hmm.. Menciona a alguien que no seas tú e.e'
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',

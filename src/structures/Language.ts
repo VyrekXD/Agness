@@ -6,7 +6,7 @@ import { Leave } from '../database/leave';
 import Agness from '../bot';
 
 interface CommandStrings {
-    help(prefix: string, categories: number, commands: number): string;
+    help(prefix: string): string;
     helpCategory(prefix: string, category: Category, commands: string, quantity: number): string;
     helpCommand(prefix: string, command: Command): string;
     prefix(prefix: string): string;
@@ -64,6 +64,11 @@ interface CommandStrings {
     cuddle(author: User, mention: User): string;
     pat(author: User, mention: User): string;
     kiss(author: User, mention: User): string;
+    feed(author: User, mention: User): string;
+    dog(): string;
+    cat(): string;
+    bunny(): string;
+    duck(): string;
 }
 
 interface CommandErrorStrings {
@@ -141,6 +146,8 @@ interface CommandErrorStrings {
     patMentionAuthor(): string;
     kissNoMention(): string;
     kissMentionAuthor(): string;
+    feedNoMention(): string;
+    feedMentionAuthor(): string;
 }
 
 interface CommandDescriptionStrings {
