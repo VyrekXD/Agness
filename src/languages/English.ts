@@ -405,6 +405,14 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                         ];
                         const random = frases[Math.floor(Math.random() *  frases.length)];
                         return random;
+                    },
+                    pat: (author, mention) => {
+                        const frases = [
+                            `**${author} pats ${mention}** :3`,
+                            `**${mention} gets pats from ${author}**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     }
                 },
                 commandErrors: {
@@ -485,7 +493,9 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     hugNoMention: () => 'Who do you want to hug? :3',
                     hugMentionAuthor: () => 'You can\'t hug yourself, sorry-',
                     cuddleNoMention: () => 'Mention who you want to cuddle u.u',
-                    cuddleMentionAuthor: () => 'Hmm.. You can not do that :('
+                    cuddleMentionAuthor: () => 'Hmm.. You can not do that :(',
+                    patNoMention: () => 'Mention the person who will receive your patties c:',
+                    patMentionAuthor: () => 'You can\'t caress yourself D:'
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',

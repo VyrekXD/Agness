@@ -406,6 +406,14 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                         ];
                         const random = frases[Math.floor(Math.random() *  frases.length)];
                         return random;
+                    },
+                    pat: (author, mention) => {
+                        const frases = [
+                            `**${author} da palmaditas a ${mention}** :3`,
+                            `**${mention} recibe palmaditas de ${author}**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     }
                 },
                 commandErrors: {
@@ -486,8 +494,9 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     hugNoMention: () => '¿A quién quieres abrazar? :3',
                     hugMentionAuthor: () => 'No puedes abrazarte a ti mismo, lo siento-',
                     cuddleNoMention: () => 'Menciona a quien quieres acariciar u.u',
-                    cuddleMentionAuthor: () => 'Hmm.. No puedes hacer eso :('
-
+                    cuddleMentionAuthor: () => 'Hmm.. No puedes hacer eso :(',
+                    patNoMention: () => 'Menciona a la persona que recibirá tus palmatidas c:',
+                    patMentionAuthor: () => 'No puedes acariciarte a ti mismo D:'
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',
