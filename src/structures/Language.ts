@@ -59,6 +59,8 @@ interface CommandStrings {
     disgust(author: User): string;
     laugh(author: User): string;
     baka(author: User, mention: User): string;
+    slap(author: User, mention: User): string;
+    hug(author: User, mention: User): string;
 }
 
 interface CommandErrorStrings {
@@ -125,6 +127,11 @@ interface CommandErrorStrings {
     bakaNoMention(): string;
     bakaMentionMe(): string;
     bakaMentionAuthor(): string;
+    slapNoMention(): string;
+    slapMentionMe(): string;
+    slapMentionAuthor(): string;
+    hugNoMention(): string;
+    hugMentionAuthor(): string;
 }
 
 interface CommandDescriptionStrings {

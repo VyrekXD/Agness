@@ -374,8 +374,26 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString("en-US", { 
                     baka: (author, mention) => {
                         let frases = [
                             `**${author} says baka to ${mention}**`,
-                            `**${mention} baka baka baka** *said by ${author}*`,
-                            `**${author} dice que ${mention} is baka D:**`,
+                            `**${mention} baka baka baka** *said by ${author}**`,
+                            `**${author} says ${mention} is baka D:**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
+                    },
+                    slap: (author, mention) => {
+                        let frases = [
+                            `**${author} slaps ${mention}** D:`,
+                            `**${mention} gets a strong slap from ${author}*`,
+                            `**${author} keeps slapping ${mention}**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
+                    },
+                    hug: (author, mention) => {
+                        let frases = [
+                            `**${author} hugs ${mention}** D:`,
+                            `**${mention} receives a warm hug from ${author}**`,
+                            `**${author} does not release ${mention}**`,
                         ]
                         let random = frases[Math.floor(Math.random() *  frases.length)]
                         return random
@@ -452,7 +470,12 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     killMentionAuthor: () => 'You can\'t kill yourself >:c',
                     bakaNoMention: () => 'Mention who you want to say baka  owo',
                     bakaMentionMe: () => 'I\'m not baka, you are D:',
-                    bakaMentionAuthor: () => 'Are you baka? okey- ;-;'
+                    bakaMentionAuthor: () => 'Are you baka? okey- ;-;',
+                    slapNoMention: () => 'Mention who you want to slap ^w^',
+                    slapMentionMe: () => 'No- don\'t slap me  D:',
+                    slapMentionAuthor: () => 'I\'m sure you don\'t want to do that  e.e',
+                    hugNoMention: () => 'Who do you want to hug? :3',
+                    hugMentionAuthor: () => 'You can\'t hug yourself, sorry- '
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',

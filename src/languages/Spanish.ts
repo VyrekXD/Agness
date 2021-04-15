@@ -380,6 +380,24 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString("en-US",
                         ]
                         let random = frases[Math.floor(Math.random() *  frases.length)]
                         return random
+                    },
+                    slap: (author, mention) => {
+                        let frases = [
+                            `**${author} abofetea a ${mention}** D:`,
+                            `**${mention} recibe una fuerte bofetada de ${author}**`,
+                            `**${author} no deja de abofetear a ${mention}**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
+                    },
+                    hug: (author, mention) => {
+                        let frases = [
+                            `**${author} abraza a ${mention}** D:`,
+                            `**${mention} recibe un caluroso abrazo de ${author}**`,
+                            `**${author} no suelta a ${mention}**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
                     }
                 },
                 commandErrors: {
@@ -453,7 +471,12 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     killMentionAuthor: () => 'No puedes matarte a ti mismo >:c',
                     bakaNoMention: () => 'Menciona a quién quieres decir baka owo',
                     bakaMentionMe: () => 'Yo no soy baka, tú lo eres D:',
-                    bakaMentionAuthor: () => '¿Tú eres baka? okey- ;-;'
+                    bakaMentionAuthor: () => '¿Tú eres baka? okey- ;-;',
+                    slapNoMention: () => 'Menciona a quién quieres abofetear ^w^',
+                    slapMentionMe: () => 'No- A mí no me abofetees D:',
+                    slapMentionAuthor: () => 'Estoy segura que no quieres hacer eso e.e',
+                    hugNoMention: () => '¿A quién quieres abrazar? :3',
+                    hugMentionAuthor: () => 'No puedes abrazarte a ti mismo, lo siento-'
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',
