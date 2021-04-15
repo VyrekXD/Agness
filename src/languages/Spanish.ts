@@ -398,6 +398,14 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString("en-US",
                         ]
                         let random = frases[Math.floor(Math.random() *  frases.length)]
                         return random
+                    },
+                    cuddle: (author, mention) => {
+                        let frases = [
+                            `**${author} acaricia a ${mention}** :3`,
+                            `**${author} le da caricias a ${mention}**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
                     }
                 },
                 commandErrors: {
@@ -476,7 +484,10 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     slapMentionMe: () => 'No- A mí no me abofetees D:',
                     slapMentionAuthor: () => 'Estoy segura que no quieres hacer eso e.e',
                     hugNoMention: () => '¿A quién quieres abrazar? :3',
-                    hugMentionAuthor: () => 'No puedes abrazarte a ti mismo, lo siento-'
+                    hugMentionAuthor: () => 'No puedes abrazarte a ti mismo, lo siento-',
+                    cuddleNoMention: () => 'Menciona a quien quieres acariciar u.u',
+                    cuddleMentionAuthor: () => 'Hmm.. No puedes hacer eso :('
+
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',

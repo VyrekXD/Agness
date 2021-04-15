@@ -61,6 +61,7 @@ interface CommandStrings {
     baka(author: User, mention: User): string;
     slap(author: User, mention: User): string;
     hug(author: User, mention: User): string;
+    cuddle(author: User, mention: User): string;
 }
 
 interface CommandErrorStrings {
@@ -132,6 +133,8 @@ interface CommandErrorStrings {
     slapMentionAuthor(): string;
     hugNoMention(): string;
     hugMentionAuthor(): string;
+    cuddleNoMention(): string;
+    cuddleMentionAuthor(): string;
 }
 
 interface CommandDescriptionStrings {

@@ -397,6 +397,14 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString("en-US", { 
                         ]
                         let random = frases[Math.floor(Math.random() *  frases.length)]
                         return random
+                    },
+                    cuddle: (author, mention) => {
+                        let frases = [
+                            `**${author} cuddles ${mention}** D:`,
+                            `**${author} caresses ${mention}**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
                     }
                 },
                 commandErrors: {
@@ -475,7 +483,9 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     slapMentionMe: () => 'No- don\'t slap me  D:',
                     slapMentionAuthor: () => 'I\'m sure you don\'t want to do that  e.e',
                     hugNoMention: () => 'Who do you want to hug? :3',
-                    hugMentionAuthor: () => 'You can\'t hug yourself, sorry- '
+                    hugMentionAuthor: () => 'You can\'t hug yourself, sorry-',
+                    cuddleNoMention: () => 'Mention who you want to cuddle u.u',
+                    cuddleMentionAuthor: () => 'Hmm.. You can not do that :('
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',
