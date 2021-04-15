@@ -12,13 +12,13 @@ export default class CuddleCommand extends Command {
     }
 
     async run(message: Message): Promise<Message> {
-        let mention = message.mentions.users.first()
-        if(!mention) return message.channel.send(this.lang.getError('cuddleNoMention'))
-        if(mention.id == message.author.id) return message.channel.send(this.lang.getError('cuddleMentionAuthor'))
+        const mention = message.mentions.users.first();
+        if(!mention) return message.channel.send(this.lang.getError('cuddleNoMention'));
+        if(mention.id == message.author.id) return message.channel.send(this.lang.getError('cuddleMentionAuthor'));
         return message.channel.send(new MessageEmbed()
         .setDescription(this.lang.get('cuddle', message.author, mention))
         .setImage((await this.client.nekos.sfw.cuddle()).url)
         .setColor('RANDOM')
-        .setFooter('Nekos Life ❤️'))
+        .setFooter('Nekos Life ❤️'));
     }
 }

@@ -16,6 +16,6 @@ export default class SmugCommand extends Command {
         .setDescription(this.lang.get('smug', message.author))
         .setImage(await this.client.getImage('sfw/gif/smug'))
         .setColor('RANDOM')
-        .setFooter('Karu API ❤️'))
+        .setFooter('Karu API ❤️'));
     }
 }

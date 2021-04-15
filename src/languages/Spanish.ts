@@ -302,7 +302,7 @@ Si necesita eliminar alguna propiedad, utilice:
 En caso de que tengas alguna duda, aquí está el enlace de invitación de mi servidor de soporte.
 > [Servidor de soporte](https://discord.gg/K63NqEDm86)`),
                     userInfo: (user, guild, author) => {
-                        let flags = {
+                        const flags = {
                             DISCORD_EMPLOYEE: '<:DiscordStaff:830458954927570974>',
                             PARTNERED_SERVER_OWNER: '<:partner:830458955666423829>',
                             HYPESQUAD_EVENTS: '<:HypeSquadEvents:830458955134271560>',
@@ -316,12 +316,12 @@ En caso de que tengas alguna duda, aquí está el enlace de invitación de mi se
                             BUGHUNTER_LEVEL_2: '<:BugHunter2:830458954541826138>',
                             VERIFIED_BOT: '<:VerifiedBot:830462197503229952>',
                             EARLY_VERIFIED_BOT_DEVELOPER: '<:dev:830458954857185310>'
-                        }
+                        };
                         let member;
                         if (guild) member = (guild as Guild).members.cache.get(user.id);
-                        let badges = user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'
+                        let badges = user.flags?.toArray.length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.';
                         if (member) badges = `${guild?.ownerID === member.id ? `<:Owner:830458955545051167> ${user.flags?.toArray().map(x => flags[x]).join(' ')}` :
-                                user.flags?.toArray.length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'}`
+                                user.flags?.toArray.length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'}`;
                         return new MessageEmbed()
                             .setTitle(`Información de ${user.username}`)
                             .setThumbnail(user.displayAvatarURL({ size: 4096, dynamic: true }))
@@ -330,82 +330,82 @@ En caso de que tengas alguna duda, aquí está el enlace de invitación de mi se
 **Mención:** ${user.toString()} ${user.bot ? '| <:bot:830462923590598736>' : ''}
 **Insignias:** ${badges}
 **Último mensaje:** ${user.lastMessage ? `[Click Aquí](${user.lastMessage?.url})` : 'No lo encontre.'}
-**Se unió a Discord:** ${user.createdAt.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}
-${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString("en-US", { timeZoneName: "short", timeZone: 'America/Lima' })}` : ''}`)
+**Se unió a Discord:** ${user.createdAt.toLocaleString('en-US', { timeZoneName: 'short', timeZone: 'America/Lima' })}
+${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US', { timeZoneName: 'short', timeZone: 'America/Lima' })}` : ''}`)
                             .setFooter(`(◍•ᴗ•◍)❤️ Pedido por: ${author.tag}`, author.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }));
                     },
                     kill: (author, mention) => {
-                        let frases = [
+                        const frases = [
                             `**${author} ha matado a ${mention}.`,
                             `**${mention} ha sido asesinado por ${author}**`,
                             `**${mention} a muerto a manos de ${author}** D:`,
                             `**${author} hizo picadillos a ${mention}.**`,
                             `**${mention} se ha ido al cielo gracias a ${author}.**`
-                        ]
-                        let random = frases[Math.floor(Math.random() *  frases.length)]
-                        return random
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     },
                     smug: (author) => {
-                        let frases = [
+                        const frases = [
                             `**${author} presume de si mism@.**`,
                             `**${author} siempre sera lo mejor.**`,
-                            `**Todos miren como presume ${author}.**`,
-                        ]
-                        let random = frases[Math.floor(Math.random() *  frases.length)]
-                        return random
+                            `**Todos miren como presume ${author}.**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     },
                     disgust: (author) => {
-                        let frases = [
+                        const frases = [
                             `**A ${author} no le gusta para nada 🤮**`,
                             `**${author} preferiria que lo maten :(**`,
-                            `**No, para ${author} no es agradable.**`,
-                        ]
-                        let random = frases[Math.floor(Math.random() *  frases.length)]
-                        return random
+                            `**No, para ${author} no es agradable.**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     },
                     laugh: (author) => {
-                        let frases = [
+                        const frases = [
                             `**Miren como ${author} ríe a carcajadas.**`,
                             `**${author} esta muriendo de risa 😆**`,
-                            `**Miren la risa de ${author} :D**`,
-                        ]
-                        let random = frases[Math.floor(Math.random() *  frases.length)]
-                        return random
+                            `**Miren la risa de ${author} :D**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     },
                     baka: (author, mention) => {
-                        let frases = [
+                        const frases = [
                             `**${author} le dice baka a ${mention}**`,
                             `**${mention} baka baka baka** *dicho por ${author}*`,
-                            `**${author} dice que ${mention} es baka D:**`,
-                        ]
-                        let random = frases[Math.floor(Math.random() *  frases.length)]
-                        return random
+                            `**${author} dice que ${mention} es baka D:**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     },
                     slap: (author, mention) => {
-                        let frases = [
+                        const frases = [
                             `**${author} abofetea a ${mention}** D:`,
                             `**${mention} recibe una fuerte bofetada de ${author}**`,
-                            `**${author} no deja de abofetear a ${mention}**`,
-                        ]
-                        let random = frases[Math.floor(Math.random() *  frases.length)]
-                        return random
+                            `**${author} no deja de abofetear a ${mention}**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     },
                     hug: (author, mention) => {
-                        let frases = [
+                        const frases = [
                             `**${author} abraza a ${mention}** D:`,
                             `**${mention} recibe un caluroso abrazo de ${author}**`,
-                            `**${author} no suelta a ${mention}**`,
-                        ]
-                        let random = frases[Math.floor(Math.random() *  frases.length)]
-                        return random
+                            `**${author} no suelta a ${mention}**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     },
                     cuddle: (author, mention) => {
-                        let frases = [
+                        const frases = [
                             `**${author} acaricia a ${mention}** :3`,
-                            `**${author} le da caricias a ${mention}**`,
-                        ]
-                        let random = frases[Math.floor(Math.random() *  frases.length)]
-                        return random
+                            `**${author} le da caricias a ${mention}**`
+                        ];
+                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        return random;
                     }
                 },
                 commandErrors: {

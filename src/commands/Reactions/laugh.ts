@@ -16,6 +16,6 @@ export default class laughCommand extends Command {
         .setDescription(this.lang.get('laugh', message.author))
         .setImage(await this.client.getImage('sfw/gif/laugh'))
         .setColor('RANDOM')
-        .setFooter('Karu API ❤️'))
+        .setFooter('Karu API ❤️'));
     }
 }

@@ -108,9 +108,9 @@ export default class Agness extends Client {
             headers: {
                 Authorization: process.env.KARU_TOKEN
             }
-        })
-        const json = await request.json()
-        return json.url
+        });
+        const json = await request.json();
+        return json.url;
     }
 }
 

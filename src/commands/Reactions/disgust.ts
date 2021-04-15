@@ -16,6 +16,6 @@ export default class DisgustCommand extends Command {
         .setDescription(this.lang.get('disgust', message.author))
         .setImage(await this.client.getImage('sfw/gif/disgust'))
         .setColor('RANDOM')
-        .setFooter('Karu API ❤️'))
+        .setFooter('Karu API ❤️'));
     }
 }

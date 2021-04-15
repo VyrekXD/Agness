@@ -12,14 +12,14 @@ export default class KillCommand extends Command {
     }
 
     async run(message: Message): Promise<Message> {
-        let mention = message.mentions.users.first()
-        if(!mention) return message.channel.send(this.lang.getError('killNoMention'))
-        if(mention.id == this.client.user!.id) return message.channel.send(this.lang.getError('killMentionMe'))
-        if(mention.id == message.author.id) return message.channel.send(this.lang.getError('killMentionAuthor'))
+        const mention = message.mentions.users.first();
+        if(!mention) return message.channel.send(this.lang.getError('killNoMention'));
+        if(mention.id == this.client.user!.id) return message.channel.send(this.lang.getError('killMentionMe'));
+        if(mention.id == message.author.id) return message.channel.send(this.lang.getError('killMentionAuthor'));
         return message.channel.send(new MessageEmbed()
         .setDescription(this.lang.get('kill', message.author, mention))
         .setImage(await this.client.getImage('sfw/gif/kill'))
         .setColor('RANDOM')
-        .setFooter('Karu API ❤️'))
+        .setFooter('Karu API ❤️'));
     }
 }
