@@ -57,6 +57,8 @@ interface CommandStrings {
     kill(author: User, mention: User): string;
     smug(author: User): string;
     disgust(author: User): string;
+    laugh(author: User): string;
+    baka(author: User, mention: User): string;
 }
 
 interface CommandErrorStrings {
@@ -120,6 +122,9 @@ interface CommandErrorStrings {
     killNoMention(): string;
     killMentionMe(): string;
     killMentionAuthor(): string;
+    bakaNoMention(): string;
+    bakaMentionMe(): string;
+    bakaMentionAuthor(): string;
 }
 
 interface CommandDescriptionStrings {

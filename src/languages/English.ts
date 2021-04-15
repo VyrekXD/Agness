@@ -361,6 +361,24 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString("en-US", { 
                         ]
                         let random = frases[Math.floor(Math.random() *  frases.length)]
                         return random
+                    },
+                    laugh: (author) => {
+                        let frases = [
+                            `**Look how ${author} laughs out loud.**`,
+                            `**${author}  is dying of laughter 😆**`,
+                            `**Look at the laugh of ${author} :D**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
+                    },
+                    baka: (author, mention) => {
+                        let frases = [
+                            `**${author} says baka to ${mention}**`,
+                            `**${mention} baka baka baka** *said by ${author}*`,
+                            `**${author} dice que ${mention} is baka D:**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
                     }
                 },
                 commandErrors: {
@@ -431,7 +449,10 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     emitNoEvent: () => 'You must specify the event to test.',
                     killNoMention: () => 'Who do you want to kill? *walks away* (~_~;)',
                     killMentionMe: () => 'No- Not me please ;w;',
-                    killMentionAuthor: () => 'You can\'t kill yourself >:c'
+                    killMentionAuthor: () => 'You can\'t kill yourself >:c',
+                    bakaNoMention: () => 'Mention who you want to say baka  owo',
+                    bakaMentionMe: () => 'I\'m not baka, you are D:',
+                    bakaMentionAuthor: () => 'Are you baka? okey- ;-;'
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',
@@ -483,7 +504,8 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     MANAGE_NICKNAMES: 'Manage Nicknames',
                     MANAGE_ROLES: 'Manage Roles',
                     MANAGE_WEBHOOKS: 'Manage Webhooks',
-                    MANAGE_EMOJIS: 'Manage Emojis'
+                    MANAGE_EMOJIS: 'Manage Emojis',
+                    REQUEST_TO_SPEAK: 'Reques to speak'
                 }
             }
         });

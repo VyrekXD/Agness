@@ -14,7 +14,7 @@ export default class DisgustCommand extends Command {
     async run(message: Message): Promise<Message> {
         return message.channel.send(new MessageEmbed()
         .setDescription(this.lang.get('disgust', message.author))
-        .setImage(await this.getImage('sfw/gif/disgust'))
+        .setImage(await this.client.getImage('sfw/gif/disgust'))
         .setColor('RANDOM')
         .setFooter('Karu API ❤️'))
     }

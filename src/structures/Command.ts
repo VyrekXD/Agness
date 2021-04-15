@@ -3,8 +3,7 @@ import { Collection, Message, TextChannel, PermissionString, MessageEmbed } from
 import { Blacklists } from '../database/blacklist';
 import { Server } from '../database/server';
 import English from '../languages/English';
-import Language from './Language';
-import fetch from 'node-fetch';
+import Language from './Language';  
 import Agness from '../bot';
 
 const devs = process.env.DEVS ? process.env.DEVS.split(', ') : [];
@@ -129,14 +128,5 @@ export default abstract class Command {
 - ${text}
 ${values.join(' ')}
 - ${characters.padStart(values.slice(0, arg + 1).join(' ').length + characters.length - 1, ' ')}\`\`\``);
-    }
-    async getImage(ruta: string): Promise<string> {
-        const request = await fetch(`https://kapi.bulzykrown.repl.co/api/img/${ruta}`, {
-            headers: {
-                Authorization: process.env.KARU_TOKEN
-            }
-        })
-        const json = await request.json()
-        return json.url
     }
 }

@@ -18,7 +18,7 @@ export default class KillCommand extends Command {
         if(mention.id == message.author.id) return message.channel.send(this.lang.getError('killMentionAuthor'))
         return message.channel.send(new MessageEmbed()
         .setDescription(this.lang.get('kill', message.author, mention))
-        .setImage(await this.getImage('sfw/gif/kill'))
+        .setImage(await this.client.getImage('sfw/gif/kill'))
         .setColor('RANDOM')
         .setFooter('Karu API ❤️'))
     }

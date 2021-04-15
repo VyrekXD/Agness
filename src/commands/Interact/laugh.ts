@@ -2,10 +2,10 @@ import { Message, MessageEmbed } from 'discord.js';
 import Command from '../../structures/Command';
 import Agness from '../../bot';
 
-export default class SmugCommand extends Command {
+export default class laughCommand extends Command {
     constructor(client: Agness, category: string) {
         super(client, {
-            name: 'smug',
+            name: 'laugh',
             botChannelPermissions: ['EMBED_LINKS'],
             category
         });
@@ -13,8 +13,8 @@ export default class SmugCommand extends Command {
 
     async run(message: Message): Promise<Message> {
         return message.channel.send(new MessageEmbed()
-        .setDescription(this.lang.get('smug', message.author))
-        .setImage(await this.client.getImage('sfw/gif/smug'))
+        .setDescription(this.lang.get('laugh', message.author))
+        .setImage(await this.client.getImage('sfw/gif/laugh'))
         .setColor('RANDOM')
         .setFooter('Karu API ❤️'))
     }

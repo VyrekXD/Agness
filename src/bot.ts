@@ -1,10 +1,12 @@
 import { Client, MessageEmbed, GuildMember, TextChannel } from 'discord.js';
 import Languages from './managers/Languages';
 import Commands from './managers/Commands';
+import nekosClient = require('nekos.life');
 import { Embed } from './database/embed';
 import Events from './managers/Events';
 import { connect } from 'mongoose';
 import { config } from 'dotenv';
+import fetch from 'node-fetch';
 
 config();
 
@@ -19,7 +21,7 @@ export default class Agness extends Client {
     commands = new Commands(this);
     events = new Events(this);
     color = '#66e7ae';
-
+    nekos = new nekosClient()
     constructor() {
         super({
             partials: ['MESSAGE', 'REACTION', 'CHANNEL'],
@@ -38,7 +40,6 @@ export default class Agness extends Client {
         this.languages.load();
         this.commands.load();
         this.events.load();
-
         this.login(process.env.TOKEN);
     }
 
@@ -101,6 +102,15 @@ export default class Agness extends Client {
         if (embedData.color)
             embed.setColor('#' + embedData.color);
         return embed;
+    }
+    async getImage(ruta: string): Promise<string> {
+        const request = await fetch(`https://kapi.bulzykrown.repl.co/api/img/${ruta}`, {
+            headers: {
+                Authorization: process.env.KARU_TOKEN
+            }
+        })
+        const json = await request.json()
+        return json.url
     }
 }
 

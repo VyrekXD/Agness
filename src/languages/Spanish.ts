@@ -362,6 +362,24 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString("en-US",
                         ]
                         let random = frases[Math.floor(Math.random() *  frases.length)]
                         return random
+                    },
+                    laugh: (author) => {
+                        let frases = [
+                            `**Miren como ${author} ríe a carcajadas.**`,
+                            `**${author} esta muriendo de risa 😆**`,
+                            `**Miren la risa de ${author} :D**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
+                    },
+                    baka: (author, mention) => {
+                        let frases = [
+                            `**${author} le dice baka a ${mention}**`,
+                            `**${mention} baka baka baka** *dicho por ${author}*`,
+                            `**${author} dice que ${mention} es baka D:**`,
+                        ]
+                        let random = frases[Math.floor(Math.random() *  frases.length)]
+                        return random
                     }
                 },
                 commandErrors: {
@@ -432,7 +450,10 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     emitNoEvent: () => 'Debes especificar el evento a probar.',
                     killNoMention: () => '¿A quién quieres matar? *se aleja* (~_~;)',
                     killMentionMe: () => 'No- A mí no porfavor ;w;',
-                    killMentionAuthor: () => 'No puedes matarte a ti mismo >:c'
+                    killMentionAuthor: () => 'No puedes matarte a ti mismo >:c',
+                    bakaNoMention: () => 'Menciona a quién quieres decir baka owo',
+                    bakaMentionMe: () => 'Yo no soy baka, tú lo eres D:',
+                    bakaMentionAuthor: () => '¿Tú eres baka? okey- ;-;'
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',
@@ -485,7 +506,8 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     MANAGE_NICKNAMES: 'Gestionar apodos',
                     MANAGE_ROLES: 'Gestionar roles',
                     MANAGE_WEBHOOKS: 'Gestionar webhooks',
-                    MANAGE_EMOJIS: 'Gestionar emojis'
+                    MANAGE_EMOJIS: 'Gestionar emojis',
+                    REQUEST_TO_SPEAK: 'Reques to speak'
                 }
             }
         });
