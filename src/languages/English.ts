@@ -12,13 +12,14 @@ export default class English extends Language {
             strings: {
                 commands: {
                     help: (prefix) => `<:world:820783752489074748> **${client.user!.username} Help Panel**
-Hi! At the moment I have **5** categories and **${client.commands.size - client.commands.filter(c => c.category === 'Developer').size}** commands.
+Hi! At the moment I have **6** categories and **${client.commands.size - client.commands.filter(c => c.category === 'Developer').size}** commands.
 **Categories:**
 > \`${prefix}help Config\` • Configuration Commands <:DiscordStaff:830458954927570974>  
 > \`${prefix}help General\` • Useful Commands <a:ALsaludo:809942573065699338>
 > \`${prefix}help Fun\` • Funny commands <:ALwaiting:823673033625436210>
 > \`${prefix}help Reaction\` • Expressive commands <:ALsadChamp:823671653694832681>
 > \`${prefix}help Interact\` • Interactive commands <a:kill:832357744123576361>
+> \`${prefix}help NSFW\` • Commands NSFW +18 <:nsfw:832630274587361281>
 **Do you need more help?**
 If you need more detailed information about each command, you can use:
 > \`${prefix}help <Command>\`
@@ -31,6 +32,7 @@ If you need more detailed information about each command, you can use:
                             Fun: 'Fun <a:kill:832357744123576361>',
                             Reaction: 'Reaction <:ALsadChamp:823671653694832681>',
                             Interact: 'Interact <a:kill:832357744123576361>',
+                            NSFW: 'NSFW <:nsfw:832630274587361281>',
                             Developer: '**Developer**'
                         };
                         return `**Commands in the category:** ${categories[category]}
@@ -439,7 +441,9 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                     dog: () => 'Look at a puppy! :3 ❤️',
                     cat: () => 'Did you want a cute cat? 🥰',
                     bunny: () => 'This is a beautiful bunny 😋',
-                    duck: () => 'Did someone say duck? 🦆'
+                    duck: () => 'Did someone say duck? 🦆',
+                    nsfw: () => 'I hope you enjoy 🕵️‍♂️',
+                    nsfwRequest: (author) => `Requested by: ${author.tag}`
                 },
                 commandErrors: {
                     noImage: () => 'You must specify the URL of a valid image.',

@@ -69,6 +69,8 @@ interface CommandStrings {
     cat(): string;
     bunny(): string;
     duck(): string;
+    nsfw(): string;
+    nsfwRequest(author: User): string;
 }
 
 interface CommandErrorStrings {
