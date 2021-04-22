@@ -9,6 +9,7 @@ export default class SayCommand extends Command {
             aliases: ['decir'],
             example: (p) => `${p}say Hi! ❤️`,
             usageArgs: ['[Text]'],
+            cooldown: 5,
             category
         });
     }

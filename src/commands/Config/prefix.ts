@@ -10,6 +10,7 @@ export default class PrefixCommand extends Command {
             usageArgs: ['<New Prefix>'],
             example: (p) => `${p}prefix a-`,
             memberGuildPermissions: ['ADMINISTRATOR'],
+            cooldown: 10,
             category
         });
     }

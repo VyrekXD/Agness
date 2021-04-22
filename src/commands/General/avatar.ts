@@ -10,6 +10,7 @@ export default class AvatarCommand extends Command {
             usageArgs: ['<@User | ID>'],
             botChannelPermissions: ['EMBED_LINKS'],
             example: (p) => `${p}avatar @Aviii.`,
+            cooldown: 4,
             category
         });
     }

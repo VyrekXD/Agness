@@ -10,6 +10,7 @@ export default class EmitCommand extends Command {
             memberChannelPermissions: ['ADMINISTRATOR'],
             usageArgs: ['[welcome/leave]'],
             example: (p) => `${p}emit welcome`,
+            cooldown: 10,
             category
         });
     }

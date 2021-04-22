@@ -11,6 +11,7 @@ export default class LanguageCommand extends Command {
             example: (p) => `${p}lang es`,
             memberGuildPermissions: ['ADMINISTRATOR'],
             botChannelPermissions: ['EMBED_LINKS'],
+            cooldown: 10,
             category
         });
     }

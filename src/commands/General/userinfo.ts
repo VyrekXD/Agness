@@ -10,6 +10,7 @@ export default class UserInfoCommand extends Command {
             usageArgs: ['<@User | ID>'],
             botChannelPermissions: ['EMBED_LINKS'],
             example: (p) => `${p}userinfo @Aviii.`,
+            cooldown: 5,
             category
         });
     }
