@@ -8,7 +8,7 @@ import Agness from '../bot';
 
 const devs = process.env.DEVS ? process.env.DEVS.split(', ') : [];
 
-export type Category = 'Config' | 'Developer' | 'General';
+export type Category = 'Config' | 'Developer' | 'General' | 'Fun' | 'Interact' | 'Reaction' | 'NSFW';
 
 interface CommandOptions {
     name: string;
@@ -74,6 +74,7 @@ export default abstract class Command {
         this.server = server;
         if (this.server)
             this.lang = this.client.languages.get(this.server.language) as Language;
+        else this.lang = new English(this.client);
     }
 
     // eslint-disable-next-line no-unused-vars

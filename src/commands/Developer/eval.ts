@@ -11,6 +11,7 @@ export default class EvalCommand extends Command {
             aliases: ['e'],
             usageArgs: ['<Code | Type>'],
             devsOnly: true,
+            guildOnly: false,
             category
         });
     }

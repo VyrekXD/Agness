@@ -34,7 +34,7 @@ export default class Agness extends Client {
             useUnifiedTopology: true
         }, (err) => {
             if (err) return console.log(`Mongo Error: ${err.stack ?? err}`);
-            console.log('MongoDB ready!');
+            console.log('MONGODB - Base de datos conectada');
         });
 
         this.languages.load();

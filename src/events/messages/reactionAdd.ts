@@ -1,7 +1,9 @@
-import { ReactionRoles } from '../../database/reaction';
 import { MessageReaction, User } from 'discord.js';
+import { ReactionRoles } from '../../database/reaction';
 import Event from '../../structures/Event';
 import Agness from '../../bot';
+import { Servers } from '../../database/server';
+import Language from '../../structures/Language';
 
 export default class MessageReactionAddEvent extends Event {
     constructor(client: Agness) {
@@ -16,7 +18,9 @@ export default class MessageReactionAddEvent extends Event {
         const emojiID = messageReaction.emoji.id ?? messageReaction.emoji.name;
 
         if (!guild || user.bot) return;
-
+        let server = await Servers.findOne({ guildID: guild?.id });
+        if (!server) server = await Servers.create({ guildID: guild.id });
+        this.lang = this.client.languages.get(server.language) as Language;
         try {
             const member = await guild.members.fetch(user.id);
             const reactionRole = await ReactionRoles.findOne({
@@ -24,7 +28,11 @@ export default class MessageReactionAddEvent extends Event {
                 emojiID
             });
             if (!reactionRole) return;
-
+            if (this.checkCooldowns(`${user.id}-${guild.id}`)) {
+                await user.send(this.lang.getError('cooldownReactionAdd', Number(((this.cooldowns.get(`${user.id}-${guild.id}`)!.date as number) - Date.now()) / 1000).toFixed(2))).catch(() => void 0);
+                messageReaction.users.remove(user).catch(() => void 0);
+                return;
+            }
             const role = guild.roles.cache.get(reactionRole.roleID);
             if (!role || !role.editable) return;
 
@@ -50,6 +58,8 @@ export default class MessageReactionAddEvent extends Event {
                     member.roles.add(role.id);
                     break;
             }
-        } catch { }
+        } catch (e) {
+            console.log(e);
+        }
     }
 }

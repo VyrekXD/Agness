@@ -1,5 +1,5 @@
 import Command from '../../structures/Command';
-import { Message, MessageEmbed } from 'discord.js';
+import { Message } from 'discord.js';
 import Agness from '../../bot';
 
 export default class GuildsCommand extends Command {
@@ -19,9 +19,7 @@ export default class GuildsCommand extends Command {
         const totalGuilds = (results[0] as number[]).reduce((acc, guildCount) => acc + guildCount, 0);
         const totalMembers = (results[1] as number[]).reduce((acc, memberCount) => acc + memberCount, 0);
         const shardID = this.client.shard!.ids.map((i) => `${i}`).join(', ');
-        return message.channel.send(new MessageEmbed()
-            .setDescription(this.lang.get('guildsDescription', totalMembers, totalGuilds))
-            .setFooter(this.lang.get('guildsFooter', shardID as string))
+        return message.channel.send(this.lang.get('guilds', totalMembers, totalGuilds, shardID as string)
             .setColor(this.client.color));
     }
 }

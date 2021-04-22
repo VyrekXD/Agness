@@ -10,12 +10,9 @@ interface CommandStrings {
     helpCategory(prefix: string, category: Category, commands: string, quantity: number): string;
     helpCommand(prefix: string, command: Command): string;
     prefix(prefix: string): string;
-    langTitle(): string;
-    langDescription(prefix: string, languages: string): string;
-    guildsDescription(members: number, guilds: number): string;
-    guildsFooter(shardID: string): string;
-    voteDescription(): string;
-    voteFooter(): string;
+    langs(prefix: string, languages: string): MessageEmbed;
+    guilds(members: number, guilds: number, shardID: string): MessageEmbed;
+    vote(): MessageEmbed
     avatar(user: string, avatar: string): string;
     rrHelp(prefix: string): MessageEmbed;
     rrReact(role: string): string;
@@ -150,6 +147,8 @@ interface CommandErrorStrings {
     kissMentionAuthor(): string;
     feedNoMention(): string;
     feedMentionAuthor(): string;
+    cooldownReactionAdd(cooldown: string): string;
+    cooldownReactionRemove(cooldown: string): string;
 }
 
 interface CommandDescriptionStrings {

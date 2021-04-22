@@ -73,18 +73,21 @@ ${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).jo
 `;
                     },
                     prefix: (prefix) => `Mi nuevo prefijo es: \`${prefix}\``,
-                    langTitle: () => 'Lista de Lenguajes',
-                    langDescription: (prefix, languages) => `Estos son los lenguajes actualmente disponibles en Agness.
+                    langs: (prefix, languages) => new MessageEmbed()
+                        .setTitle('Lista de Lenguajes')
+                        .setDescription(`Estos son los lenguajes actualmente disponibles en Agness.
 **Si quieres cambiar el idioma de Agness en el servidor usa:**
 > \`${prefix}lang <Código de lenguaje>\`
 
-${languages}`,
-                    guildsDescription: (members, guilds) => `En este momento, estoy en: **${guilds}** servidores y con **${members}** usuarios.`,
-                    guildsFooter: (shardID) => `Este servidor está en la shard: ${shardID}`,
-                    voteDescription: () => `¡Realmente aprecio que quieras votar por mí!
+${languages}`),
+                    guilds: (members, guilds, shardID) => new MessageEmbed()
+                        .setDescription(`En este momento, estoy en: **${guilds}** servidores y con **${members}** usuarios.`)
+                        .setFooter(`Este servidor está en la shard: ${shardID}`),
+                    vote: () => new MessageEmbed()
+                        .setDescription(`¡Realmente aprecio que quieras votar por mí!
 [¡Vota por mí aquí!](https://top.gg/bot/798573830645874718)
-Recuerda que puedes votar cada 12 horas.`,
-                    voteFooter: () => 'Con mucho amor ❤️',
+Recuerda que puedes votar cada 12 horas.`)
+                        .setFooter('Con mucho amor ❤️'),
                     avatar: (user, avatar) => `Avatar de **${user}**
 > [Enlace al avatar](${avatar})`,
                     rrHelp: (prefix) => new MessageEmbed()
@@ -327,9 +330,9 @@ En caso de que tengas alguna duda, aquí está el enlace de invitación de mi se
                         };
                         let member;
                         if (guild) member = (guild as Guild).members.cache.get(user.id);
-                        let badges = user.flags?.toArray().length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.';
+                        let badges = user.flags?.toArray().length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.';
                         if (member) badges = `${guild?.ownerID === member.id ? `<:Owner:830458955545051167> ${user.flags?.toArray().map(x => flags[x]).join(' ')}` :
-                                user.flags?.toArray().length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'}`;
+                            user.flags?.toArray().length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'No tiene.'}`;
                         return new MessageEmbed()
                             .setTitle(`Información de ${user.username}`)
                             .setThumbnail(user.displayAvatarURL({ size: 4096, dynamic: true }))
@@ -350,7 +353,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${author} hizo picadillos a ${mention}.**`,
                             `**${mention} se ha ido al cielo gracias a ${author}.**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     smug: (author) => {
@@ -359,7 +362,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${author} siempre sera lo mejor.**`,
                             `**Todos miren como presume ${author}.**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     disgust: (author) => {
@@ -368,7 +371,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${author} preferiria que lo maten :(**`,
                             `**No, para ${author} no es agradable.**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     laugh: (author) => {
@@ -377,7 +380,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${author} esta muriendo de risa 😆**`,
                             `**Miren la risa de ${author} :D**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     baka: (author, mention) => {
@@ -386,7 +389,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${mention} baka baka baka** *dicho por ${author}*`,
                             `**${author} dice que ${mention} es baka D:**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     slap: (author, mention) => {
@@ -395,7 +398,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${mention} recibe una fuerte bofetada de ${author}**`,
                             `**${author} no deja de abofetear a ${mention}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     hug: (author, mention) => {
@@ -404,7 +407,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${mention} recibe un caluroso abrazo de ${author}**`,
                             `**${author} no suelta a ${mention}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     cuddle: (author, mention) => {
@@ -412,7 +415,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${author} acaricia a ${mention}** :3`,
                             `**${author} le da caricias a ${mention}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     pat: (author, mention) => {
@@ -420,7 +423,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${author} da palmaditas a ${mention}** :3`,
                             `**${mention} recibe palmaditas de ${author}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     kiss: (author, mention) => {
@@ -428,7 +431,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${author} le dio un beso a ${mention}** -w-`,
                             `**${mention} recibio un beso de ${author}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     feed: (author, mention) => {
@@ -436,7 +439,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                             `**${author} ha dado de comer a ${mention}** .w.`,
                             `**${mention} ha comido gracias a ${author}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     dog: () => '¡Mira un perrito! :3 ❤️',
@@ -530,7 +533,9 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     kissNoMention: () => 'Menciona a quien quieres besar 7w7',
                     kissMentionAuthor: () => 'Hmm.. no te puedes besar a ti mismo ._.',
                     feedNoMention: () => 'Menciona a quien quieres dar de comer .w.',
-                    feedMentionAuthor: () => 'Hmm.. Menciona a alguien que no seas tú e.e'
+                    feedMentionAuthor: () => 'Hmm.. Menciona a alguien que no seas tú e.e',
+                    cooldownReactionAdd: (coldoown) => `Tienes que esperar **${coldoown}s** para obtener el siguiente rol.`,
+                    cooldownReactionRemove: (coldoown) => `Tienes que esperar **${coldoown}s** para eliminarte el siguiente rol.`
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',

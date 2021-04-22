@@ -71,18 +71,21 @@ ${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).jo
 \`\`\``;
                     },
                     prefix: (prefix) => `My new prefix is: \`${prefix}\``,
-                    langTitle: () => 'List of Languages',
-                    langDescription: (prefix, languages) => `There're the languages currently available in Agness.
+                    langs: (prefix, languages) => new MessageEmbed()
+                        .setTitle('List of Languages')
+                        .setDescription(`There're the languages currently available in Agness.
 **If you want to change the language of Agness on the server use:**
 > \`${prefix}lang <Language code>\`
 
-${languages}`,
-                    guildsDescription: (members, guilds) => `At this moment, I'm in **${guilds}** servers and with **${members}** users.`,
-                    guildsFooter: (shardID) => `This server is on the shard ${shardID}`,
-                    voteDescription: () => `I really appreciate that you want to vote for me!
+${languages}`),
+                    guilds: (members, guilds, shardID) => new MessageEmbed()
+                        .setDescription(`At this moment, I'm in **${guilds}** servers and with **${members}** users.`)
+                        .setFooter(`This server is on the shard ${shardID}`),
+                    vote: () => new MessageEmbed()
+                        .setDescription(`I really appreciate that you want to vote for me!
 [Vote for me here!](https://top.gg/bot/798573830645874718)
-Remember that you can vote every 12 hours.`,
-                    voteFooter: () => 'With love ❤️',
+Remember that you can vote every 12 hours.`)
+                        .setFooter('With love ❤️'),
                     avatar: (user, avatar) => `**${user}**'s avatar
 > [Avatar Link](${avatar})`,
                     rrHelp: (prefix) => new MessageEmbed()
@@ -325,10 +328,9 @@ In case you have any doubts, here's the invitation link from my support server.
                         };
                         let member;
                         if (guild) member = (guild as Guild).members.cache.get(user.id);
-                        let badges = user.flags?.toArray().length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.';
-                        if(member)  badges = `${
-                            guild?.ownerID === member.id ? `<:Owner:830458955545051167> ${user.flags?.toArray().map(x => flags[x]).join(' ')}` : 
-                            user.flags?.toArray().length ?  user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.'}`;
+                        let badges = user.flags?.toArray().length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.';
+                        if (member) badges = `${guild?.ownerID === member.id ? `<:Owner:830458955545051167> ${user.flags?.toArray().map(x => flags[x]).join(' ')}` :
+                                user.flags?.toArray().length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.'}`;
                         return new MessageEmbed()
                             .setTitle(`${user.username}'s Information`)
                             .setThumbnail(user.displayAvatarURL({ size: 4096, dynamic: true }))
@@ -349,7 +351,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${author} destroyed ${mention}.**`,
                             `**${mention} has gone to heaven thanks to ${author}.**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     smug: (author) => {
@@ -358,7 +360,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${author} will always be the best.**`,
                             `**Everyone look at how ${author} boasts.**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     disgust: (author) => {
@@ -367,7 +369,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${author} would rather kill himself :(**`,
                             `**No, for ${author} it's not nice.**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     laugh: (author) => {
@@ -376,7 +378,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${author}  is dying of laughter 😆**`,
                             `**Look at the laugh of ${author} :D**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     baka: (author, mention) => {
@@ -385,7 +387,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${mention} baka baka baka** *said by ${author}**`,
                             `**${author} says ${mention} is baka D:**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     slap: (author, mention) => {
@@ -394,7 +396,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${mention} gets a strong slap from ${author}*`,
                             `**${author} keeps slapping ${mention}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     hug: (author, mention) => {
@@ -403,7 +405,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${mention} receives a warm hug from ${author}**`,
                             `**${author} does not release ${mention}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     cuddle: (author, mention) => {
@@ -411,7 +413,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${author} cuddles ${mention}** D:`,
                             `**${author} caresses ${mention}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     pat: (author, mention) => {
@@ -419,7 +421,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${author} pats ${mention}** :3`,
                             `**${mention} gets pats from ${author}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     kiss: (author, mention) => {
@@ -427,7 +429,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${author} gave ${mention} a kiss** -w-`,
                             `**${mention} got a kiss from ${author}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     feed: (author, mention) => {
@@ -435,7 +437,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                             `**${author} has fed ${mention}** .w.`,
                             `**${mention}  has eaten thanks to ${author}**`
                         ];
-                        const random = frases[Math.floor(Math.random() *  frases.length)];
+                        const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
                     dog: () => 'Look at a puppy! :3 ❤️',
@@ -529,7 +531,9 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     kissNoMention: () => 'Mention who you want to kiss 7w7',
                     kissMentionAuthor: () => 'Hmm.. you can\'t kiss yourself  ._.',
                     feedNoMention: () => 'Mention who you want to feed  .w.',
-                    feedMentionAuthor: () => 'Hmm.. Mention someone other than you  e.e'
+                    feedMentionAuthor: () => 'Hmm.. Mention someone other than you  e.e',
+                    cooldownReactionAdd: (coldoown) => `You have to wait **${coldoown}s** to get the next role.`,
+                    cooldownReactionRemove: (coldoown) => `You have to wait **${coldoown}s** to remove the next role.`
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',

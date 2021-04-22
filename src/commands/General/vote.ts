@@ -1,5 +1,5 @@
 import Command from '../../structures/Command';
-import { Message, MessageEmbed } from 'discord.js';
+import { Message } from 'discord.js';
 import Agness from '../../bot';
 
 export default class VoteCommand extends Command {
@@ -12,9 +12,7 @@ export default class VoteCommand extends Command {
     }
 
     async run(message: Message): Promise<Message> {
-        return message.channel.send(new MessageEmbed()
-            .setDescription(this.lang.get('voteDescription'))
-            .setFooter(this.lang.get('voteFooter'))
+        return message.channel.send(this.lang.get('vote')
             .setColor(this.client.color)
             .setTimestamp());
     }
