@@ -16,6 +16,7 @@ export default class EmbedCommand extends Command {
             memberGuildPermissions: ['ADMINISTRATOR'],
             botChannelPermissions: ['EMBED_LINKS'],
             example: (p) => `${p}embed create rules`,
+            cooldown: 5,
             category
         });
     }

@@ -68,6 +68,8 @@ interface CommandStrings {
     duck(): string;
     nsfw(): string;
     nsfwRequest(author: User): string;
+    purge(messages: number): string;
+    purgeNothing(): string;
 }
 
 interface CommandErrorStrings {
@@ -149,6 +151,10 @@ interface CommandErrorStrings {
     feedMentionAuthor(): string;
     cooldownReactionAdd(cooldown: string): string;
     cooldownReactionRemove(cooldown: string): string;
+    purgeNoArgs(prefix: string): MessageEmbed;
+    purgeNoNumber(): string;
+    purgeNoValid(): string;
+    purgeNoUsers(): string;
 }
 
 interface CommandDescriptionStrings {

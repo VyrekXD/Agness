@@ -330,7 +330,7 @@ In case you have any doubts, here's the invitation link from my support server.
                         if (guild) member = (guild as Guild).members.cache.get(user.id);
                         let badges = user.flags?.toArray().length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.';
                         if (member) badges = `${guild?.ownerID === member.id ? `<:Owner:830458955545051167> ${user.flags?.toArray().map(x => flags[x]).join(' ')}` :
-                                user.flags?.toArray().length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.'}`;
+                            user.flags?.toArray().length ? user.flags?.toArray().map(x => flags[x]).join(' ') : 'Doesn\'t have.'}`;
                         return new MessageEmbed()
                             .setTitle(`${user.username}'s Information`)
                             .setThumbnail(user.displayAvatarURL({ size: 4096, dynamic: true }))
@@ -445,7 +445,9 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                     bunny: () => 'This is a beautiful bunny 😋',
                     duck: () => 'Did someone say duck? 🦆',
                     nsfw: () => 'I hope you enjoy 🕵️‍♂️',
-                    nsfwRequest: (author) => `Requested by: ${author.tag}`
+                    nsfwRequest: (author) => `Requested by: ${author.tag}`,
+                    purgeNothing: () => 'I didn\'t find anything to delete in the last 100 messages.',
+                    purge: (messages) => `<:right:830079699803701259> I have deleted **${messages}** successfully. `
                 },
                 commandErrors: {
                     noImage: () => 'You must specify the URL of a valid image.',
@@ -533,7 +535,17 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     feedNoMention: () => 'Mention who you want to feed  .w.',
                     feedMentionAuthor: () => 'Hmm.. Mention someone other than you  e.e',
                     cooldownReactionAdd: (coldoown) => `You have to wait **${coldoown}s** to get the next role.`,
-                    cooldownReactionRemove: (coldoown) => `You have to wait **${coldoown}s** to remove the next role.`
+                    cooldownReactionRemove: (coldoown) => `You have to wait **${coldoown}s** to remove the next role.`,
+                    purgeNoArgs: (prefix) => new MessageEmbed()
+                        .setTitle('Modes of use.')
+                        .setDescription(`${prefix}purge [ amount ]
+${prefix}purge bots [ amount ]
+${prefix}purge user [ amount ] [ @mentions | IDs ]
+${prefix}purge embeds [ amount ]
+${prefix}purge attachments [ amount ]`),
+                    purgeNoNumber: () => 'You must specify a valid number or type.',
+                    purgeNoValid: () => 'You must specify a number from 1 to 100.',
+                    purgeNoUsers: () => 'Mention users or specify their IDs'
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',

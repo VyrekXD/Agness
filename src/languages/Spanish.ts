@@ -447,7 +447,9 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                     bunny: () => 'Este es un conejo hermoso 😋',
                     duck: () => '¿Alguien dijo pato? 🦆',
                     nsfw: () => 'Espero lo disfrutes 🕵️‍♂️',
-                    nsfwRequest: (author) => `Pedido por: ${author.tag}`
+                    nsfwRequest: (author) => `Pedido por: ${author.tag}`,
+                    purgeNothing: () => 'No encontre nada para borrar en los ultimos 100 mensajes.',
+                    purge: (messages) => `<:right:830079699803701259> He borrado **${messages}** correctamente.`
                 },
                 commandErrors: {
                     noImage: () => 'Debes especificar la URL de una imagen válida.',
@@ -535,7 +537,17 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     feedNoMention: () => 'Menciona a quien quieres dar de comer .w.',
                     feedMentionAuthor: () => 'Hmm.. Menciona a alguien que no seas tú e.e',
                     cooldownReactionAdd: (coldoown) => `Tienes que esperar **${coldoown}s** para obtener el siguiente rol.`,
-                    cooldownReactionRemove: (coldoown) => `Tienes que esperar **${coldoown}s** para eliminarte el siguiente rol.`
+                    cooldownReactionRemove: (coldoown) => `Tienes que esperar **${coldoown}s** para eliminarte el siguiente rol.`,
+                    purgeNoArgs: (prefix) => new MessageEmbed()
+                        .setTitle('Modos de uso.')
+                        .setDescription(`${prefix} <cantidad>
+${prefix}purge bots [ cantidad ]
+${prefix}purge users [ cantidad ] [ @menciones | IDs ]
+${prefix}purge embeds [ cantidad ]
+${prefix}purge attachments [ cantidad ]`),
+                    purgeNoNumber: () => 'Debes especificar un número o tipo válido.',
+                    purgeNoValid: () => 'Debes de especificar un numero del 1 al 100.',
+                    purgeNoUsers: () => 'Menciona a los usuarios o especifica sus IDs'
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',
