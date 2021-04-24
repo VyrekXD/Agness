@@ -55,14 +55,16 @@ export default class MessageEvent extends Event {
             guildID: message.guild.id,
             name: tag.embedName
         });
-        const replaceText = (text: string) => this.client.replaceText(text, {
-            channel: message.channel as TextChannel,
-            member: message.member!,
-            prefix
-        });
+        const replaceText = async (text: string) => {
+            return await this.client.replaceText(text, {
+                channel: message.channel as TextChannel,
+                member: message.member!,
+                prefix
+            });
+        };
         let embed;
         if (embedData)
-            embed = this.client.generateEmbed(embedData, replaceText);
+            embed = await this.client.generateEmbed(embedData, replaceText);
         const files = tag.image ? [new MessageAttachment(tag.image, 'image.png')] : [];
         tag.addRoleID.forEach((roleID) => {
             const role = message.guild!.roles.resolve(roleID);
@@ -76,6 +78,6 @@ export default class MessageEvent extends Event {
         });
         if ((tag.addRoleID[0] || tag.removeRoleID[0]) && !tag.message && !embed && !files[0]) return true;
         if (!tag.message && !embed && !files[0]) return false;
-        return !!message.channel.send(replaceText(tag.message), { files, embed });
+        return !!message.channel.send(await replaceText(tag.message), { files, embed });
     }
 }

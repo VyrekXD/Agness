@@ -39,15 +39,16 @@ export default class MemberAddEvent extends Event {
                 guildID: member.guild.id
             });
 
-        const replaceText = (text: string) =>
-            this.client.replaceText(text, {
+        const replaceText = async (text: string) => {
+            return await this.client.replaceText(text, {
                 channel: channel as TextChannel,
                 prefix: server!.prefix,
                 member
             });
+        };
         if (embedData)
-            embed = this.client.generateEmbed(embedData, replaceText);
+            embed = await this.client.generateEmbed(embedData, replaceText);
         if (!welcome.message && !embed) return;
-        (channel as TextChannel).send(replaceText(welcome.message), { embed }).catch(() => void 0);
+        (channel as TextChannel).send(await replaceText(welcome.message), { embed }).catch(() => void 0);
     }
 }

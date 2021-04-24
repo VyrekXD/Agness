@@ -22,11 +22,13 @@ export default class EmbedCommand extends Command {
     }
 
     async run(message: Message, args: string[]): Promise<Message> {
-        const replaceText = (text: string) => this.client.replaceText(text, {
-            channel: message.channel as TextChannel,
-            member: message.member!,
-            prefix: this.server!.prefix
-        });
+        const replaceText = async (text: string) => {
+            return await this.client.replaceText(text, {
+                channel: message.channel as TextChannel,
+                member: message.member!,
+                prefix: this.server!.prefix
+            });
+        };
         switch (args[0]?.toLowerCase() ?? '') {
             case 'add':
             case 'create': {
@@ -119,13 +121,13 @@ export default class EmbedCommand extends Command {
                 }
 
                 await embed.save();
-                return message.channel.send(this.lang.get('embedEdited', property, embed.name), this.client.generateEmbed(embed, replaceText));
+                return message.channel.send(this.lang.get('embedEdited', property, embed.name), await this.client.generateEmbed(embed, replaceText));
             }
             case 'show':
             case 'preview': {
                 const embed = await Embeds.findOne({ guildID: message.guild!.id, name: args[1] });
                 if (!embed) return this.sendError(message, this.lang.getError('embedNoExists'), 1);
-                return message.channel.send(this.client.generateEmbed(embed, replaceText));
+                return message.channel.send(await this.client.generateEmbed(embed, replaceText));
             }
             case 'props':
             case 'properties': {

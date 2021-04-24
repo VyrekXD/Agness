@@ -43,7 +43,8 @@ export default class Agness extends Client {
         this.login(process.env.TOKEN);
     }
 
-    replaceText(text: string, { channel, member, prefix }: ReplaceOptions): string {
+    async replaceText(text: string, { channel, member, prefix }: ReplaceOptions): Promise<string> {
+        const owner = await member.guild.fetchOwner();
         return text.replace(/{user}/gi, member.user.toString())
             .replace(/{user\.tag}/gi, member.user.tag)
             .replace(/{user\.discrim}/gi, member.user.discriminator)
@@ -70,12 +71,12 @@ export default class Agness extends Client {
             .replace(/{server\.boostlevel}/gi, member.guild.premiumTier.toString())
             .replace(/{server\.boostcount}/gi, member.guild.premiumSubscriptionCount?.toString() ?? '0')
             .replace(/{server\.icon}/gi, member.guild.iconURL({ dynamic: true, size: 4096 }) ?? 'https://cdn.discordapp.com/embed/avatars/0.png?size=2048')
-            .replace(/{server\.owner}/gi, member.guild.owner?.user.toString() ?? '')
-            .replace(/{server\.owner\.name}/gi, member.guild.owner?.user.username ?? '')
-            .replace(/{server\.owner\.id}/gi, member.guild.owner?.user.id ?? '')
-            .replace(/{server\.owner\.nick}/gi, member.guild.owner?.displayName ?? '')
-            .replace(/{server\.owner\.avatar}/gi, member.guild.owner?.user.displayAvatarURL({ size: 4096, dynamic: true }) ?? '')
-            .replace(/{server\.owner\.createdate}/gi, member.guild.owner?.user.createdAt!.toLocaleDateString() ?? '')
+            .replace(/{server\.owner}/gi, `<@${member.guild.ownerID}>`)
+            .replace(/{server\.owner\.name}/gi, owner.user.username ?? '')
+            .replace(/{server\.owner\.id}/gi, owner.user.id ?? '')
+            .replace(/{server\.owner\.nick}/gi, owner.displayName ?? '')
+            .replace(/{server\.owner\.avatar}/gi, owner.user.displayAvatarURL({ size: 4096, dynamic: true }) ?? '')
+            .replace(/{server\.owner\.createdate}/gi, owner.user.createdAt!.toLocaleDateString() ?? '')
             .replace(/{channel}/gi, channel.toString())
             .replace(/{channel\.id}/gi, channel.id)
             .replace(/{channel\.name}/gi, channel.name)
@@ -83,20 +84,20 @@ export default class Agness extends Client {
     }
 
     // eslint-disable-next-line no-unused-vars
-    generateEmbed(embedData: Embed, replaceText: (text: string) => string): MessageEmbed {
+    async generateEmbed(embedData: Embed, replaceText: (text: string) => Promise<string>): Promise<MessageEmbed> {
         const embed = new MessageEmbed();
         if (embedData.author.text)
-            embed.setAuthor(replaceText(embedData.author.text), embedData.author.image ? replaceText(embedData.author.image) : undefined);
+            embed.setAuthor(await replaceText(embedData.author.text), embedData.author.image ? await replaceText(embedData.author.image) : undefined);
         if (embedData.title)
-            embed.setTitle(replaceText(embedData.title));
+            embed.setTitle(await replaceText(embedData.title));
         if (embedData.description)
-            embed.setDescription(replaceText(embedData.description));
+            embed.setDescription(await replaceText(embedData.description));
         if (embedData.thumbnail)
-            embed.setThumbnail(replaceText(embedData.thumbnail));
+            embed.setThumbnail(await replaceText(embedData.thumbnail));
         if (embedData.image)
-            embed.setImage(replaceText(embedData.image));
+            embed.setImage(await replaceText(embedData.image));
         if (embedData.footer.text)
-            embed.setAuthor(replaceText(embedData.footer.text), embedData.footer.image ? replaceText(embedData.footer.image) : undefined);
+            embed.setAuthor(await replaceText(embedData.footer.text), embedData.footer.image ? await replaceText(embedData.footer.image) : undefined);
         if (embedData.timestamp)
             embed.setTimestamp();
         if (embedData.color)
