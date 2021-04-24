@@ -36,9 +36,12 @@ export default class EmbedCommand extends Command {
                 if (embeds.length >= 10) return message.channel.send(this.lang.getError('embedMax'));
                 if (!args[1] || args[1].length >= 10) return this.sendError(message, this.lang.getError('embedName'), 1);
                 if (embeds.find((e) => e.name === args[1])) return message.channel.send(this.lang.getError('embedExists'));
+                if (!args[2]) return this.sendError(message, this.lang.getError('embedNoDescriptionValue'), 3);
+                if (args.slice(2).join(' ').length > 2040) return message.channel.send(this.lang.getError('embedMaxCharacters', 'description', 2040));
                 const embed = await Embeds.create({
                     guildID: message.guild!.id,
-                    name: args[1]
+                    name: args[1],
+                    description: args.slice(2).join(' ')
                 });
                 return message.channel.send(this.lang.get('embedCreated', this.server!.prefix, embed.name));
             }
@@ -84,13 +87,20 @@ export default class EmbedCommand extends Command {
                         }
                         break;
                     }
-                    case 'title':
-                    case 'description': {
+                    case 'title': {
                         if (!args[3]) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
-                        if (property === 'title' && args.slice(3).join(' ').length > 256) return message.channel.send(this.lang.getError('embedMaxCharacters', property, 256));
+                        if (args.slice(3).join(' ').length > 256) return message.channel.send(this.lang.getError('embedMaxCharacters', property, 256));
                         if (args[3].toLowerCase() !== 'null')
                             embed[property] = args.slice(3).join(' ');
                         else embed[property] = '';
+                        break;
+                    }
+                    case 'description': {
+                        if (!args[3]) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
+                        if (args.slice(3).join(' ').length > 2040) return message.channel.send(this.lang.getError('embedMaxCharacters', property, 2040));
+                        if (args[3].toLowerCase() !== 'null')
+                            embed[property] = args.slice(3).join(' ');
+                        else return this.sendError(message, this.lang.getError('embedNoDescriptionValue'), 3);
                         break;
                     }
                     case 'image':

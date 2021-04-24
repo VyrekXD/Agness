@@ -112,11 +112,11 @@ There's an example of how it works and setup:`),
 There's an example of how it works and setup:`),
                     rrDelete: (emoji) => `Reaction role with emoji ${emoji} deleted successfully.`,
                     embedHelp: (prefix) => new MessageEmbed()
-                        .setTitle('¿Para que sirve un embed?')
-                        .setDescription('Te permitirá crear un texto con mayor estética para insertarlos en tus bienvenidas, despedidas, reglas, etc., para mejorar en cuanto estética a tu servidor. Lo siguiente son pasos para poder crear y editar tu embed.')
+                        .setTitle('Why do I need an embed?')
+                        .setDescription('You may need it to make your server look much better aesthetically, as it will allow you to create rich text, which you can put in your welcomes and custom commands. Creativity is up to you!')
                         .addField('1. Create and name your embed.', `__First of all you should not include [] or <> in the command__
-The name will allow us to identify your embed so that everything looks more orderly when it comes to putting it in welcomes, leaves and custom commands. How? Well, adding \`{embed:[embed_name]}\` and Replacing \`embed_name\` with the name of your embed. For this, you can create it and give it the name you like, just like this:
-> \`${prefix}embed create [embed_name]\``)
+The name will allow us to identify your embed so that everything looks more orderly when it comes to putting it in welcomes, leaves and custom commands. You will also have to put a description to your new embed, if you don't, the embed will simply not be sent. How? Well, adding \`{embed:[embed_name]}\` and Replacing \`embed_name\` with the name of your embed. For this, you can create it and give it the name you like, just like this:
+> \`${prefix}embed create [embed_name] [description]\``)
                         .addField('2. Editing our embed', `Well, it's time to edit it the way you like, your creativity matters! Here I show you the properties of an embed:
 > \`author\` - [text | <Image link>]
 > \`thumbnail\` - [Image link]
@@ -505,6 +505,7 @@ If you need a little more help you can use: \`${prefix}reactrole help\``,
                     embedExists: () => 'There\'s already an embed with that name. Try another.',
                     embedNoExists: () => 'There\'s no embed with that name or you didn\'t specify one.',
                     embedNoValue: (property) => `You must put the text to put as ${property}.`,
+                    embedNoDescriptionValue: () => 'You must add a description to your embed!.',
                     embedMaxCharacters: (property, max) => `The **${property}** must have ${max} characters or less.`,
                     embedNoTimestamp: () => 'You must specify if you want the timestamp (yes/no).',
                     embedNoColor: () => 'You must specify the color without #.',
