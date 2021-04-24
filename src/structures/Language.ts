@@ -22,11 +22,11 @@ interface CommandStrings {
     rrOnly(): MessageEmbed;
     rrDelete(emoji: string): string;
     embedHelp(prefix: string): MessageEmbed;
-    embedCreated(embed: string): string;
+    embedCreated(prefix: string, embed: string): string;
     embedDeleted(embed: string): string;
     embedList(embeds: string, icon: string | undefined): MessageEmbed;
     embedEdited(property: string, name: string): string;
-    embedProperties(): MessageEmbed;
+    embedProperties(prefix: string): MessageEmbed;
     tagsHelp(prefix: string): MessageEmbed;
     tagsCreated(name: string): string;
     tagsEdited(name: string): string;
@@ -70,6 +70,10 @@ interface CommandStrings {
     nsfwRequest(author: User): string;
     purge(messages: number): string;
     purgeNothing(): string;
+    Waiting(): string;
+    kickCheck(): string;
+    banCheck(): string;
+    unbanOK(user: string): string;
 }
 
 interface CommandErrorStrings {
@@ -155,6 +159,17 @@ interface CommandErrorStrings {
     purgeNoNumber(): string;
     purgeNoValid(): string;
     purgeNoUsers(): string;
+    kickNoArgs(): string;
+    kickNoUsers(): string;
+    kickError(): string;
+    kickUsersMax(): string;
+    banNoArgs(): string;
+    banNoUsers(): string;
+    banError(): string;
+    banUsersMax(): string;
+    unbanNoUser(): string;
+    unbanUserNoBan(): string;
+    unBanNo(user: string): string;
 }
 
 interface CommandDescriptionStrings {

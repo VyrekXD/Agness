@@ -7,7 +7,7 @@ export default class PurgeCommand extends Command {
         super(client, {
             name: 'purge',
             aliases: ['clear'],
-            botChannelPermissions: ['MANAGE_MESSAGES'],
+            botChannelPermissions: ['MANAGE_MESSAGES', 'EMBED_LINKS'],
             memberChannelPermissions: ['MANAGE_MESSAGES'],
             example: (prefix) => `\n${prefix}purge 20\n${prefix}purge user 20 @Aviii @Andremor`,
             usageArgs: ['[amount | bots | user | embed | attachment]', '<amount>', '<users>'],

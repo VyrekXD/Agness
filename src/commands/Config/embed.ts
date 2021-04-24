@@ -38,7 +38,7 @@ export default class EmbedCommand extends Command {
                     guildID: message.guild!.id,
                     name: args[1]
                 });
-                return message.channel.send(this.lang.get('embedCreated', embed.name));
+                return message.channel.send(this.lang.get('embedCreated', this.server!.prefix, embed.name));
             }
             case 'del':
             case 'delete':
@@ -111,6 +111,7 @@ export default class EmbedCommand extends Command {
                     case 'color': {
                         if (!args[3]) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
                         if (!this.colorRegex.test(args[3])) return message.channel.send(this.lang.getError('embedNoColor'));
+                        embed[property] = args[3];
                         break;
                     }
                     default:
@@ -128,7 +129,7 @@ export default class EmbedCommand extends Command {
             }
             case 'props':
             case 'properties': {
-                return message.channel.send(this.lang.get('embedProperties')
+                return message.channel.send(this.lang.get('embedProperties', this.server!.prefix)
                     .setColor(this.client.color));
             }
             default: {

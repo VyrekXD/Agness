@@ -156,8 +156,8 @@ To insert it in a welcome or leave, there are three options:
 You can find the full list with \`${prefix}variables\``)
                         .setTimestamp()
                         .setFooter('<> Optional | [] Required'),
-                    embedCreated: (embed) => `Embed with name ${embed} created successfully.
-Use \`a?embed properties\` to see how to modify it.`,
+                    embedCreated: (prefix, embed) => `Embed with name ${embed} created successfully.
+Use \`${embed}embed properties\` to see how to modify it.`,
                     embedDeleted: (embed) => `Embed with name ${embed} deleted successfully`,
                     embedList: (embeds, serverIcon) => new MessageEmbed()
                         .setAuthor('Server embeds', serverIcon)
@@ -165,7 +165,7 @@ Use \`a?embed properties\` to see how to modify it.`,
                     embedEdited: (property, embedName) => `The **${property}** property of the embed a was edited correctly.
 You can add the embed to welcome, leave or tags (custom commands) with \`{embed:${embedName}}\`.
 **__Preview of the embed:__**`,
-                    embedProperties: () => new MessageEmbed()
+                    embedProperties: (prefix) => new MessageEmbed()
                         .addField('Properties of an embed', `> \`author\` - [text | <Image link>]
 > \`thumbnail\` - [Image link]
 > \`title\` - [text]
@@ -173,7 +173,9 @@ You can add the embed to welcome, leave or tags (custom commands) with \`{embed:
 > \`footer\` - [text | <Image link>]
 > \`image\` - [Image link]
 > \`color\` - [Hex Code]
-> \`timestamp\` - [yes/no]`)
+> \`timestamp\` - [yes/no]
+
+Use: \`${prefix}embed edit [name] [property] [value]\` to edit your embed.`)
                         .setFooter('<> Optional | [] Required')
                         .setTimestamp(),
                     tagsHelp: (prefix) => new MessageEmbed()
@@ -269,7 +271,7 @@ If you need to delete any property use:
                         .setTitle(`${client.user!.username} Variables`)
                         .setDescription('These variables can be used when editing embeds, in welcomes/leaves messages, and custom commands (tags).')
                         .addField('User Information',
-                            `\`{user}\` - @Mention (e.j. @Aviii.#0721 ❤️)
+                            `\`{user}\` - @Mention (e.j. @Aviii.#0721)
 \`{user.name}\` - Username (e.j. Aviii.)
 \`{user.discrim}\` - User tag (e.j. 0721)
 \`{user.nick}\` - Member's nickname, if none, it will show 'No nickname.'
@@ -447,7 +449,12 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                     nsfw: () => 'I hope you enjoy 🕵️‍♂️',
                     nsfwRequest: (author) => `Requested by: ${author.tag}`,
                     purgeNothing: () => 'I didn\'t find anything to delete in the last 100 messages.',
-                    purge: (messages) => `<:right:830079699803701259> I have deleted **${messages}** successfully. `
+                    purge: (messages) => `<:right:830079699803701259> I have deleted **${messages}** successfully.`,
+                    Waiting: () => 'This may take a while.',
+                    kickCheck: () => 'was kicked.',
+                    banCheck: () => 'was banned.',
+                    unbanOK: (user) => `**${user}** has been removed from the ban list.`
+
                 },
                 commandErrors: {
                     noImage: () => 'You must specify the URL of a valid image.',
@@ -545,7 +552,18 @@ ${prefix}purge embeds [ amount ]
 ${prefix}purge attachments [ amount ]`),
                     purgeNoNumber: () => 'You must specify a valid number or type.',
                     purgeNoValid: () => 'You must specify a number from 1 to 100.',
-                    purgeNoUsers: () => 'Mention users or specify their IDs'
+                    purgeNoUsers: () => 'Mention users or specify their IDs',
+                    kickNoArgs: () => 'You must specify which members you want to kick.',
+                    kickNoUsers: () => 'Invalid user(s). Please be sure to mention someone and that they can be kicked by both of you.',
+                    kickError: () => 'was not kicked.',
+                    kickUsersMax: () => 'You can only kick 20 users at a time.',
+                    banNoArgs: () => 'You must specify which members you want to ban.',
+                    banNoUsers: () => 'Invalid user(s). Please be sure to mention someone and they can be banned by both of you.',
+                    banError: () => 'was not banned.',
+                    banUsersMax: () => 'You can only ban 20 users at a time.',
+                    unbanNoUser: () => 'You must specify the user you want to revoke the ban from.',
+                    unbanUserNoBan: () => 'This user is not on the ban list.',
+                    unBanNo: (user) => `I couldn't remove **${user}** from the ban list.`
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',

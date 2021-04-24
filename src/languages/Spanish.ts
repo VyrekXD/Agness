@@ -158,8 +158,8 @@ Para insertarlo en una bienvenida o despedida, hay tres opciones:
 Puede encontrar la lista completa con \`${prefix}variables\``)
                         .setTimestamp()
                         .setFooter('<> Opcional | [] Requerido'),
-                    embedCreated: (name) => `Embed con el nombre ${name} creado correctamente.
-Usa \`a?embed properties\` para ver como modificarlo.`,
+                    embedCreated: (prefix, name) => `Embed con el nombre ${name} creado correctamente.
+Usa \`${prefix}embed properties\` para ver como modificarlo.`,
                     embedDeleted: (name) => `Embed con el nombre ${name} eliminado correctamente.`,
                     embedList: (embeds, icon) => new MessageEmbed()
                         .setAuthor('Embeds del servidor', icon)
@@ -167,7 +167,7 @@ Usa \`a?embed properties\` para ver como modificarlo.`,
                     embedEdited: (property, name) => `La propiedad **${property}** del embed se editó correctamente.
 Para agregar el embed para dar la bienvenida, salidas o tags (comandos personalizados) usa \`{embed:${name}}\`.
 **__Vista previa del embed:__**`,
-                    embedProperties: () => new MessageEmbed()
+                    embedProperties: (prefix) => new MessageEmbed()
                         .addField('Propiedades de un embed', `> \`author\` - [Texto | <Enlace Imagen>]
 > \`thumbnail\` - [Enlace de imagen]
 > \`title\` - [Texto]
@@ -175,7 +175,9 @@ Para agregar el embed para dar la bienvenida, salidas o tags (comandos personali
 > \`footer\` - [Texto | <Enlace de imagen]>]
 > \`image\` - [Enlace de imagen | Attachment]
 > \`color\` - [Código Hex]
-> \`timestamp\` - [yes/no]`)
+> \`timestamp\` - [yes/no]
+
+Usa: \`${prefix}embed edit [nombre] [propiedad] [valor]\` para editar tu embed.`)
                         .setFooter('<> Opcional | [] Requerido')
                         .setTimestamp(),
                     tagsHelp: (prefix) => new MessageEmbed()
@@ -240,7 +242,7 @@ Si necesita eliminar alguna propiedad, utilice:
                     messageRemoved: () => 'El mensaje se eliminó correctamente.',
                     welcomeEmbed: (prefix, embed) => `El nuevo embed para usar en las bienvenidas ahora es **${embed}**. Para probarlo usa: \`${prefix}emit welcome\`.`,
                     leaveEmbed: (prefix, embed) => `El nuevo embed para usar en las despedidas ahora es **${embed}**. Para probarlo usa: \`${prefix}emit leave\`.`,
-                    welcomeMessage: (prefix, embed) => `El mensaje ${embed ? 'y embed ' : ''}de las bienvenidas se ha actualizado correctamente. Para probarlo usa: \`${prefix}emit leave\`.`,
+                    welcomeMessage: (prefix, embed) => `El mensaje ${embed ? 'y embed ' : ''}de las bienvenidas se ha actualizado correctamente. Para probarlo usa: \`${prefix}emit welcome\`.`,
                     leaveMessage: (prefix, embed) => `El mensaje ${embed ? 'y embed ' : ''}de las bienvenidas se ha actualizado correctamente. Para probarlo usa: \`${prefix}emit leave\`.`,
                     welcomeRoleRemoved: (option) => `No se dará un rol ahora cuando un ${option} se una al servidor.`,
                     welcomeRole: (role, option, prefix) => `Ahora, el rol **${role}** se dará cuando un ${option} se una al servidor. Para probarlo usa: \`${prefix}emit welcome\``,
@@ -271,7 +273,7 @@ Si necesita eliminar alguna propiedad, utilice:
                         .setTitle(`${client.user!.username} Variables`)
                         .setDescription('Estas variables se pueden usar al editar embeds, en mensajes de bienvenida / despedida y comandos personalizados(tags).')
                         .addField('Informacion del usuario',
-                            `\`{user}\` - @Mención (e.j. @Aviii.#0721 ❤️)
+                            `\`{user}\` - @Mención (e.j. @Aviii.#0721)
 \`{user.name}\` - Username (e.j. Aviii.)
 \`{user.discrim}\` - User tag (e.j. 0721)
 \`{user.nick}\` - Apodo del miembro, si no lo tiene, mostrará "No nickname".
@@ -449,7 +451,11 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                     nsfw: () => 'Espero lo disfrutes 🕵️‍♂️',
                     nsfwRequest: (author) => `Pedido por: ${author.tag}`,
                     purgeNothing: () => 'No encontre nada para borrar en los ultimos 100 mensajes.',
-                    purge: (messages) => `<:right:830079699803701259> He borrado **${messages}** correctamente.`
+                    purge: (messages) => `<:right:830079699803701259> He borrado **${messages}** correctamente.`,
+                    Waiting: () => 'Esto puede tardar un poco...',
+                    kickCheck: () => 'ha sido kickeado.',
+                    banCheck: () => 'ha sido baneado.',
+                    unbanOK: (user) => `**${user}** ha sido quitado de la lista de baneos.`
                 },
                 commandErrors: {
                     noImage: () => 'Debes especificar la URL de una imagen válida.',
@@ -540,14 +546,25 @@ Puedes ver la lista de propiedades con \`${prefix}embed properties\`.`,
                     cooldownReactionRemove: (coldoown) => `Tienes que esperar **${coldoown}s** para eliminarte el siguiente rol.`,
                     purgeNoArgs: (prefix) => new MessageEmbed()
                         .setTitle('Modos de uso.')
-                        .setDescription(`${prefix} <cantidad>
+                        .setDescription(`${prefix}purge <cantidad>
 ${prefix}purge bots [ cantidad ]
 ${prefix}purge users [ cantidad ] [ @menciones | IDs ]
 ${prefix}purge embeds [ cantidad ]
 ${prefix}purge attachments [ cantidad ]`),
                     purgeNoNumber: () => 'Debes especificar un número o tipo válido.',
                     purgeNoValid: () => 'Debes de especificar un numero del 1 al 100.',
-                    purgeNoUsers: () => 'Menciona a los usuarios o especifica sus IDs'
+                    purgeNoUsers: () => 'Menciona a los usuarios o especifica sus IDs',
+                    kickNoArgs: () => 'Debes especificar a qué miembros quieres kickear.',
+                    kickNoUsers: () => 'Usuario(s) no válido(s). Por favor asegurese de mencionar a alguien y que este pueda ser kickeado por ambos.',
+                    kickError: () => 'no fue kickeado.',
+                    kickUsersMax: () => 'Solo puedes kickear 20 usuarios a la vez.',
+                    banNoArgs: () => 'Debes especificar a qué miembros quieres banear.',
+                    banNoUsers: () => 'Usuario(s) no válido(s). Por favor asegurese de mencionar a alguien y que este pueda ser baneado por ambos.',
+                    banError: () => 'no fue baneado.',
+                    banUsersMax: () => 'Solo puedes banear 20 usuarios a la vez.',
+                    unbanNoUser: () => 'Debes especificar el usuario al que quieres revocar el baneo.',
+                    unbanUserNoBan: () => 'Este usuario no se encuentra en la lista de baneos.',
+                    unBanNo: (user) => `No pude remover a **${user}** de la lista de baneos`
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',
