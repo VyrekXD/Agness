@@ -157,7 +157,7 @@ You can find the full list with \`${prefix}variables\``)
                         .setTimestamp()
                         .setFooter('<> Optional | [] Required'),
                     embedCreated: (prefix, embed) => `Embed with name ${embed} created successfully.
-Use \`${embed}embed properties\` to see how to modify it.`,
+Use \`${prefix}embed properties\` to see how to modify it.`,
                     embedDeleted: (embed) => `Embed with name ${embed} deleted successfully`,
                     embedList: (embeds, serverIcon) => new MessageEmbed()
                         .setAuthor('Server embeds', serverIcon)
