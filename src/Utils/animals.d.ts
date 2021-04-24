@@ -1,1 +1,0 @@
-declare module 'random-animals-api/src/index.ts';
