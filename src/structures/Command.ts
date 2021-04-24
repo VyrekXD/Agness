@@ -8,7 +8,7 @@ import Agness from '../bot';
 
 const devs = process.env.DEVS ? process.env.DEVS.split(', ') : [];
 
-export type Category = 'Config' | 'Developer' | 'General' | 'Fun' | 'Interact' | 'Reaction' | 'NSFW';
+export type Category = 'Config' | 'Developer' | 'General' | 'Fun' | 'Interact' | 'Reaction' | 'NSFW' | 'Mod';
 
 interface CommandOptions {
     name: string;

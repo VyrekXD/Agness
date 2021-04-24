@@ -16,6 +16,7 @@ export default class Spanish extends Language {
 **Categorias:**
 > \`${prefix}help Config\` • Comandos de configuración <:DiscordStaff:830458954927570974>
 > \`${prefix}help General\` • Comandos útiles <a:ALsaludo:809942573065699338>
+> \`${prefix}help Mod\` • Comandos de Moderación <:modHammer:835631758053605403>
 > \`${prefix}help Fun\` • Comandos divertidos <:ALwaiting:823673033625436210>
 > \`${prefix}help Reaction\` • Comandos expresivos <:ALsadChamp:823671653694832681>
 > \`${prefix}help Interact\` • Comandos de interacción <a:kill:832357744123576361>
@@ -33,7 +34,8 @@ Si necesita información más detallada sobre cada comando, puede usar:
                             Reaction: 'Reacciones <:ALsadChamp:823671653694832681>',
                             Interact: 'Interacción <a:kill:832357744123576361>',
                             NSFW: 'NSFW <:nsfw:832630274587361281>',
-                            Developer: '**Developer**'
+                            Developer: '**Developer**',
+                            Mod: 'Moderación <:modHammer:835631758053605403>'
                         };
                         return `**Comandos en la categoria:** ${categories[category]}
 Esta categoria tiene \`${quantity}\` comandos.
@@ -455,7 +457,8 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                     Waiting: () => 'Esto puede tardar un poco...',
                     kickCheck: () => 'ha sido kickeado.',
                     banCheck: () => 'ha sido baneado.',
-                    unbanOK: (user) => `**${user}** ha sido quitado de la lista de baneos.`
+                    unbanOK: (user) => `**${user}** ha sido quitado de la lista de baneos.`,
+                    reasonDays: (reason, days) => `${reason ? `**Razón:** ${reason}${days ? '\n' : ''}`: ''}${days ? `**Dias:** ${days}` : ''}`
                 },
                 commandErrors: {
                     noImage: () => 'Debes especificar la URL de una imagen válida.',
@@ -563,9 +566,12 @@ ${prefix}purge attachments [ cantidad ]`),
                     banNoUsers: () => 'Usuario(s) no válido(s). Por favor asegurese de mencionar a alguien y que este pueda ser baneado por ambos.',
                     banError: () => 'no fue baneado.',
                     banUsersMax: () => 'Solo puedes banear 20 usuarios a la vez.',
+                    banDaysInvalid: () => 'Debes especificar un número de dias valido del 1 al 7 si desea un baneo temporal: `--days [ 1 - 7 ]`',
                     unbanNoUser: () => 'Debes especificar el usuario al que quieres revocar el baneo.',
                     unbanUserNoBan: () => 'Este usuario no se encuentra en la lista de baneos.',
-                    unBanNo: (user) => `No pude remover a **${user}** de la lista de baneos`
+                    unBanNo: (user) => `No pude remover a **${user}** de la lista de baneos`,
+                    reasonInvalid: () => 'Debes especificar la razón del baneo si quieres que tenga una: `--reason "[ razón ]"`',
+                    reasonNoComillas: () => 'Tienes que usar las comillas "" para dar la razón: `--reason "[ razón ]"`'
                 },
                 commandDescriptions: {
                     help: 'Muestra la ayuda y enlaces útiles del bot.',

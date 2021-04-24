@@ -16,6 +16,7 @@ Hi! At the moment I have **6** categories and **${client.commands.size - client.
 **Categories:**
 > \`${prefix}help Config\` • Configuration Commands <:DiscordStaff:830458954927570974>  
 > \`${prefix}help General\` • Useful Commands <a:ALsaludo:809942573065699338>
+> \`${prefix}help Mod\` • Moderation Commands <:modHammer:835631758053605403>
 > \`${prefix}help Fun\` • Funny commands <:ALwaiting:823673033625436210>
 > \`${prefix}help Reaction\` • Expressive commands <:ALsadChamp:823671653694832681>
 > \`${prefix}help Interact\` • Interactive commands <a:kill:832357744123576361>
@@ -33,7 +34,8 @@ If you need more detailed information about each command, you can use:
                             Reaction: 'Reaction <:ALsadChamp:823671653694832681>',
                             Interact: 'Interact <a:kill:832357744123576361>',
                             NSFW: 'NSFW <:nsfw:832630274587361281>',
-                            Developer: '**Developer**'
+                            Developer: '**Developer**',
+                            Mod: 'Mod <:modHammer:835631758053605403>'
                         };
                         return `**Commands in the category:** ${categories[category]}
 This category has \`${quantity}\` commands.
@@ -453,7 +455,8 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                     Waiting: () => 'This may take a while.',
                     kickCheck: () => 'was kicked.',
                     banCheck: () => 'was banned.',
-                    unbanOK: (user) => `**${user}** has been removed from the ban list.`
+                    unbanOK: (user) => `**${user}** has been removed from the ban list.`,
+                    reasonDays: (reason, days) => `${reason ? `**Reason:** ${reason}\n`: ''}${days ? `**Days:** ${days}` : ''}`
 
                 },
                 commandErrors: {
@@ -562,9 +565,12 @@ ${prefix}purge attachments [ amount ]`),
                     banNoUsers: () => 'Invalid user(s). Please be sure to mention someone and they can be banned by both of you.',
                     banError: () => 'was not banned.',
                     banUsersMax: () => 'You can only ban 20 users at a time.',
+                    banDaysInvalid: () => 'You must specify a valid number of days from 1 to 7 if you want a temporary ban: `--days [ 1 - 7 ]`',
                     unbanNoUser: () => 'You must specify the user you want to revoke the ban from.',
                     unbanUserNoBan: () => 'This user is not on the ban list.',
-                    unBanNo: (user) => `I couldn't remove **${user}** from the ban list.`
+                    unBanNo: (user) => `I couldn't remove **${user}** from the ban list.`,
+                    reasonInvalid: () => 'You must specify the reason for the ban if you want it to have one: `--reason "[ reason ]"`',
+                    reasonNoComillas: () => 'You have to use the quotation marks "" to give the reason : `--reason "[ reason ]"`'
                 },
                 commandDescriptions: {
                     help: 'Displays helpful links and help for the bot.',

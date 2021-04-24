@@ -74,6 +74,7 @@ interface CommandStrings {
     kickCheck(): string;
     banCheck(): string;
     unbanOK(user: string): string;
+    reasonDays(reason: string | null, days: string | null): string;
 }
 
 interface CommandErrorStrings {
@@ -168,9 +169,12 @@ interface CommandErrorStrings {
     banNoUsers(): string;
     banError(): string;
     banUsersMax(): string;
+    banDaysInvalid(): string;
     unbanNoUser(): string;
     unbanUserNoBan(): string;
     unBanNo(user: string): string;
+    reasonInvalid(): string;
+    reasonNoComillas(): string;
 }
 
 interface CommandDescriptionStrings {

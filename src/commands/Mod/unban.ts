@@ -23,7 +23,7 @@ export default class UnBanCommand extends Command {
         const banUser = await message.guild!.fetchBan(user).catch(() => { null });
         if (!banUser) return message.channel.send(this.lang.getError('unbanUserNoBan'));
         try {
-            message.guild!.members.unban(banUser.user, args[1] || undefined);
+            message.guild!.members.unban(banUser.user, args.slice(1).join(' ') || undefined);
             message.channel.send(`<:right:830079699803701259> ${this.lang.get('unbanOK', banUser.user.tag)}`);
         } catch {
             message.channel.send(`<:error:829478128970629150> ${this.lang.getError('unBanNo', banUser.user.tag)}`);
