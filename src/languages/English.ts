@@ -115,8 +115,8 @@ There's an example of how it works and setup:`),
                         .setTitle('Why do I need an embed?')
                         .setDescription('You may need it to make your server look much better aesthetically, as it will allow you to create rich text, which you can put in your welcomes and custom commands. Creativity is up to you!')
                         .addField('1. Create and name your embed.', `__First of all you should not include [] or <> in the command__
-The name will allow us to identify your embed so that everything looks more orderly when it comes to putting it in welcomes, leaves and custom commands. You will also have to put a description to your new embed, if you don't, the embed will simply not be sent. How? Well, adding \`{embed:[embed_name]}\` and Replacing \`embed_name\` with the name of your embed. For this, you can create it and give it the name you like, just like this:
-> \`${prefix}embed create [embed_name] [description]\``)
+The name will allow us to identify your embed so that everything looks more orderly when it comes to putting it in welcomes, leaves and custom commands. How? Well, adding \`{embed:[embed_name]}\` and Replacing \`embed_name\` with the name of your embed. For this, you can create it and give it the name you like, just like this:
+> \`${prefix}embed create [embed_name]\``)
                         .addField('2. Editing our embed', `Well, it's time to edit it the way you like, your creativity matters! Here I show you the properties of an embed:
 > \`author\` - [text | <Image link>]
 > \`thumbnail\` - [Image link]

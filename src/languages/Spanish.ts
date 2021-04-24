@@ -117,8 +117,8 @@ Aquí hay ejemplo de cómo funciona y cómo se configura:`),
                         .setTitle('Por qué necesito un embed?')
                         .setDescription('Es posible que lo necesite para que su servidor se vea mucho mejor estéticamente, ya que le permitirá crear texto enriquecido, que puede poner en sus bienvenidas, despedidas y comandos personalizados. ¡La creatividad depende de ti!')
                         .addField('1. Crea y nombra a tu embed.', `__En primer lugar, no debe incluir [] o <> en el comando__
-El nombre nos permitirá identificar tu embed para que todo luzca más ordenado a la hora de ponerlo en bienvenidas, tags y comandos personalizados. También deberá ponerle una descripción a su embed, si no lo hace, el embed simplemente no se enviará. ¿Cómo? Bueno, agregando \`{embed:[embed_name]}\` y reemplazando \`embed_name\` con el nombre de tu embed. Para ello, puedes crearlo y darle el nombre que quieras, así:
-> \`${prefix}embed create [embed_name] [descripción]\``)
+El nombre nos permitirá identificar tu embed para que todo luzca más ordenado a la hora de ponerlo en bienvenidas, tags y comandos personalizados. ¿Cómo? Bueno, agregando \`{embed:[embed_name]}\` y reemplazando \`embed_name\` con el nombre de tu embed. Para ello, puedes crearlo y darle el nombre que quieras, así:
+> \`${prefix}embed create [embed_name]\``)
                         .addField('2. Editando nuestro embed.', `Bueno, es hora de editarlo como más te guste, ¡tú creatividad importa! Aquí te muestro las propiedades de un embed:
 > \`author\` - [Texto | <Enlace imagen>]
 > \`thumbnail\` - [Enlace de Imágen]
