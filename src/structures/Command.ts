@@ -96,13 +96,13 @@ export default abstract class Command {
             return !this.sendOrReply(message, this.lang.getError('cmdDevs'));
         if (message.guild && !channel.nsfw && this.nsfwOnly)
             return !this.sendOrReply(message, this.lang.getError('cmdNSFW'));
-        if (message.guild && this.memberGuildPermissions[0] && !this.memberGuildPermissions.some((p) => message.member!.permissions.has(p)) && !devs.includes(message.author.id))
+        if (message.guild && this.memberGuildPermissions[0] && !this.memberGuildPermissions.every((p) => message.member!.permissions.has(p)) && !devs.includes(message.author.id))
             return !this.sendOrReply(message, this.lang.getError('cmdMemberGuild', this.memberGuildPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
-        if (message.guild && this.memberChannelPermissions[0] && !this.memberChannelPermissions.some((p) => channel.permissionsFor(message.member!).has(p)) && !devs.includes(message.author.id))
+        if (message.guild && this.memberChannelPermissions[0] && !this.memberChannelPermissions.every((p) => channel.permissionsFor(message.member!).has(p)) && !devs.includes(message.author.id))
             return !this.sendOrReply(message, this.lang.getError('cmdMemberChannel', this.memberChannelPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
-        if (message.guild && this.botGuildPermissions[0] && !this.botGuildPermissions.some((p) => message.guild!.me!.permissions.has(p)))
+        if (message.guild && this.botGuildPermissions[0] && !this.botGuildPermissions.every((p) => message.guild!.me!.permissions.has(p)))
             return !this.sendOrReply(message, this.lang.getError('cmdBotGuild', this.botGuildPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
-        if (message.guild && this.botChannelPermissions[0] && !this.botChannelPermissions.some((p) => channel.permissionsFor(message.guild!.me!).has(p)))
+        if (message.guild && this.botChannelPermissions[0] && !this.botChannelPermissions.every((p) => channel.permissionsFor(message.guild!.me!).has(p)))
             return !this.sendOrReply(message, this.lang.getError('cmdBotChannel', this.botChannelPermissions.map(p => `+ ${this.lang.parsePermission(p)}`).join('\n')));
         return true;
     }
