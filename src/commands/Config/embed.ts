@@ -36,12 +36,9 @@ export default class EmbedCommand extends Command {
                 if (embeds.length >= 10) return message.channel.send(this.lang.getError('embedMax'));
                 if (!args[1] || args[1].length >= 10) return this.sendError(message, this.lang.getError('embedName'), 1);
                 if (embeds.find((e) => e.name === args[1])) return message.channel.send(this.lang.getError('embedExists'));
-                if (!args[2]) return this.sendError(message, this.lang.getError('embedNoDescriptionValue'), 3);
-                if (args.slice(2).join(' ').length > 2040) return message.channel.send(this.lang.getError('embedMaxCharacters', 'description', 2040));
                 const embed = await Embeds.create({
                     guildID: message.guild!.id,
-                    name: args[1],
-                    description: args.slice(2).join(' ')
+                    name: args[1]
                 });
                 return message.channel.send(this.lang.get('embedCreated', this.server!.prefix, embed.name));
             }
@@ -87,20 +84,13 @@ export default class EmbedCommand extends Command {
                         }
                         break;
                     }
-                    case 'title': {
+                    case 'title':
+                    case 'description': {
                         if (!args[3]) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
                         if (args.slice(3).join(' ').length > 256) return message.channel.send(this.lang.getError('embedMaxCharacters', property, 256));
                         if (args[3].toLowerCase() !== 'null')
                             embed[property] = args.slice(3).join(' ');
                         else embed[property] = '';
-                        break;
-                    }
-                    case 'description': {
-                        if (!args[3]) return this.sendError(message, this.lang.getError('embedNoValue', property), 3);
-                        if (args.slice(3).join(' ').length > 2040) return message.channel.send(this.lang.getError('embedMaxCharacters', property, 2040));
-                        if (args[3].toLowerCase() !== 'null')
-                            embed[property] = args.slice(3).join(' ');
-                        else return this.sendError(message, this.lang.getError('embedNoDescriptionValue'), 3);
                         break;
                     }
                     case 'image':
@@ -137,7 +127,7 @@ export default class EmbedCommand extends Command {
             case 'preview': {
                 const embed = await Embeds.findOne({ guildID: message.guild!.id, name: args[1] });
                 if (!embed) return this.sendError(message, this.lang.getError('embedNoExists'), 1);
-                return message.channel.send(await this.client.generateEmbed(embed, replaceText));
+                return message.channel.send(await this.client.generateEmbed(embed, replaceText)).catch(() => message.channel.send(this.lang.getError('embedNoValues', this.server!.prefix, args[1])));
             }
             case 'props':
             case 'properties': {

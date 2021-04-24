@@ -118,7 +118,7 @@ interface CommandErrorStrings {
     embedExists(): string;
     embedNoExists(): string;
     embedNoValue(property: string): string;
-    embedNoDescriptionValue(): string;
+    embedNoValues(prefix: string, embed: string): string;
     embedMaxCharacters(property: string, max: number): string;
     embedNoTimestamp(): string;
     embedNoColor(): string;
