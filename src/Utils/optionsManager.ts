@@ -26,7 +26,7 @@ export default function (options: Array<options>, args: Array<string>): Array<de
         if (index === -1) continue;
         if (option.requireValue) {
             if (option.allowQuotes) {
-                const nextStr = args[index + 1];
+                const nextStr = args[index + 1] || '';
                 if (nextStr.includes('"')) {
                     const arrWorked = args.slice(index + 1);
                     for (const i in arrWorked) {
