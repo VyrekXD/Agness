@@ -32,9 +32,11 @@ export default class BanCommand extends Command {
                 }
             ], args);
             const days = arr.find(x => x.name === 'days')?.value;
-            if (arr.find(x => x.name === 'days') && !days) return message.channel.send(this.lang.getError('banDaysInvalid'));
-            if (isNaN(days as unknown as number)) return message.channel.send(this.lang.getError('banDaysInvalid'));
-            if (parseInt(days as string) > 7 || parseInt(days as string) < 0) return message.channel.send(this.lang.getError('banDaysInvalid'));
+            if (arr.find(x => x.name === 'days')) {
+                if (!days) return message.channel.send(this.lang.getError('banDaysInvalid'));
+                if (isNaN(days as unknown as number)) return message.channel.send(this.lang.getError('banDaysInvalid'));
+                if (parseInt(days as string) > 7 || parseInt(days as string) < 0) return message.channel.send(this.lang.getError('banDaysInvalid'));
+            }
             if (
                 arr.find(x => x.name === 'reason') &&
                 !arr.find(x => x.name === 'reason')?.value
