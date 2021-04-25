@@ -20,12 +20,9 @@ export default class PurgeCommand extends Command {
         if (!args[0]) return message.channel.send(this.lang.getError('purgeNoArgs', this.server!.prefix)
         .setColor(this.client.color)
         .setTimestamp());
-        if (
-            (isNaN(args[0] as unknown as number) && !types.includes(args[0].toLocaleLowerCase())) ||
-            (args[1] && isNaN(args[1] as unknown as number))
-        ) return this.sendError(message, this.lang.getError('purgeNoNumber'), types.includes(args[0].toLocaleLowerCase()) ? 1 : 0);
-        const number = isNaN(args[0] as unknown as number) ? parseInt(args[0]) : parseInt(args[1]);
-        if (number < 0 || number > 100) return message.channel.send(this.lang.getError('purgeNoValid'));
+        const number = args[1] ? parseInt(args[1]) : parseInt(args[0]);
+        if (isNaN(number) || (number < 1) || (number > 100)) return message.channel.send(this.lang.getError('purgeNoValid'));
+        if (args[1] && !types.includes(args[0].toLocaleLowerCase())) return this.sendError(message, this.lang.getError('purgeNoNumber'), types.includes(args[0].toLocaleLowerCase()) ? 1 : 0);
         if (message.deletable) await message.delete();
         let messagesDelete;
         switch (args[0].toLocaleLowerCase()) {

@@ -451,7 +451,7 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                     nsfw: () => 'I hope you enjoy 🕵️‍♂️',
                     nsfwRequest: (author) => `Requested by: ${author.tag}`,
                     purgeNothing: () => 'I didn\'t find anything to delete in the last 100 messages.',
-                    purge: (messages) => `<:right:830079699803701259> I have deleted **${messages}** successfully.`,
+                    purge: (messages) => `<:right:830079699803701259> I have deleted **${messages}** message(s) successfully.`,
                     Waiting: () => 'This may take a while.',
                     kickCheck: () => 'was kicked.',
                     banCheck: () => 'was banned.',
