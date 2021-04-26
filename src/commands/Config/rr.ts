@@ -98,7 +98,7 @@ export default class ReactionRoleCommand extends Command {
                     if (sentMessage.deletable) await sentMessage.delete();
                     if (emoji.id && !this.client.emojis.resolve(emoji.id)) return message.channel.send(this.lang.getError('rrNoEmoji'));
                     const emojiID = emoji.id ?? emoji.name;
-                    const reactionRole = await ReactionRoles.findOne({ messageID, reaction: emojiID });
+                    const reactionRole = await ReactionRoles.findOne({ messageID, emojiID });
                     if (reactionRole) return message.channel.send(this.lang.getError('rrExists'));
                     await reactMessage.react(emojiID);
                     await ReactionRoles.create({
