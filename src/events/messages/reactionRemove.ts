@@ -30,7 +30,6 @@ export default class MessageReactionRemoveEvent extends Event {
             if (!reactionRole) return;
             if (this.checkCooldowns(`${user.id}-${guild.id}`)) {
                 await user.send(this.lang.getError('cooldownReactionRemove', Number(((this.cooldowns.get(`${user.id}-${guild.id}`)!.date as number) - Date.now()) / 1000).toFixed(2))).catch(() => void 0);
-                messageReaction.users.remove(user).catch(() => void 0);
                 return;
             }
             const role = guild.roles.cache.get(reactionRole.roleID);
