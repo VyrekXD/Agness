@@ -20,7 +20,7 @@ export default class Agness extends Client {
     languages = new Languages(this);
     commands = new Commands(this);
     events = new Events(this);
-    color = '#66e7ae';
+    color = '#b7d8d6';
     nekos = new nekosClient()
     constructor() {
         super({

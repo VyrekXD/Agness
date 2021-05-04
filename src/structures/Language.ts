@@ -87,7 +87,6 @@ interface CommandErrorStrings {
     cmdServer(): string;
     cmdCooldown(cooldown: string): string;
     cmdEnabled(): string;
-    cmdDevs(): string;
     cmdNSFW(): string;
     cmdMemberGuild(perms: string): string;
     cmdMemberChannel(perms: string): string;
@@ -178,23 +177,37 @@ interface CommandErrorStrings {
 }
 
 interface CommandDescriptionStrings {
-    help: string;
-    ping: string;
-    eval: string;
-    prefix: string;
-    guilds: string;
-    say: string;
+    /* General */
     avatar: string;
+    djs: string;
+    guilds: string;
+    help: string;
+    invite: string;
+    ping: string;
+    say: string;
+    userinfo: string;
+    variables: string;
     vote: string;
-    lang: string;
-    bl: string;
-    reactrole: string;
+
+    /* Config */
     embed: string;
+    emit: string;
+    lang: string;
+    leave: string;
+    prefix: string;
+    reactrole: string;
     tags: string;
     welcome: string;
-    leave: string;
-    emit: string;
-    variables: string;
+
+    /* Mod */
+    ban: string;
+    kick: string;
+    purge: string;
+    unban: string;
+
+    /* Developer */
+    eval: string;
+    bl: string;
 }
 
 interface LanguageStrings {

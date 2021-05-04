@@ -1,6 +1,7 @@
 /* eslint-disable max-lines */
-import Language from '../structures/Language';
 import { Guild, MessageEmbed } from 'discord.js';
+import Language from '../structures/Language';
+import ms = require('@fabricio-191/ms');
 import Agness from '../bot';
 
 export default class Spanish extends Language {
@@ -48,10 +49,10 @@ ${commands}
                     },
                     helpCommand: (prefix, command) => {
                         return `__**Comando ${command.name.replace(/^[a-z]/gi, (c) => c.toUpperCase())}**__
-**\`Descripción:\`** ${command.description ?? 'No tiene descripción.'}
+${this.getDescription(command.name) ? `**\`Descripción:\`**\n${this.getDescription(command.name)}` : ''}
 **\`Alias:\`** ${command.aliases.join(' | ') || 'No tiene alias.'}
 **\`Categoria:\`** ${command.category}
-**\`Cooldown:\`** ${command.cooldown} segundos.
+**\`Cooldown:\`** ${ms(command.cooldown * 1000, { language: 'es', long: true })}
 **\`Uso:\`** ${command.usage(prefix)}
 **\`Ejemplo:\`** ${command.example(prefix)}
 \`\`\`diff
@@ -59,14 +60,16 @@ ${commands}
 ¿Solo servidores?: ${command.guildOnly ? 'Sí.' : 'No.'}
 ¿Solo NSFW?: ${command.nsfwOnly ? 'Sí.' : 'No.'}
 ¿Solo desarrolladores?: ${command.devsOnly ? 'Sí.' : 'No.'}
-
-Permisos del bot:
+\`\`\`
+> **Permisos del bot:**
+\`\`\`diff
 > Servidor:
 ${command.botGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 > Canal:
 ${command.botChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
-
-Permisos del miembro:
+\`\`\`
+> **Permisos del miembro:**
+\`\`\`diff
 > Servidor:
 ${command.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'No necesita'}
 > Canal:
@@ -458,7 +461,7 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                     kickCheck: () => 'ha sido kickeado.',
                     banCheck: () => 'ha sido baneado.',
                     unbanOK: (user) => `**${user}** ha sido quitado de la lista de baneos.`,
-                    reasonDays: (reason, days) => `${reason ? `**Razón:** ${reason}${days ? '\n' : ''}`: ''}${days ? `**Dias:** ${days}` : ''}`
+                    reasonDays: (reason, days) => `${reason ? `**Razón:** ${reason}${days ? '\n' : ''}` : ''}${days ? `**Dias:** ${days}` : ''}`
                 },
                 commandErrors: {
                     noImage: () => 'Debes especificar la URL de una imagen válida.',
@@ -470,7 +473,6 @@ ${member ? `**Se unió al servidor:** ${member.joinedAt?.toLocaleString('en-US',
                     cmdServer: () => 'Este comando solo está disponible para servidores.',
                     cmdCooldown: (cooldown) => `Tienes que esperar **${cooldown}s** para ejecutar este comando.`,
                     cmdEnabled: () => 'Este comando está en mantenimiento.',
-                    cmdDevs: () => 'Este comando solo puede ser utilizado por los desarrolladores.',
                     cmdNSFW: () => 'Este comando solo se puede utilizar en canales NSFW.',
                     cmdMemberGuild: (perms) => `Necesita los siguientes permisos:\n\`\`\`diff\n${perms}\n\`\`\``,
                     cmdMemberChannel: (perms) => `Necesita los siguientes permisos en este canal:\n\`\`\`diff\n${perms}\n\`\`\``,
@@ -574,23 +576,38 @@ ${prefix}purge attachments [ cantidad ]`),
                     reasonNoComillas: () => 'Tienes que usar las comillas "" para dar la razón: `--reason "[ razón ]"`'
                 },
                 commandDescriptions: {
-                    help: 'Muestra la ayuda y enlaces útiles del bot.',
-                    eval: 'Evalua un código',
-                    ping: 'Muestra la latencia del bot.',
-                    prefix: 'Establece un prefijo personalizado en tu servidor.',
-                    guilds: 'Muestra la cantidad de servidores y usuarios que tengo.',
-                    say: 'Digo todo lo que quieras.',
+
+                    /* General */
                     avatar: 'Obtiene el avatar de cualquier usuario.',
+                    djs: 'Busca en la documentación de Discord.js',
+                    guilds: 'Muestra la cantidad de servidores y usuarios que tengo.',
+                    help: 'Muestra la ayuda y enlaces útiles del bot.',
+                    invite: 'Te dare mis invitaciónes.',
+                    ping: 'Muestra la latencia del bot.',
+                    say: 'Digo todo lo que quieras.',
+                    userinfo: 'Mira información util de cualquier usuario.',
+                    variables: 'Mira los distintos tipos de variables que puedes usar con el bot.',
                     vote: 'Muestra el enlace de Top.gg para votar por mí.',
-                    lang: 'Cambia el idioma en tu servidor para un ambiente más agradable.',
-                    bl: 'Añade a un usuario a la lista negra.',
-                    reactrole: 'Establece roles con determinado emoji en el mensaje que quieras, funciona para roles de colores, roles para menciones. ¡Todo es posible!',
+
+                    /* Config */
                     embed: 'Crea embeds personalizados para tus tags, bienvenidas y salidas. ¡Tú haces el diseño!',
+                    emit: 'Haz una simulación de eventos en el bot.',
+                    lang: 'Cambia el idioma en tu servidor para un ambiente más agradable.',
+                    leave: 'Establezca el canal y los mensajes que prefiera cuando alguien abandone su servidor >:c',
+                    prefix: 'Establece un prefijo personalizado en tu servidor.',
+                    reactrole: 'Establece roles con determinado emoji en el mensaje que quieras, funciona para roles de colores, roles para menciones. ¡Todo es posible!',
                     tags: 'Crea comandos personalizados que pueden enviar mensajes, fotos y añadir o eliminar roles. ¡Todo es posible!',
                     welcome: 'Configura el canal, los mensajes, y roles que más prefieras cuando alguien se une a tu servidor c:',
-                    leave: 'Establezca el canal y los mensajes que prefiera cuando alguien abandone su servidor >:c',
-                    emit: 'Haz una simulación de eventos en el bot.',
-                    variables: 'Mira los distintos tipos de variables que puedes usar con el bot.'
+
+                    /* Mod */
+                    ban: 'Banea a quienes se lo merescan.',
+                    kick: 'Kickea a las personas malas en tu servidor.',
+                    purge: 'Borra mensajes con diferentes opciones.',
+                    unban: 'Quita el baneo a los usuarios que tu prefieras.',
+
+                    /* Developer */
+                    eval: 'Evalua un código',
+                    bl: 'Añade a un usuario a la lista negra.'
 
                 },
                 permissions: {

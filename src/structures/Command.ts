@@ -32,7 +32,6 @@ export default abstract class Command {
     name: string;
     category: Category;
     aliases: string[];
-    description: string;
     usageArgs: string[];
     example: (p: string) => string;
     botGuildPermissions: PermissionString[];
@@ -52,7 +51,6 @@ export default abstract class Command {
         this.name = options.name;
         this.aliases = options.aliases ?? [];
         this.category = (options.category ?? 'General') as Category;
-        this.description = options.description ?? '';
         this.usageArgs = options.usageArgs ?? [];
         this.example = options.example ?? ((p) => `${p}${this.name}`);
         this.botGuildPermissions = options.botGuildPermissions ?? [];
@@ -92,8 +90,7 @@ export default abstract class Command {
             .setColor(this.client.color));
         if (!this.enabled && !devs.includes(message.author.id))
             return !this.sendOrReply(message, this.lang.getError('cmdEnabled'));
-        if (this.devsOnly && !devs.includes(message.author.id))
-            return !this.sendOrReply(message, this.lang.getError('cmdDevs'));
+        if (this.devsOnly && !devs.includes(message.author.id)) return false;
         if (message.guild && !channel.nsfw && this.nsfwOnly)
             return !this.sendOrReply(message, this.lang.getError('cmdNSFW'));
         if (message.guild && this.memberGuildPermissions[0] && !this.memberGuildPermissions.every((p) => message.member!.permissions.has(p)) && !devs.includes(message.author.id))

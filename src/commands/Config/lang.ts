@@ -22,6 +22,6 @@ export default class LanguageCommand extends Command {
         if (!this.client.languages.map((l) => l.code).includes(args[0].toLowerCase())) return this.sendError(message, this.lang.getError('langNo'), 0);
         this.server!.language = args[0];
         await this.server!.save();
-        await message.react('✅');
+        await message.react('830079699803701259');
     }
 }

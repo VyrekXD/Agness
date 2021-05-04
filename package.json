@@ -33,6 +33,7 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
+    "@fabricio-191/ms": "*",
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
     "image-url-validator": "^1.0.4",

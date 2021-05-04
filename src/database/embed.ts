@@ -70,7 +70,7 @@ const embeds: Schema<Embed> = new Schema({
     },
     color: {
         type: String,
-        default: '66e7ae'
+        default: 'b7d8d6'
     }
 });
 
