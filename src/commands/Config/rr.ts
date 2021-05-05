@@ -41,7 +41,7 @@ export default class ReactionRoleCommand extends Command {
                             .setColor(this.client.color));
                     default:
                         return message.channel.send(this.lang.get('rrHelp', this.server!.prefix)
-                            .setImage('https://i.imgur.com/Riy2Gyg.gif')
+                            .setImage('https://i.ibb.co/RbdSNKh/Riy2Gyg.gif')
                             .setColor(this.client.color));
                 }
             }
