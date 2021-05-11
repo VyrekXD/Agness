@@ -12,6 +12,13 @@ export default class English extends Language {
             nativeName: 'English',
             strings: {
                 commands: {
+                    /* General */
+                    channelRemoved: () => 'The channel was successfully removed.',
+                    messageRemoved: () => 'The message was successfully deleted.',
+                    waiting: () => 'This may take a while.',
+                    reasonDays: (reason, days) => `${reason ? `**Reason:** ${reason}\n` : ''}${days ? `**Days:** ${days}` : ''}`,
+
+                    /* help */
                     help: (prefix) => `<:world:820783752489074748> **${client.user!.username} Help Panel**
 Hi! At the moment I have **6** categories and **${client.commands.size - client.commands.filter(c => c.category === 'Developer').size}** commands.
 **Categories:**
@@ -76,14 +83,18 @@ ${command.memberGuildPermissions.map((p) => `+ ${this.parsePermission(p)}`).join
 ${command.memberChannelPermissions.map((p) => `+ ${this.parsePermission(p)}`).join('\n') || 'Doesn\'t need.'}
 \`\`\``;
                     },
-                    prefix: (prefix) => `My new prefix is: \`${prefix}\``,
-                    langs: (prefix, languages) => new MessageEmbed()
-                        .setTitle('List of Languages')
-                        .setDescription(`There're the languages currently available in Agness.
-**If you want to change the language of Agness on the server use:**
-> \`${prefix}lang <Language code>\`
 
-${languages}`),
+                    /* prefix */
+                    prefix: (prefix) => `My new prefix is: \`${prefix}\``,
+
+                    /* lang */
+                    langs: (languages) => `There're the languages currently available in Agness.
+**If you want to change the language of Agness on the server react with the respective emoji.**
+
+${languages}`,
+                    langsSet: () => '<:right:830079699803701259> Language set to English.',
+
+                    /* General category */
                     guilds: (members, guilds, shardID) => new MessageEmbed()
                         .setDescription(`At this moment, I'm in **${guilds}** servers and with **${members}** users.`)
                         .setFooter(`This server is on the shard ${shardID}`),
@@ -94,185 +105,6 @@ Remember that you can vote every 12 hours.`)
                         .setFooter('With love ❤️'),
                     avatar: (user, avatar) => `**${user}**'s avatar
 > [Avatar Link](${avatar})`,
-                    rrHelp: (prefix) => new MessageEmbed()
-                        .addField('Reaction Role Types', `At the moment, there're 3 types of reaction roles. To get specific information about one, use:
-> \`${prefix}reactrole help normal\`
-> \`${prefix}reactrole help unique\`
-> \`${prefix}reactrole help only\``)
-                        .addField('How do I get the ID of a message?', `You must turn on the __Developer Mode__ in settings, right click a message and copy ID.
-Detalied information in the GIF below.`),
-                    rrReact: (role) => `I'm preparing the reaction role for ${role}.
-You have 30 seconds to react with the emoji with which you want the role to be given.`,
-                    rr: (role, emoji) => `The role **${role}** will be given the next time someone reacts with the emoji ${emoji} in that message.`,
-                    rrNormal: () => new MessageEmbed()
-                        .setTitle('Normal Type Reaction')
-                        .setDescription(`The reaction role of type **normal** allows you to add and remove the specified role when you react or when you remove the reaction.
-There's an example of how it works and setup:`),
-                    rrUnique: () => new MessageEmbed()
-                        .setTitle('Unique Type Reaction')
-                        .setDescription(`The reaction role of type **unique** allows you to add the specified role once and it'll not be removed.
-There's an example of how it works and setup:`),
-                    rrOnly: () => new MessageEmbed()
-                        .setTitle('Only Type Reaction')
-                        .setDescription(`The reaction role of type **only** allows you to have only one role from the others of the same type in the message.
-There's an example of how it works and setup:`),
-                    rrDelete: (emoji) => `Reaction role with emoji ${emoji} deleted successfully.`,
-                    embedHelp: (prefix) => new MessageEmbed()
-                        .setTitle('Why do I need an embed?')
-                        .setDescription('You may need it to make your server look much better aesthetically, as it will allow you to create rich text, which you can put in your welcomes and custom commands. Creativity is up to you!')
-                        .addField('1. Create and name your embed.', `__First of all you should not include [] or <> in the command__
-The name will allow us to identify your embed so that everything looks more orderly when it comes to putting it in welcomes, leaves and custom commands. How? Well, adding \`{embed:[embed_name]}\` and Replacing \`embed_name\` with the name of your embed. For this, you can create it and give it the name you like, just like this:
-> \`${prefix}embed create [embed_name]\``)
-                        .addField('2. Editing our embed', `Well, it's time to edit it the way you like, your creativity matters! Here I show you the properties of an embed:
-> \`author\` - [text | <Image link>]
-> \`thumbnail\` - [Image link]
-> \`title\` - [text]
-> \`description\` - [text]
-> \`footer\` - [text | <Image link>]
-> \`image\` - [Image link]
-> \`color\` - [Hex Code]
-> \`timestamp\` - [yes/no]
-The way of use is intuitive with which it will be easier for you to learn each property. Well, without more, the embed editing mode, and it's as follows:
-> \`${prefix}embed edit [name] [property] [value]\``)
-                        .addField('**EXAMPLE**', `Now, let's look at a small example with some properties, which will allow you to familiarize yourself with the simple format.
-We start by creating an embed which we will call \`example\`.
-> \`${prefix}embed create example\`
-Now, to give it an attractive title
-> \`${prefix}embed edit example title I am learning how to edit an embed.\`
-Well, now let's put a description on it.
-> \`${prefix}embed edit example description This description looks very cute\`
-Let's put an image on it and we will have a simple embed, be careful and put links that really contain images. In this case we will put a funny gif.
-> \`${prefix}embed edit example image https://i.imgur.com/mXOijAT.gif\`
-Finally, let's put a color which has to be in hexadecimal code without the #, if you don't know them, you can see the colors [here](https://htmlcolorcodes.com/es/).
-> \`${prefix}embed edit example color e658ff\`
-Ready, this is a simple embed that if you want you can test yourself with:
-> \`${prefix}embed preview example`)
-                        .addField('Send it for welcomes/leaves', `Remember that in any case you would use: {embed:[embed name]}
-> In this case: \`{embed:example}\`
-To insert it in a welcome or leave, there are three options:
-- Message and embed:
-> \`${prefix}welcome message Welcome user! | {embed:example}\`
-- Message only:
-> \`${prefix}welcome message Welcome user!\`
-- Or just the embed:
-> \`${prefix}welcome message {embed:example}\``)
-                        .addField('**VARIABLES**', `First of all, what are variables? Well, for that I am, the variables will allow us to do "automated" things so that they can be replaced by names, channels, links and others, they can be used in embeds as well as in text, for welcomes, leaves and custom commands. Here are some:
-\`{user}\` - @Mention (e.j. @Aviii.#0721)
-\`{server}\` - Server name (e.j. ${client.user!.username}'s Support)
-You can find the full list with \`${prefix}variables\``)
-                        .setTimestamp()
-                        .setFooter('<> Optional | [] Required'),
-                    embedCreated: (prefix, embed) => `Embed with name ${embed} created successfully.
-Use \`${prefix}embed properties\` to see how to modify it.`,
-                    embedDeleted: (embed) => `Embed with name ${embed} deleted successfully`,
-                    embedList: (embeds, serverIcon) => new MessageEmbed()
-                        .setAuthor('Server embeds', serverIcon)
-                        .setDescription(embeds || 'This server doesn\'t has any embed.'),
-                    embedEdited: (property, embedName) => `The **${property}** property of the embed a was edited correctly.
-You can add the embed to welcome, leave or tags (custom commands) with \`{embed:${embedName}}\`.
-**__Preview of the embed:__**`,
-                    embedProperties: (prefix) => new MessageEmbed()
-                        .addField('Properties of an embed', `> \`author\` - [text | <Image link>]
-> \`thumbnail\` - [Image link]
-> \`title\` - [text]
-> \`description\` - [text]
-> \`footer\` - [text | <Image link>]
-> \`image\` - [Image link]
-> \`color\` - [Hex Code]
-> \`timestamp\` - [yes/no]
-
-Use: \`${prefix}embed edit [name] [property] [value]\` to edit your embed.`)
-                        .setFooter('<> Optional | [] Required')
-                        .setTimestamp(),
-                    tagsHelp: (prefix) => new MessageEmbed()
-                        .setDescription(`You must specify a valid option.
-> \`${prefix}tag create [Name] [Properties]\`
-> \`${prefix}tag edit [Name] [Properties]\`
-> \`${prefix}tag delete [Name]\`
-
-To see all tags in the server use:
-> \`${prefix}tag list\`
-
-To see the properties use:
-> \`${prefix}tag properties\`
-
-To use a tag, use:
-> \`${prefix}[tag name]\``),
-                    tagsCreated: (tagName) => `Tag with the name **${tagName}** created successfully.`,
-                    tagsEdited: (tagName) => `Tag with the name **${tagName}** edited successfully.`,
-                    tagsDeleted: (tagName) => `Tag with the name **${tagName}** deleted successfully.`,
-                    tagsList: (tags, icon) => new MessageEmbed()
-                        .setAuthor('Server tag list', icon)
-                        .setDescription(tags || 'This server doesn\'t has any tag.'),
-                    tagsProperties: () => new MessageEmbed()
-                        .addField('**Properties of a tag**', `
-> \`(message:[Text])\` - The normal text of the message to send.
-> \`(image:[URL])\` - Send an image as attachment.
-> \`{embed:[Embed Name]}\` - Send an embed already created (embed command).
-> \`{addRole:[RoleID]}\` - Adds a role (put another \\*:roleID\\* to add one more role).
-> \`{removeRole:[RoleID]}\` - Removes a role (put another \\*:roleID\\* to remove one more role).`),
-                    welcomeHelp: (prefix) => new MessageEmbed()
-                        .setDescription(`You must specify a valid property.
-> \`${prefix}welcome channel [#Channel | null]\`
-> \`${prefix}welcome message [ <Text> | {embed:[embed name]} ]\`
-> \`${prefix}welcome autorole [user|bot] [@Role | Role ID |]\`
-To insert a message or embed, there are three options:
-- Message and embed:
-> \`${prefix}welcome message Welcome {user}! | {embed:[embed name]}\`
-- Message only:
-> \`${prefix}welcome message Welcome {user}!\`
-- Or just the embed:
-> \`${prefix}welcome message {embed:[embed name]}\`
-If you need to delete any property use:
-> \`${prefix}welcome [property] null\``)
-                        .setFooter(`You can see the configuration using: ${prefix}welcome config`),
-                    leaveHelp: (prefix) => new MessageEmbed()
-                        .setDescription(`You must specify a valid property.
-> \`${prefix}leave channel [#Channel | null]\`
-> \`${prefix}leave message  [<Text>| {embed[embed name]} ]\`
-To insert messages into a leave, there are three options:
-- Message and embed:
-> \`${prefix}leave message A user left the server! | {embed:[embed name]}\`
-- Message only:
-> \`${prefix}leave message A User left the server!\`
-- Or just the embed:
-> \`${prefix}leave message {embed:[embed name]}\`
-If you need to delete any property use:
-> \`${prefix}leave [property] null\``)
-                        .setFooter(`You can see the configuration using: ${prefix}leave config`),
-                    welcomeChannel: (channel) => `The welcomes channel is now ${channel}.`,
-                    leaveChannel: (channel) => `The leaves channel is now ${channel}.`,
-                    channelRemoved: () => 'The channel was successfully removed.',
-                    messageRemoved: () => 'The message was successfully deleted.',
-                    welcomeEmbed: (prefix, embed) => `The new embed to use in the welcomes is now **${embed}**. To test it use: \`${prefix}emit welcome\`.`,
-                    leaveEmbed: (prefix, embed) => `The new embed to use in the leaves is now **${embed}**. To test it use: \`${prefix}emit leave\`.`,
-                    welcomeMessage: (prefix, embed) => `The message ${embed ? 'and embed ' : ''}of welcomes has been updated correctly. To test it use: \`${prefix}emit welcome\`.`,
-                    leaveMessage: (prefix, embed) => `The message ${embed ? 'and embed ' : ''}of leaves has been updated correctly. To test it use: \`${prefix}emit leave\`.`,
-                    welcomeRoleRemoved: (option) => `A role will not be given now when a ${option} joins the server.`,
-                    welcomeRole: (role, option, prefix) => `Now, the role **${role}** will be given when a ${option} joins the server. To test it use: \`${prefix}emit welcome\``,
-                    welcomeConfig: (welcome, prefix) => {
-                        const configEmbed = new MessageEmbed()
-                            .setTitle('Server Welcome Configuration')
-                            .setDescription(`**Channel:** ${welcome.channelID ? `<#${welcome.channelID}>` : 'Doesn\'t have.'}
-**User AutoRole:** ${welcome.autorole.user ? `<@&${welcome.autorole.user}>` : 'Doesn\'t have.'}
-**Bot AutoRole:** ${welcome.autorole.bot ? `<@&${welcome.autorole.bot}>` : 'Doesn\'t have.'}
-**Embed Name:** ${welcome.embedName ? welcome.embedName : 'Doesn\'t have.'}`)
-                            .addField('Message:', `${welcome.message ? welcome.message.length > 1024 ? `${welcome.message.substring(0, 1000)}. And more..` : welcome.message : 'Doesn\'t have.'}`);
-                        if (welcome.embedName)
-                            configEmbed.setFooter(`If you want to see the embed use: ${prefix}embed preview ${welcome.embedName}`);
-                        return configEmbed;
-                    },
-                    leaveConfig: (leave, prefix) => {
-                        const configEmbed = new MessageEmbed()
-                            .setTitle('Server Welcome Configuration')
-                            .setDescription(`**Channel:** ${leave.channelID ? `<#${leave.channelID}>` : 'Doesn\'t have.'}
-**Embed Name:** ${leave.embedName ? leave.embedName : 'Doesn\'t have.'}`)
-                            .addField('Message:', `${leave.message ? leave.message.length > 1024 ? `${leave.message.substring(0, 1000)}. And more..` : leave.message : 'Doesn\'t have.'}`);
-                        if (leave.embedName)
-                            configEmbed.setFooter(`If you want to see the embed use: ${prefix}embed preview ${leave.embedName}`);
-                        return configEmbed;
-                    },
-                    emitEvent: (event) => `Emitted **${event}** event successfully.`,
                     variables: () => new MessageEmbed()
                         .setTitle(`${client.user!.username} Variables`)
                         .setDescription('These variables can be used when editing embeds, in welcomes/leaves messages, and custom commands (tags).')
@@ -351,6 +183,195 @@ In case you have any doubts, here's the invitation link from my support server.
 ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { timeZoneName: 'short', timeZone: 'America/Lima' })}` : ''}`)
                             .setFooter(`(◍•ᴗ•◍)❤️ Requested by: ${author.tag}`, author.displayAvatarURL({ format: 'webp', size: 4096, dynamic: true }));
                     },
+                    /* reaction role */
+                    rrHelp: (prefix) => new MessageEmbed()
+                        .addField('Reaction Role Types', `At the moment, there're 3 types of reaction roles. To get specific information about one, use:
+> \`${prefix}reactrole help normal\`
+> \`${prefix}reactrole help unique\`
+> \`${prefix}reactrole help only\``)
+                        .addField('How do I get the ID of a message?', `You must turn on the __Developer Mode__ in settings, right click a message and copy ID.
+Detalied information in the GIF below.`),
+                    rrReact: (role) => `I'm preparing the reaction role for ${role}.
+You have 30 seconds to react with the emoji with which you want the role to be given.`,
+                    rr: (role, emoji) => `The role **${role}** will be given the next time someone reacts with the emoji ${emoji} in that message.`,
+                    rrNormal: () => new MessageEmbed()
+                        .setTitle('Normal Type Reaction')
+                        .setDescription(`The reaction role of type **normal** allows you to add and remove the specified role when you react or when you remove the reaction.
+There's an example of how it works and setup:`),
+                    rrUnique: () => new MessageEmbed()
+                        .setTitle('Unique Type Reaction')
+                        .setDescription(`The reaction role of type **unique** allows you to add the specified role once and it'll not be removed.
+There's an example of how it works and setup:`),
+                    rrOnly: () => new MessageEmbed()
+                        .setTitle('Only Type Reaction')
+                        .setDescription(`The reaction role of type **only** allows you to have only one role from the others of the same type in the message.
+There's an example of how it works and setup:`),
+                    rrDelete: (emoji) => `Reaction role with emoji ${emoji} deleted successfully.`,
+
+                    /* embeds */
+                    embedHelp: (prefix) => new MessageEmbed()
+                        .setTitle('Why do I need an embed?')
+                        .setDescription('You may need it to make your server look much better aesthetically, as it will allow you to create rich text, which you can put in your welcomes and custom commands. Creativity is up to you!')
+                        .addField('1. Create and name your embed.', `__First of all you should not include [] or <> in the command__
+The name will allow us to identify your embed so that everything looks more orderly when it comes to putting it in welcomes, leaves and custom commands. How? Well, adding \`{embed:[embed_name]}\` and Replacing \`embed_name\` with the name of your embed. For this, you can create it and give it the name you like, just like this:
+> \`${prefix}embed create [embed_name]\``)
+                        .addField('2. Editing our embed', `Well, it's time to edit it the way you like, your creativity matters! Here I show you the properties of an embed:
+> \`author\` - [text | <Image link>]
+> \`thumbnail\` - [Image link]
+> \`title\` - [text]
+> \`description\` - [text]
+> \`footer\` - [text | <Image link>]
+> \`image\` - [Image link]
+> \`color\` - [Hex Code]
+> \`timestamp\` - [yes/no]
+The way of use is intuitive with which it will be easier for you to learn each property. Well, without more, the embed editing mode, and it's as follows:
+> \`${prefix}embed edit [name] [property] [value]\``)
+                        .addField('**EXAMPLE**', `Now, let's look at a small example with some properties, which will allow you to familiarize yourself with the simple format.
+We start by creating an embed which we will call \`example\`.
+> \`${prefix}embed create example\`
+Now, to give it an attractive title
+> \`${prefix}embed edit example title I am learning how to edit an embed.\`
+Well, now let's put a description on it.
+> \`${prefix}embed edit example description This description looks very cute\`
+Let's put an image on it and we will have a simple embed, be careful and put links that really contain images. In this case we will put a funny gif.
+> \`${prefix}embed edit example image https://i.imgur.com/mXOijAT.gif\`
+Finally, let's put a color which has to be in hexadecimal code without the #, if you don't know them, you can see the colors [here](https://htmlcolorcodes.com/es/).
+> \`${prefix}embed edit example color e658ff\`
+Ready, this is a simple embed that if you want you can test yourself with:
+> \`${prefix}embed preview example`)
+                        .addField('Send it for welcomes/leaves', `Remember that in any case you would use: {embed:[embed name]}
+> In this case: \`{embed:example}\`
+To insert it in a welcome or leave, there are three options:
+- Message and embed:
+> \`${prefix}welcome message Welcome user! | {embed:example}\`
+- Message only:
+> \`${prefix}welcome message Welcome user!\`
+- Or just the embed:
+> \`${prefix}welcome message {embed:example}\``)
+                        .addField('**VARIABLES**', `First of all, what are variables? Well, for that I am, the variables will allow us to do "automated" things so that they can be replaced by names, channels, links and others, they can be used in embeds as well as in text, for welcomes, leaves and custom commands. Here are some:
+\`{user}\` - @Mention (e.j. @Aviii.#0721)
+\`{server}\` - Server name (e.j. ${client.user!.username}'s Support)
+You can find the full list with \`${prefix}variables\``)
+                        .setTimestamp()
+                        .setFooter('<> Optional | [] Required'),
+                    embedCreated: (prefix, embed) => `Embed with name ${embed} created successfully.
+Use \`${prefix}embed properties\` to see how to modify it.`,
+                    embedDeleted: (embed) => `Embed with name ${embed} deleted successfully`,
+                    embedList: (embeds, serverIcon) => new MessageEmbed()
+                        .setAuthor('Server embeds', serverIcon)
+                        .setDescription(embeds || 'This server doesn\'t has any embed.'),
+                    embedEdited: (property, embedName) => `The **${property}** property of the embed a was edited correctly.
+You can add the embed to welcome, leave or tags (custom commands) with \`{embed:${embedName}}\`.
+**__Preview of the embed:__**`,
+                    embedProperties: (prefix) => new MessageEmbed()
+                        .addField('Properties of an embed', `> \`author\` - [text | <Image link>]
+> \`thumbnail\` - [Image link]
+> \`title\` - [text]
+> \`description\` - [text]
+> \`footer\` - [text | <Image link>]
+> \`image\` - [Image link]
+> \`color\` - [Hex Code]
+> \`timestamp\` - [yes/no]
+
+Use: \`${prefix}embed edit [name] [property] [value]\` to edit your embed.`)
+                        .setFooter('<> Optional | [] Required')
+                        .setTimestamp(),
+
+                    /* tags */
+                    tagsHelp: (prefix) => new MessageEmbed()
+                        .setDescription(`You must specify a valid option.
+> \`${prefix}tag create [Name] [Properties]\`
+> \`${prefix}tag edit [Name] [Properties]\`
+> \`${prefix}tag delete [Name]\`
+
+To see all tags in the server use:
+> \`${prefix}tag list\`
+
+To see the properties use:
+> \`${prefix}tag properties\`
+
+To use a tag, use:
+> \`${prefix}[tag name]\``),
+                    tagsCreated: (tagName) => `Tag with the name **${tagName}** created successfully.`,
+                    tagsEdited: (tagName) => `Tag with the name **${tagName}** edited successfully.`,
+                    tagsDeleted: (tagName) => `Tag with the name **${tagName}** deleted successfully.`,
+                    tagsList: (tags, icon) => new MessageEmbed()
+                        .setAuthor('Server tag list', icon)
+                        .setDescription(tags || 'This server doesn\'t has any tag.'),
+                    tagsProperties: () => new MessageEmbed()
+                        .addField('**Properties of a tag**', `
+> \`(message:[Text])\` - The normal text of the message to send.
+> \`(image:[URL])\` - Send an image as attachment.
+> \`{embed:[Embed Name]}\` - Send an embed already created (embed command).
+> \`{addRole:[RoleID]}\` - Adds a role (put another \\*:roleID\\* to add one more role).
+> \`{removeRole:[RoleID]}\` - Removes a role (put another \\*:roleID\\* to remove one more role).`),
+
+                    /* welcome */
+                    welcomeHelp: (prefix) => new MessageEmbed()
+                        .setDescription(`You must specify a valid property.
+> \`${prefix}welcome channel [#Channel | null]\`
+> \`${prefix}welcome message [ <Text> | {embed:[embed name]} ]\`
+> \`${prefix}welcome autorole [user|bot] [@Role | Role ID |]\`
+To insert a message or embed, there are three options:
+- Message and embed:
+> \`${prefix}welcome message Welcome {user}! | {embed:[embed name]}\`
+- Message only:
+> \`${prefix}welcome message Welcome {user}!\`
+- Or just the embed:
+> \`${prefix}welcome message {embed:[embed name]}\`
+If you need to delete any property use:
+> \`${prefix}welcome [property] null\``)
+                        .setFooter(`You can see the configuration using: ${prefix}welcome config`),
+                    welcomeChannel: (channel) => `The welcomes channel is now ${channel}.`,
+                    welcomeEmbed: (prefix, embed) => `The new embed to use in the welcomes is now **${embed}**. To test it use: \`${prefix}emit welcome\`.`,
+                    welcomeMessage: (prefix, embed) => `The message ${embed ? 'and embed ' : ''}of welcomes has been updated correctly. To test it use: \`${prefix}emit welcome\`.`,
+                    welcomeRoleRemoved: (option) => `A role will not be given now when a ${option} joins the server.`,
+                    welcomeRole: (role, option, prefix) => `Now, the role **${role}** will be given when a ${option} joins the server. To test it use: \`${prefix}emit welcome\``,
+                    welcomeConfig: (welcome, prefix) => {
+                        const configEmbed = new MessageEmbed()
+                            .setTitle('Server Welcome Configuration')
+                            .setDescription(`**Channel:** ${welcome.channelID ? `<#${welcome.channelID}>` : 'Doesn\'t have.'}
+    **User AutoRole:** ${welcome.autorole.user ? `<@&${welcome.autorole.user}>` : 'Doesn\'t have.'}
+    **Bot AutoRole:** ${welcome.autorole.bot ? `<@&${welcome.autorole.bot}>` : 'Doesn\'t have.'}
+    **Embed Name:** ${welcome.embedName ? welcome.embedName : 'Doesn\'t have.'}`)
+                            .addField('Message:', `${welcome.message ? welcome.message.length > 1024 ? `${welcome.message.substring(0, 1000)}. And more..` : welcome.message : 'Doesn\'t have.'}`);
+                        if (welcome.embedName)
+                            configEmbed.setFooter(`If you want to see the embed use: ${prefix}embed preview ${welcome.embedName}`);
+                        return configEmbed;
+                    },
+                    /* leave */
+                    leaveHelp: (prefix) => new MessageEmbed()
+                        .setDescription(`You must specify a valid property.
+> \`${prefix}leave channel [#Channel | null]\`
+> \`${prefix}leave message  [<Text>| {embed[embed name]} ]\`
+To insert messages into a leave, there are three options:
+- Message and embed:
+> \`${prefix}leave message A user left the server! | {embed:[embed name]}\`
+- Message only:
+> \`${prefix}leave message A User left the server!\`
+- Or just the embed:
+> \`${prefix}leave message {embed:[embed name]}\`
+If you need to delete any property use:
+> \`${prefix}leave [property] null\``)
+                        .setFooter(`You can see the configuration using: ${prefix}leave config`),
+                    leaveChannel: (channel) => `The leaves channel is now ${channel}.`,
+                    leaveEmbed: (prefix, embed) => `The new embed to use in the leaves is now **${embed}**. To test it use: \`${prefix}emit leave\`.`,
+                    leaveMessage: (prefix, embed) => `The message ${embed ? 'and embed ' : ''}of leaves has been updated correctly. To test it use: \`${prefix}emit leave\`.`,
+                    leaveConfig: (leave, prefix) => {
+                        const configEmbed = new MessageEmbed()
+                            .setTitle('Server Welcome Configuration')
+                            .setDescription(`**Channel:** ${leave.channelID ? `<#${leave.channelID}>` : 'Doesn\'t have.'}
+**Embed Name:** ${leave.embedName ? leave.embedName : 'Doesn\'t have.'}`)
+                            .addField('Message:', `${leave.message ? leave.message.length > 1024 ? `${leave.message.substring(0, 1000)}. And more..` : leave.message : 'Doesn\'t have.'}`);
+                        if (leave.embedName)
+                            configEmbed.setFooter(`If you want to see the embed use: ${prefix}embed preview ${leave.embedName}`);
+                        return configEmbed;
+                    },
+
+                    /* emit */
+                    emitEvent: (event) => `Emitted **${event}** event successfully.`,
+
+                    /* interact */
                     kill: (author, mention) => {
                         const frases = [
                             `**${author} has killed ${mention}.**`,
@@ -448,28 +469,44 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                         const random = frases[Math.floor(Math.random() * frases.length)];
                         return random;
                     },
+
+                    /* images */
                     dog: () => 'Look at a puppy! :3 ❤️',
                     cat: () => 'Did you want a cute cat? 🥰',
                     bunny: () => 'This is a beautiful bunny 😋',
                     duck: () => 'Did someone say duck? 🦆',
+
+                    /* nsfw */
                     nsfw: () => 'I hope you enjoy 🕵️‍♂️',
                     nsfwRequest: (author) => `Requested by: ${author.tag}`,
+
+                    /* purge */
                     purgeNothing: () => 'I didn\'t find anything to delete in the last 100 messages.',
                     purge: (messages) => `<:right:830079699803701259> I have deleted **${messages}** message(s) successfully.`,
-                    Waiting: () => 'This may take a while.',
+
+                    /* kick */
                     kickCheck: () => 'was kicked.',
+
+                    /* ban */
                     banCheck: () => 'was banned.',
-                    unbanOK: (user) => `**${user}** has been removed from the ban list.`,
-                    reasonDays: (reason, days) => `${reason ? `**Reason:** ${reason}\n` : ''}${days ? `**Days:** ${days}` : ''}`
+
+                    /* unban */
+                    unbanOK: (user) => `**${user}** has been removed from the ban list.`
 
                 },
                 commandErrors: {
+                    
+                    /* General */
                     noImage: () => 'You must specify the URL of a valid image.',
                     noChannel: () => 'I couldn\'t find the channel or it\'s invalid.',
                     noChannelView: () => 'I don\'t have permissions to see that channel.',
                     noChannelWrite: () => 'I can\'t send messages in that channel.',
                     noRole: () => 'I couldn\'t find that role or it\'s invalid.',
                     noRoleAdd: () => 'I don\'t have enough permissions to give that role.',
+                    reasonInvalid: () => 'You must specify the reason for the ban if you want it to have one: `--reason "[ reason ]"`',
+                    reasonNoComillas: () => 'You have to use the quotation marks "" to give the reason : `--reason "[ reason ]"`',
+
+                    /* Command CanRun */
                     cmdServer: () => 'This command is only available for servers.',
                     cmdCooldown: (cooldown) => `You have to wait **${cooldown}s** to execute this command.`,
                     cmdEnabled: () => 'This command is under maintenance.',
@@ -478,17 +515,29 @@ ${member ? `**Joined the server:** ${member.joinedAt?.toLocaleString('en-US', { 
                     cmdMemberChannel: (perms) => `You need the following permissions on this channel:\n\`\`\`diff\n${perms}\n\`\`\``,
                     cmdBotGuild: (perms) => `I need the following permissions:\n\`\`\`diff\n${perms}\n\`\`\``,
                     cmdBotChannel: (perms) => `I need the following permissions on this channel:\n\`\`\`diff\n${perms}\n\`\`\``,
+
+                    /* prefix */
                     prefixArgs: () => 'You must specify the new prefix.',
                     prefixLength: () => 'The new prefix must not exceed 5 characters.',
+
+                    /* lang */
                     langNo: () => 'You must specify a valid language.',
+
+                    /* help */
                     helpNo: () => '> The command or category couldn\'t be found.',
+
+                    /* say */
                     sayNoText: () => 'You must specify the text that you want me to say.',
                     sayNoPerms: () => 'You must have the permission of mention everyone to execute this command.',
+
+                    /* blacklist */
                     blacklist: (reason, date) => `You're on the blacklist. Here you have more information:
 > **Reason:** \`${reason}\`
 > **Date:** \`${date}\`
 You can appeal by going to my support server.
 > [Support Server](https://discord.gg/K63NqEDm86)`,
+
+                    /* reaction role */
                     rrMax: () => 'You can only have 32 reaction roles per server.',
                     rrNoOption: (prefix) => `You must specify a valid option or role.
 > \`${prefix}reactrole [@Role] [Type] [Message ID] <#Channel>\`
@@ -506,6 +555,10 @@ If you need a little more help you can use: \`${prefix}reactrole help\``,
                     rrDeleteNoMessage: () => 'You must specify the message ID.',
                     rrDeleteEmoji: () => 'You must specify a valid emoji.',
                     rrDeleteNo: () => 'The reaction role couldn\'t be deleted, check if there\'s one with that message ID and emoji in the server.',
+                    cooldownReactionAdd: (coldoown) => `You have to wait **${coldoown}s** to get the next role.`,
+                    cooldownReactionRemove: (coldoown) => `You have to wait **${coldoown}s** to remove the next role.`,
+
+                    /* embeds */
                     embedMax: () => 'You can only have 10 embeds per server.',
                     embedName: () => 'You must specify the name of the embed and must have a maximum of 10 characters.',
                     embedExists: () => 'There\'s already an embed with that name. Try another.',
@@ -517,6 +570,8 @@ If you need a little more help you can use: \`${prefix}reactrole help\``,
                     embedNoColor: () => 'You must specify the color without #.',
                     embedNoProperty: (prefix) => `The property that you put isn't valid.
 You can see the list of the propertsies with \`${prefix}embed properties\`.`,
+
+                    /* tags */
                     tagsMax: () => 'You can only have 10 tags per server.',
                     tagsName: () => 'You must specify the name of the tag and must have a maximum of 10 characters.',
                     tagsExists: () => 'There\'s already an tag with that name. Try another.',
@@ -525,10 +580,18 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     tagsNoRole: () => 'I can\'t add or remove the roles you have specified or they don\'t exist.',
                     tagsNoExists: () => 'There\'s no tag with that name or you didn\'t specify one.',
                     tagsNoCommand: () => 'You can\'t create a tag with the name of a command.',
+
+                    /* welcome */
                     welcomeNoMessage: () => 'You must specify a welcome message.',
-                    leaveNoMessage: () => 'You must specify a welcome message.',
                     welcomeRoleType: () => 'You must specify the type of user that will receive the role (user/bot)',
+
+                    /* leave */
+                    leaveNoMessage: () => 'You must specify a welcome message.',
+
+                    /* emit */
                     emitNoEvent: () => 'You must specify the event to test.',
+
+                    /* interact */
                     killNoMention: () => 'Who do you want to kill? *walks away* (~_~;)',
                     killMentionMe: () => 'No- Not me please ;w;',
                     killMentionAuthor: () => 'You can\'t kill yourself >:c',
@@ -548,8 +611,8 @@ You can see the list of the propertsies with \`${prefix}embed properties\`.`,
                     kissMentionAuthor: () => 'Hmm.. you can\'t kiss yourself  ._.',
                     feedNoMention: () => 'Mention who you want to feed  .w.',
                     feedMentionAuthor: () => 'Hmm.. Mention someone other than you  e.e',
-                    cooldownReactionAdd: (coldoown) => `You have to wait **${coldoown}s** to get the next role.`,
-                    cooldownReactionRemove: (coldoown) => `You have to wait **${coldoown}s** to remove the next role.`,
+
+                    /* purge */
                     purgeNoArgs: (prefix) => new MessageEmbed()
                         .setTitle('Modes of use.')
                         .setDescription(`${prefix}purge [ amount ]
@@ -560,20 +623,24 @@ ${prefix}purge attachments [ amount ]`),
                     purgeNoNumber: () => 'You must specify a valid number or type.',
                     purgeNoValid: () => 'You must specify a number from 1 to 100.',
                     purgeNoUsers: () => 'Mention users or specify their IDs',
+
+                    /* kick */
                     kickNoArgs: () => 'You must specify which members you want to kick.',
                     kickNoUsers: () => 'Invalid user(s). Please be sure to mention someone and that they can be kicked by both of you.',
                     kickError: () => 'was not kicked.',
                     kickUsersMax: () => 'You can only kick 20 users at a time.',
+
+                    /* ban */
                     banNoArgs: () => 'You must specify which members you want to ban.',
                     banNoUsers: () => 'Invalid user(s). Please be sure to mention someone and they can be banned by both of you.',
                     banError: () => 'was not banned.',
                     banUsersMax: () => 'You can only ban 20 users at a time.',
                     banDaysInvalid: () => 'You must specify a valid number of days from 1 to 7 if you want a temporary ban: `--days [ 1 - 7 ]`',
+
+                    /* unban */
                     unbanNoUser: () => 'You must specify the user you want to revoke the ban from.',
                     unbanUserNoBan: () => 'This user is not on the ban list.',
-                    unBanNo: (user) => `I couldn't remove **${user}** from the ban list.`,
-                    reasonInvalid: () => 'You must specify the reason for the ban if you want it to have one: `--reason "[ reason ]"`',
-                    reasonNoComillas: () => 'You have to use the quotation marks "" to give the reason : `--reason "[ reason ]"`'
+                    unBanNo: (user) => `I couldn't remove **${user}** from the ban list.`
                 },
                 commandDescriptions: {
 

@@ -6,14 +6,33 @@ import { Leave } from '../database/leave';
 import Agness from '../bot';
 
 interface CommandStrings {
+    /* General */
+    channelRemoved(): string;
+    messageRemoved(): string;
+    reasonDays(reason: string | null, days: string | null): string;
+    waiting(): string;
+
+    /* help */
     help(prefix: string): string;
     helpCategory(prefix: string, category: Category, commands: string, quantity: number): string;
     helpCommand(prefix: string, command: Command): string;
+
+    /* prefix */
     prefix(prefix: string): string;
-    langs(prefix: string, languages: string): MessageEmbed;
+
+    /* lang */
+    langs(languages: string): string;
+    langsSet(): string;
+
+    /* General Category */
     guilds(members: number, guilds: number, shardID: string): MessageEmbed;
     vote(): MessageEmbed
     avatar(user: string, avatar: string): string;
+    variables(): MessageEmbed;
+    invite(): MessageEmbed;
+    userInfo(user: User, guild: Guild | null, author: User): MessageEmbed;
+
+    /* reaction role */
     rrHelp(prefix: string): MessageEmbed;
     rrReact(role: string): string;
     rr(role: string, emoji: string): string;
@@ -21,36 +40,43 @@ interface CommandStrings {
     rrUnique(): MessageEmbed;
     rrOnly(): MessageEmbed;
     rrDelete(emoji: string): string;
+
+    /* embeds */
     embedHelp(prefix: string): MessageEmbed;
     embedCreated(prefix: string, embed: string): string;
     embedDeleted(embed: string): string;
     embedList(embeds: string, icon: string | undefined): MessageEmbed;
     embedEdited(property: string, name: string): string;
     embedProperties(prefix: string): MessageEmbed;
+
+    /* tags */
     tagsHelp(prefix: string): MessageEmbed;
     tagsCreated(name: string): string;
     tagsEdited(name: string): string;
     tagsDeleted(name: string): string;
     tagsList(tags: string, icon: string | undefined): MessageEmbed;
     tagsProperties(): MessageEmbed;
+
+    /* welcome */
     welcomeHelp(prefix: string): MessageEmbed;
-    leaveHelp(prefix: string): MessageEmbed;
     welcomeChannel(channel: string): string;
-    leaveChannel(channel: string): string;
-    channelRemoved(): string;
-    messageRemoved(): string;
     welcomeEmbed(prefix: string, embed: string): string;
-    leaveEmbed(prefix: string, embed: string): string;
     welcomeMessage(prefix: string, embed: boolean): string;
-    leaveMessage(prefix: string, embed: boolean): string;
     welcomeRoleRemoved(type: string): string;
     welcomeRole(role: string, type: string, prefix: string): string;
     welcomeConfig(welcome: Welcome, prefix: string): MessageEmbed;
+
+    /* leave */
+    leaveHelp(prefix: string): MessageEmbed;
+    leaveChannel(channel: string): string;
+    leaveEmbed(prefix: string, embed: string): string;
+    leaveMessage(prefix: string, embed: boolean): string;
     leaveConfig(leave: Leave, prefix: string): MessageEmbed;
+
+    /* emit */
     emitEvent(event: string): string;
-    variables(): MessageEmbed;
-    invite(): MessageEmbed;
-    userInfo(user: User, guild: Guild | null, author: User): MessageEmbed;
+
+    /* interact */
     kill(author: User, mention: User): string;
     smug(author: User): string;
     disgust(author: User): string;
@@ -62,28 +88,44 @@ interface CommandStrings {
     pat(author: User, mention: User): string;
     kiss(author: User, mention: User): string;
     feed(author: User, mention: User): string;
+
+    /* images */
     dog(): string;
     cat(): string;
     bunny(): string;
     duck(): string;
+
+    /* nsfw */
     nsfw(): string;
     nsfwRequest(author: User): string;
+
+    /* purge */
     purge(messages: number): string;
     purgeNothing(): string;
-    Waiting(): string;
+
+    /* kick */
     kickCheck(): string;
+
+    /* ban */
     banCheck(): string;
+
+    /* unban */
     unbanOK(user: string): string;
-    reasonDays(reason: string | null, days: string | null): string;
 }
 
 interface CommandErrorStrings {
+
+    /* General */
     noImage(): string;
     noChannel(): string;
     noChannelView(): string;
     noChannelWrite(): string;
     noRole(): string;
     noRoleAdd(): string;
+    reasonInvalid(): string;
+    reasonNoComillas(): string;
+
+    /* Commands CanRun */
     cmdServer(): string;
     cmdCooldown(cooldown: string): string;
     cmdEnabled(): string;
@@ -92,13 +134,26 @@ interface CommandErrorStrings {
     cmdMemberChannel(perms: string): string;
     cmdBotGuild(perms: string): string;
     cmdBotChannel(perms: string): string;
+
+    /* prefix */
     prefixArgs(): string;
     prefixLength(): string;
+
+    /* lang */
+
     langNo(): string;
+
+    /* help */
     helpNo(): string;
+
+    /* say */
     sayNoText(): string;
     sayNoPerms(): string;
+
+    /* blacklist */
     blacklist(reason: string, date: string): string;
+
+    /* reaction roles */
     rrMax(): string;
     rrNoOption(prefix: string): string;
     rrNoType(prefix: string): string;
@@ -113,6 +168,10 @@ interface CommandErrorStrings {
     rrDeleteNoMessage(): string;
     rrDeleteEmoji(): string;
     rrDeleteNo(): string;
+    cooldownReactionAdd(cooldown: string): string;
+    cooldownReactionRemove(cooldown: string): string;
+
+    /* embeds */
     embedMax(): string;
     embedName(): string;
     embedExists(): string;
@@ -123,6 +182,8 @@ interface CommandErrorStrings {
     embedNoTimestamp(): string;
     embedNoColor(): string;
     embedNoProperty(prefix: string): string;
+
+    /* tags */
     tagsMax(): string;
     tagsName(): string;
     tagsExists(): string;
@@ -131,10 +192,18 @@ interface CommandErrorStrings {
     tagsNoRole(): string;
     tagsNoExists(): string;
     tagsNoCommand(): string;
+
+    /* welcome */
     welcomeNoMessage(): string;
-    leaveNoMessage(): string;
     welcomeRoleType(): string;
+
+    /* leave */
+    leaveNoMessage(): string;
+
+    /* emit */
     emitNoEvent(): string;
+
+    /* interact */
     killNoMention(): string;
     killMentionMe(): string;
     killMentionAuthor(): string;
@@ -154,26 +223,30 @@ interface CommandErrorStrings {
     kissMentionAuthor(): string;
     feedNoMention(): string;
     feedMentionAuthor(): string;
-    cooldownReactionAdd(cooldown: string): string;
-    cooldownReactionRemove(cooldown: string): string;
+
+    /* purge */
     purgeNoArgs(prefix: string): MessageEmbed;
     purgeNoNumber(): string;
     purgeNoValid(): string;
     purgeNoUsers(): string;
+
+    /* kick */
     kickNoArgs(): string;
     kickNoUsers(): string;
     kickError(): string;
     kickUsersMax(): string;
+
+    /* ban */
     banNoArgs(): string;
     banNoUsers(): string;
     banError(): string;
     banUsersMax(): string;
     banDaysInvalid(): string;
+
+    /* unban */
     unbanNoUser(): string;
     unbanUserNoBan(): string;
     unBanNo(user: string): string;
-    reasonInvalid(): string;
-    reasonNoComillas(): string;
 }
 
 interface CommandDescriptionStrings {
