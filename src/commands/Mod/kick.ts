@@ -50,7 +50,7 @@ export default class KickCommand extends Command {
             if (members.length < 1) return message.channel.send(this.lang.getError('kickNoUsers'));
             if (members.length > 20) return message.channel.send(this.lang.getError('kickUsersMax'));
             const kick: string[] = [this.lang.get('reasonDays', arr.find(x => x.name === 'reason')?.value || null, null)];
-            let msg: Message | void = await message.channel.send(this.lang.get('Waiting'));
+            let msg: Message | void = await message.channel.send(this.lang.get('waiting'));
             for (const member of members) {
                 try {
                     await member.kick(arr.find(x => x.name === 'reason')?.value || undefined);

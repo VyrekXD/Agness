@@ -61,7 +61,7 @@ export default class BanCommand extends Command {
             if (members.length < 1) return message.channel.send(this.lang.getError('banNoUsers'));
             if (members.length > 20) return message.channel.send(this.lang.getError('banUsersMax'));
             const ban: string[] = [this.lang.get('reasonDays', arr.find(x => x.name === 'reason')?.value || null, arr.find(x => x.name === 'days')?.value || null)];
-            let msg: Message | void = await message.channel.send(this.lang.get('Waiting'));
+            let msg: Message | void = await message.channel.send(this.lang.get('waiting'));
             for (const member of members) {
                 try {
                     await member.ban({ reason: arr.find(x => x.name === 'reason')?.value || undefined, days: parseInt(arr.find(x => x.name === 'days')?.value as string) || 0 });
