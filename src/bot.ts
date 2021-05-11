@@ -7,7 +7,7 @@ import Events from './managers/Events';
 import { connect } from 'mongoose';
 import { config } from 'dotenv';
 import fetch from 'node-fetch';
-import DBL from 'dblapi.js';
+import DBL = require('dblapi.js');
 
 config();
 
