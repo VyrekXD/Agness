@@ -7,6 +7,7 @@ import Events from './managers/Events';
 import { connect } from 'mongoose';
 import { config } from 'dotenv';
 import fetch from 'node-fetch';
+import DBL from 'dblapi.js';
 
 config();
 
@@ -22,6 +23,7 @@ export default class Agness extends Client {
     events = new Events(this);
     color = '#b7d8d6';
     nekos = new nekosClient()
+    dbl: DBL | undefined;
     constructor() {
         super({
             partials: ['MESSAGE', 'REACTION', 'CHANNEL'],
@@ -33,7 +35,7 @@ export default class Agness extends Client {
             useNewUrlParser: true,
             useUnifiedTopology: true
         }, (err) => {
-            if (err) return console.log(`Mongo Error: ${err.stack ?? err}`);
+            if (err) return console.log(`MongoDB - Error: ${err.stack ?? err}`);
             console.log('MONGODB - Base de datos conectada');
         });
 
@@ -41,6 +43,15 @@ export default class Agness extends Client {
         this.commands.load();
         this.events.load();
         this.login(process.env.TOKEN);
+        if (process.env.CONNECT === 'yes') {
+            this.dbl = new DBL(process.env.DBLKEY, this);
+            this.dbl.on('posted', () => {
+              console.log('TOP.GG - Server count posted!');
+            });
+            this.dbl.on('error', e => {
+              console.error('TOP.GG - Error:', e);
+            });
+          }
     }
 
     async replaceText(text: string, { channel, member, prefix }: ReplaceOptions): Promise<string> {

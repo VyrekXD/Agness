@@ -7,6 +7,8 @@ declare global {
             KARU_TOKEN: string;
             DEVS: string;
             SERVERS_CHANNEL: string;
+            CONNECT: string;
+            DBLKEY: string;
         }
     }
 }
